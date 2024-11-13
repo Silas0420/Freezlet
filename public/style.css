@@ -8,8 +8,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(10, 9, 45);
-    color: #333;
+    color: #ffffff;
     margin: 10px;
+    align-items: center;
 }
 
 .title {
@@ -23,6 +24,11 @@ h1 {
     color: rgb(255, 255, 255);
     margin-bottom: 20px;
     text-align: center;
+}
+
+input::placeholder {
+    color: #ffffff;
+    font-size: 1rem;
 }
 
 .button1 {
@@ -78,4 +84,53 @@ h1 {
 
 .button2:hover {
     background-color: rgb(67, 75, 97);
+}
+
+.create-button {
+    margin-top: 10px;
+    align-items: center;
+    border: .125rem solid #0000;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    justify-content: center;
+    position: relative;
+    width: fit-content;
+    transition: all .12s cubic-bezier(.47,0,.745,.715);
+    min-height: 2.5rem;
+    font-weight: 600;
+    font-size: .875rem;
+    letter-spacing: normal;
+    line-height: 1.4285714285714286;
+    border-color: rgb(88,99,128);
+    color: #f6f7fb;
+    background: rgb(10, 9, 45);
+    padding: .375rem .875rem;
+}
+
+.create-button:hover {
+    background-color: rgb(67, 75, 97);
+}
+
+.input {
+    box-sizing: inherit;
+    margin: 0;
+    padding: .5rem;
+    font: 12px/18px hurme_no2-webfont,-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: normal;
+    line-height: 1.5;
+    appearance: none;
+    border: none;
+    box-shadow: none;
+    color: rgb(255, 255, 255);
+    cursor: text;
+    filter: none;
+    flex: 1 1 auto;
+    background-color: rgb(88,99,128);
+    padding-right: 1rem;
+    border-radius: .5rem;
 }
