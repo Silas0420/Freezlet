@@ -9,9 +9,10 @@ const pool = mysql.createPool({
   database: 'freezlet',  // Deine Datenbankname
 });
 
-// Exportiere die Verbindungspool-Instanz
-module.exports = pool.promise();
+// Exportiere die Verbindungspool-Instanz mit `.promise()` für die Nutzung von Promises
+module.exports = pool.promise();  // pool.promise gibt eine Version mit Promises zurück
 
+// Funktion, um ein neues Lernset zu erstellen
 async function createSet(title, description, language) {
   const [rows] = await pool.query(
     'INSERT INTO lernset (title, description, language) VALUES (?, ?, ?)',
@@ -24,7 +25,7 @@ async function createSet(title, description, language) {
 async function addCards(setId, cards) {
   const cardPromises = cards.map(card =>
     pool.query(
-    'INSERT INTO karte (set_id, vorderseite, rueckseite) VALUES (?, ?, ?)',
+      'INSERT INTO karte (set_id, vorderseite, rueckseite) VALUES (?, ?, ?)',
       [setId, card.vorderseite, card.rueckseite]
     )
   );
