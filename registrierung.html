@@ -1,0 +1,39 @@
+
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrierung</title>
+</head>
+<body>
+
+    <div>
+        <h2>Registrierung</h2>
+        <form action="/registerdaten" method="POST">
+            
+            <label for="email">E-Mail:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+
+            <label for="username">Benutzername:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+
+            <label for="confirm-password">Passwort bestätigen:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <br>
+
+            <button type="submit">Registrieren</button>
+        </form>
+    </div>
+
+    <div>
+        <p>Bereits ein Konto? <a href="index.html">Melde dich hier an</a>.</p>
+    </div>
+
+</body>
+</html>
