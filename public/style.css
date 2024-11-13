@@ -9,14 +9,10 @@ body {
     font-family: Arial, sans-serif;
     background-color: rgb(10, 9, 45);
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 20px;
+    margin: 10px;
 }
 
-.main-title {
+.title {
     font-size: 36px;
     color: rgb(255, 255, 255);
     text-align: center;
@@ -27,61 +23,6 @@ h1 {
     color: rgb(255, 255, 255);
     margin-bottom: 20px;
     text-align: center;
-}
-
-/* Container Styling */
-.container {
-    background-color: rgb(46,56,86);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 20px;
-}
-
-.entry {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.entry-number {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 10px;
-    color:rgb(255, 255, 255)
-}
-
-.entry-content {
-    flex: 1;
-}
-
-.field {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
-label {
-    font-size: 14px;
-    color: #ffffff;
-    margin-bottom: 5px;
-}
-
-input[type="text"], select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 100%;
-}
-
-input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
 }
 
 .button1 {
@@ -137,16 +78,4 @@ input[type="text"]:focus {
 
 .button2:hover {
     background-color: rgb(67, 75, 97);
-}
-
-.delete-icon {
-    font-size: 18px;
-    color: #ff4d4d;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: color 0.3s ease;
-}
-
-.delete-icon:hover {
-    color: #ff0000;
 }
