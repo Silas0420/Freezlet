@@ -44,12 +44,12 @@
                         <div class="entry-number">${cardCount}</div>
                         <div class="entry-content">
                             <div class="field">
-                                <label for="term-${cardCount}">Vorderseite</label>
-                                <input type="text" id="term-${cardCount}" placeholder="Begriff eingeben" required>
+                                <label for="vorderseite-${cardCount}">Vorderseite</label>
+                                <input type="text" id="vorderseite-${cardCount}" placeholder="Begriff eingeben" required>
                             </div>
                             <div class="field">
-                                <label for="definition-${cardCount}">Rückseite</label>
-                                <input type="text" id="definition-${cardCount}" placeholder="Definition eingeben" required>
+                                <label for="rueckseite-${cardCount}">Rückseite</label>
+                                <input type="text" id="rueckseite-${cardCount}" placeholder="Definition eingeben" required>
                             </div>
                         </div>
                         <div class="delete-icon" onclick="deleteCard(this)">&times;</div>
@@ -80,9 +80,9 @@
                 const cards = [];
                 const entries = document.querySelectorAll('.container');
                 entries.forEach(entry => {
-                    const term = entry.querySelector('input[id^="term"]').value;
-                    const definition = entry.querySelector('input[id^="definition"]').value;
-                    cards.push({ term, definition });
+                    const vorderseite = entry.querySelector('input[id^="vorderseite"]').value;
+                    const rueckseite = entry.querySelector('input[id^="rueckseite"]').value;
+                    cards.push({ vorderseite, rueckseite });
                 });
 
                 const newSet = { title, description, language, cards };
