@@ -5,40 +5,107 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Neues Lernset erstellen</title>
         <link rel="stylesheet" href="styles.css">
+        <link rel="icon" href="Freezlet Logo.png"/>
     </head>
     <body>
         <div>
             <h1>Neues Lernset erstellen</h1>
-
-            <button class="button2">Erstellen</button><br>
-            <label for="Titel">Titel des Lernsets</label><br>
-            <input type="text" name="Titel" placeholder="Gib einen Titel ein"><br>
-            <label for="Titel">Beschreibung des Lernsets</label><br>
-            <input type="text" name="Beschreibung" placeholder="Beschreibung hinzufuegen..."><br>
-            <label for="language-1">Sprache auswählen (Rückseite)</label><br>
-                        <select id="language-1">
-                            <option value="de">Deutsch</option>
-                            <option value="en">Englisch</option>
-                            <option value="fr">Französisch</option>
-                        </select><br>
-            <span class="Unterstrich"></span>
-            <label for="Import">Lernset importieren</label><br>
-            <button class="button1" name="Import">Importieren</button>
+            <form id="createSetForm"></form>
+                <button class="button2" type="submit">Erstellen</button><br>
+                <label for="title">Titel des Lernsets</label><br>
+                <input type="text" id="title" name="title" placeholder="Gib einen Titel ein"><br>
+                <label for="description">Beschreibung des Lernsets</label><br>
+                <input type="text" id="description" name="description" placeholder="Beschreibung hinzufuegen..."><br>
+                <label for="language">Sprache auswählen (Rückseite)</label><br>
+                    <select id="language" name="language">
+                        <option value="de">Deutsch</option>
+                        <option value="en">Englisch</option>
+                        <option value="fr">Französisch</option>
+                    </select><br>
+                <span class="Unterstrich"></span>
+                <label for="import">Lernset importieren</label><br>
+                <button type="button" class="button1" id="importBtn">Importieren</button>
+            </form>
         </div>
         <br>
+        <div id="cardContainer">
+            <!-- Dynamische Karteien werden hier hinzugefügt -->
+        </div>
+        <button id="addCardBtn">Neue Karte hinzufügen</button>
+        <script>
+            document.getElementById('addCardBtn').addEventListener('click', function() {
+                const cardContainer = document.getElementById('cardContainer');
+                const cardCount = cardContainer.children.length + 1;
+
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('container');
+                cardDiv.innerHTML = `
+                    <div class="entry">
+                        <div class="entry-number">${cardCount}</div>
+                        <div class="entry-content">
+                            <div class="field">
+                                <label for="term-${cardCount}">Vorderseite</label>
+                                <input type="text" id="term-${cardCount}" placeholder="Begriff eingeben" required>
+                            </div>
+                            <div class="field">
+                                <label for="definition-${cardCount}">Rückseite</label>
+                                <input type="text" id="definition-${cardCount}" placeholder="Definition eingeben" required>
+                            </div>
+                        </div>
+                        <div class="delete-icon" onclick="deleteCard(this)">&times;</div>
+                    </div>
+                `;
+                cardContainer.appendChild(cardDiv);
+            });
+
+            function deleteCard(icon) {
+                icon.closest('.container').remove();
+                updateCardNumbers();
+            }
+
+            function updateCardNumbers() {
+                const cards = document.querySelectorAll('.entry-number');
+                cards.forEach((card, index) => {
+                    card.textContent = index + 1;
+                });
+            }
+
+            document.getElementById('createSetForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const language = document.getElementById('language').value;
+
+                const cards = [];
+                const entries = document.querySelectorAll('.container');
+                entries.forEach(entry => {
+                    const term = entry.querySelector('input[id^="term"]').value;
+                    const definition = entry.querySelector('input[id^="definition"]').value;
+                    cards.push({ term, definition });
+                });
+
+                const newSet = { title, description, language, cards };
+                console.log(newSet);
+
+                            fetch('/api/sets', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newSet)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Lernset erstellt:', data);
+                    alert('Lernset erfolgreich erstellt!');
+                })
+                .catch(error => {
+                    console.error('Fehler:', error);
+                    alert('Fehler beim Erstellen des Lernsets');
+                });
+            });
+        </script>
+
         <div class="container">
-            <div class="entry">
-                <div class="entry-number">1</div>
-                <div class="entry-content">
-                    <div class="field">
-                        <label for="term-1">Vorderseite</label>
-                        <input type="text" id="term-1" placeholder="Begriff eingeben">
-                    </div>
-                    <div class="field">
-                        <label for="definition-1">Rückseite</label>
-                        <input type="text" id="definition-1" placeholder="Definition eingeben">
-                    </div>
-                </div>
-                <div class="delete-icon">&times;</div>
+          
     </body>
 </html>
