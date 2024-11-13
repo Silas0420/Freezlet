@@ -1,0 +1,54 @@
+
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anmelden</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div>
+        <h2>Anmelden</h2>
+        <form id="login-form">
+            <label for="username">Benutzername oder E-Mail</label><br>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Passwort</label><br>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Anmelden</button>
+        </form>
+    </div>
+
+    <div>
+        <p>Noch kein Konto? <a href="registrierung.html">Registriere dich hier</a>.</p>
+    </div>
+
+    <script>
+        // Formular-Submit handler
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+          e.preventDefault(); // Verhindert das Standard-Formular-Submit
+    
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+    
+          const response = await fetch('http://localhost:3000/login', { //Noch ändern bei Online!!!
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+          });
+    
+          const data = await response.json();
+    
+          if (response.ok) {
+            alert('Anmeldung erfolgreich!');
+          } else {
+            alert('Fehler: ' + data.message);
+          }
+        });
+      </script>
+</body>
+</html>
