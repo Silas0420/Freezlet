@@ -11,3 +11,24 @@ const pool = mysql.createPool({
 
 // Exportiere die Verbindungspool-Instanz
 module.exports = pool.promise();
+
+async function createSet(title, description, language) {
+  const [rows] = await pool.query(
+    'INSERT INTO lernset (title, description, language) VALUES (?, ?, ?)',
+    [title, description, language]
+  );
+  return rows.insertId;
+}
+
+// Funktion, um Lernkarten zu einem Lernset hinzuzufügen
+async function addCards(setId, cards) {
+  const cardPromises = cards.map(card =>
+    pool.query(
+    'INSERT INTO karte (set_id, vorderseite, rueckseite) VALUES (?, ?, ?)',
+      [setId, card.vorderseite, card.rueckseite]
+    )
+  );
+  await Promise.all(cardPromises);  // Alle Abfragen parallel ausführen
+}
+
+module.exports = { createSet, addCards };
