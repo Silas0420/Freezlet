@@ -9,7 +9,7 @@
 
     <div>
         <h2>Registrierung</h2>
-        <form action="/registerdaten" method="POST">
+        <form id="registrierung-form">
             
             <label for="email">E-Mail:</label>
             <input type="email" id="email" name="email" required>
@@ -34,6 +34,32 @@
     <div>
         <p>Bereits ein Konto? <a href="index.html">Melde dich hier an</a>.</p>
     </div>
+    <script>
+        // Formular-Submit handler
+        document.getElementById('registrierung-form').addEventListener('submit', async function(e) {
+          e.preventDefault(); // Verhindert das Standard-Formular-Submit
 
+          const email = document.getElementById('email').value;
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          const confirmpassword = document.getElementById('confirm-password').value;
+    
+          const response = await fetch('http://localhost:3000/login', { //Noch ändern bei Online!!!
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, username, password, confirmpassword}),
+          });
+    
+          const data = await response.json();
+    
+          if (response.ok) {
+            alert('Anmeldung erfolgreich!');
+          } else {
+            alert('Fehler: ' + data.message);
+          }
+        });
+      </script>
 </body>
 </html>
