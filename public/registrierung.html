@@ -30,6 +30,7 @@
             <button type="submit">Registrieren</button>
         </form>
     </div>
+    <div id="error-message" style="color: red; margin-top: 10px;"></div>
 
     <div>
         <p>Bereits ein Konto? <a href="index.html">Melde dich hier an</a>.</p>
@@ -43,21 +44,32 @@
           const username = document.getElementById('username').value;
           const password = document.getElementById('password').value;
           const confirmpassword = document.getElementById('confirm-password').value;
-    
-          const response = await fetch('http://localhost:3000/login', { //Noch ändern bei Online!!!
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, username, password, confirmpassword}),
-          });
-    
-          const data = await response.json();
-    
-          if (response.ok) {
-            alert('Anmeldung erfolgreich!');
-          } else {
-            alert('Fehler: ' + data.message);
+
+          document.getElementById('error-message').innerText = '';
+
+          try {
+              const response = await fetch('http://localhost:3000/register', { //Noch ändern bei Online!!!
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email, username, password, confirmpassword}),
+            });
+
+            console.log(response); // Füge dies hinzu, um die Antwort zu sehen
+            
+            const data = await response.json();
+        
+                if (response.ok) {
+                // Erfolgreiche Anmeldung -> Weiterleitung
+                window.location.href = '/home.html';
+            } else {
+                // Fehlermeldung anzeigen
+                document.getElementById('error-message').innerText = data.message;
+            }
+            } catch (error) {
+              console.error('Fehler bei der Anfrage:', error);
+              document.getElementById('error-message').innerText = 'Ein unerwarteter Fehler ist aufgetreten. Versuche es nochmal!';
           }
         });
       </script>

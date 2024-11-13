@@ -18,6 +18,7 @@
             <br>
             <button type="submit">Anmelden</button>
         </form>
+        <div id="error-message" style="color: red; margin-top: 10px;"></div>
     </div>
 
     <div>
@@ -32,21 +33,29 @@
           const username = document.getElementById('username').value;
           const password = document.getElementById('password').value;
     
-          const response = await fetch('http://localhost:3000/login', { //Noch ändern bei Online!!!
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-          });
-    
-          const data = await response.json();
-    
-          if (response.ok) {
-            alert('Anmeldung erfolgreich!');
-          } else {
-            alert('Fehler: ' + data.message);
+          document.getElementById('error-message').innerText = '';
+
+          try {
+              const response = await fetch('http://localhost:3000/login', { //Noch ändern bei Online!!!
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username, password }),
+            });
+      
+            const data = await response.json();
+      
+            if (response.ok) {
+              window.location.href = '/home.html';
+            } else {
+              document.getElementById('error-message').innerText = data.message;
+            }
+          } catch (error) {
+            console.error('Fehler bei der Anfrage:', error);
+            document.getElementById('error-message').innerText = 'Ein unerwarteter Fehler ist aufgetreten.';
           }
+
         });
       </script>
 </body>
