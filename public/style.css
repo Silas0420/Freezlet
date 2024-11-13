@@ -134,3 +134,108 @@ input::placeholder {
     padding-right: 1rem;
     border-radius: .5rem;
 }
+
+/*CSS vom Home.HTML*/
+
+/* Grundlegende Reset-Regeln */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Allgemeine Gestaltung */
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(10, 9, 45);
+    color: #ff7777;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    line-height: 100px;
+    padding: 300px;
+}
+
+/* Container für den gesamten Inhalt */
+.home-container {
+    width: 1500%;  /* Der Container nimmt die gesamte Breite ein */
+    max-width: 300px; /* Erhöhe den maximalen Wert */
+    max-width: 1200px; /* Maximale Breite für große Bildschirme */
+    margin: 0 auto;  /* Zentriert den Container */
+    padding: 60px;
+    background: linear-gradient(135deg, #3a3f8d, #4347c7); /* Sanfter Farbverlauf */
+    color: #e0e0e0;
+    border-radius: 60px;
+    text-align: center;
+    box-shadow: 0 50px 200px rgba(221, 168, 63, 0.4); /* Schatten für mehr Tiefe */
+}
+
+/* Styling für die Hauptüberschrift */
+.home-title {
+    font-size: 70px;
+    color: #ffffff;
+    margin-bottom: -30px;
+}
+
+/* Styling für die Unterüberschrift */
+.home-subtitle {
+    font-size: 40px;
+    color: #ffffff;
+    margin-bottom: 0px;
+}
+
+/* Menübutton */
+.menu-container {
+    margin-bottom: 40px;
+    position: absolute;
+}
+
+.menu-btn {
+    font-size: 40px;
+    color: #ffffff;
+    background-color: #333;
+    padding: 20px 30px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Menüstruktur */
+.menu {
+    display: none; /* Standardmäßig ausgeblendet */
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu ul li {
+    margin: 10px 0;
+}
+
+.menu ul li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu ul li a:hover {
+    color: #ffa500;
+}
+
+/* Media Query für mobile Geräte */
+@media (max-width: 768px) {
+    .home-container {
+        width: 90%;  /* Für kleinere Bildschirme wird die Breite angepasst */
+    }
+
+    .home-title {
+        font-size: 30px; /* Kleinere Schriftgröße auf kleinen Geräten */
+    }
+
+    .home-subtitle {
+        font-size: 20px; /* Kleinere Schriftgröße auf kleinen Geräten */
+    }
+}
