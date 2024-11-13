@@ -7,9 +7,16 @@ const { register, login } = require('./userController');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.post('/register', register);
 
 // Anmeldung
 app.post('/login', login);
 
-const { register, login } = require('./userController');
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server läuft auf Port ${PORT}`);
+});
