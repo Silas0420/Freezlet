@@ -18,7 +18,7 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Benutzer in der Datenbank speichern
-    await db.query('INSERT INTO benutzer (benutzername, passwort_hash, email) VALUES (?, ?, ?)', [username, hashedPassword, email]);
+    await db.query('INSERT INTO benutzer (benutzername, passwort, email) VALUES (?, ?, ?)', [username, hashedPassword, email]);
     res.status(201).json({ message: "Benutzer erfolgreich registriert" });
   } catch (error) {
     console.error(error);
@@ -26,7 +26,6 @@ const register = async (req, res) => {
   }
 };
 
-// Benutzer anmelden
 const login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -47,7 +46,6 @@ const login = async (req, res) => {
         message: isEmail ? "E-Mail oder Passwort ungültig." : "Benutzername oder Passwort ungültig."
       });
     }
-
     // Passwort vergleichen
     const user = rows[0];
     const isMatch = await bcrypt.compare(password, user.passwort_hash);

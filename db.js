@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 // Exportiere die Verbindungspool-Instanz mit `.promise()` für die Nutzung von Promises
 module.exports = pool.promise();  // pool.promise gibt eine Version mit Promises zurück
-
+/*
 // Funktion, um ein neues Lernset zu erstellen
 async function createSet(title, description, language) {
   const [rows] = await pool.query(
@@ -32,4 +32,4 @@ async function addCards(setId, cards) {
   await Promise.all(cardPromises);  // Alle Abfragen parallel ausführen
 }
 
-module.exports = { createSet, addCards };
+module.exports = { createSet, addCards };*/
