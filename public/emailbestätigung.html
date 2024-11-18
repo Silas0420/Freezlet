@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Mail Bestätigung</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Freezlet Logo.png"/>
+</head>
+<body>
+
+  <div class="message info">
+    <h2 id="messageTitle">Bitte bestätige deine E-Mailadresse...</h2>
+  </div>
+
+  <!-- Automatische Weiterleitung zur Login-Seite nach erfolgreicher Bestätigung -->
+  <script>
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+
+      if (token) {
+        // Zeige die Verifizierungsnachricht an, wenn ein Token vorhanden ist
+        document.getElementById('messageTitle').innerText = "Ihre E-Mail wird gerade verifiziert...";
+
+        // Anfrage zur Verifizierung des Tokens an den Server
+        fetch(`/verify-email?token=${token}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.querySelector('.message').innerHTML = "<h2>E-Mail erfolgreich bestätigt!</h2><p>Sie werden in wenigen Sekunden weitergeleitet...</p>";
+              setTimeout(() => {
+                window.location.href = '/home.html'; 
+              }, 3000); // Verzögerung von 3 Sekunden
+            } else {
+              document.querySelector('.message').innerHTML = "<h2>Fehler bei der Bestätigung!</h2><p>Der Bestätigungstoken ist ungültig oder abgelaufen.</p>";
+            }
+          })
+          .catch(error => {
+            document.querySelector('.message').innerHTML = "<h2>Fehler!</h2><p>Es gab ein Problem bei der Verifizierung.</p>";
+          });
+      }
+    };
+  </script>
+
+</body>
+</html>

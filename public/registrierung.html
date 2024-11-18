@@ -46,6 +46,11 @@
           const password = document.getElementById('password').value;
           const confirmpassword = document.getElementById('confirm-password').value;
 
+          if (password !== confirmpassword) {
+              document.getElementById('error-message').innerText = 'Die Passwörter stimmen nicht überein.';
+              return; // Verhindert das Absenden des Formulars
+          }
+
           document.getElementById('error-message').innerText = '';
 
           try {
@@ -63,7 +68,7 @@
         
                 if (response.ok) {
                 // Erfolgreiche Anmeldung -> Weiterleitung
-                window.location.href = '/home.html';
+                window.location.href = '/emailbestätigung.html';
             } else {
                 // Fehlermeldung anzeigen
                 document.getElementById('error-message').innerText = data.message;
