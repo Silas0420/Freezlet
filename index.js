@@ -1,11 +1,10 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const { register, login } = require('./userController');
+const { register, login, verifyEmail } = require('./userController');
 
 
-const { sendTestEmail } = require('./userController'); // Importiere die Funktion
-app.get('/send-test-email', sendTestEmail);
+
 
 app.use(express.json()); // Middleware für JSON-Parsing
 app.use(express.static(path.join(__dirname, 'public')));
@@ -13,10 +12,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+app.get('/emailbestätigung.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'emailbestätigung.html'));
+});
 
 // Benutzer-Registrierung und Anmeldung
 app.post('/register', register);
 app.post('/login', login);
+app.get('/verify-email', verifyEmail);
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

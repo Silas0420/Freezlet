@@ -25,20 +25,21 @@
 
         // Anfrage zur Verifizierung des Tokens an den Server
         fetch(`/verify-email?token=${token}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              document.querySelector('.message').innerHTML = "<h2>E-Mail erfolgreich bestätigt!</h2><p>Sie werden in wenigen Sekunden weitergeleitet...</p>";
-              setTimeout(() => {
-                window.location.href = '/home.html'; 
-              }, 3000); // Verzögerung von 3 Sekunden
-            } else {
-              document.querySelector('.message').innerHTML = "<h2>Fehler bei der Bestätigung!</h2><p>Der Bestätigungstoken ist ungültig oder abgelaufen.</p>";
-            }
-          })
-          .catch(error => {
-            document.querySelector('.message').innerHTML = "<h2>Fehler!</h2><p>Es gab ein Problem bei der Verifizierung.</p>";
-          });
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.querySelector('.message').innerHTML = "<h2>E-Mail erfolgreich bestätigt!</h2><p>Sie werden in wenigen Sekunden weitergeleitet...</p>";
+      setTimeout(() => {
+        window.location.href = '/home.html'; 
+      }, 3000); // Verzögerung von 3 Sekunden
+    } else {
+      document.querySelector('.message').innerHTML = "<h2>Fehler bei der Bestätigung!</h2><p>Der Bestätigungstoken ist ungültig oder abgelaufen.</p>";
+    }
+  })
+  .catch(error => {
+    document.querySelector('.message').innerHTML = "<h2>Fehler!</h2><p>Es gab ein Problem bei der Verifizierung.</p>";
+  });
+
       }
     };
   </script>

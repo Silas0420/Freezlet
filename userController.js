@@ -69,7 +69,7 @@ const register = async (req, res) => {
     );
 
     // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `https://freezlet.ch/verify-email?token=${token}`;
+    const confirmationLink = `http://localhost:3000/emailbestätigung.html?token=${token}`;
     await sendEmail(
         email,
         'E-Mail-Bestätigung',
@@ -159,20 +159,4 @@ const login = async (req, res) => {
   }
 };
 
-const sendTestEmail = async (req, res) => {
-  const mailOptions = {
-      from: `"Freezlet" <${process.env.EMAIL_USER}>`, // Absender
-      to: 'silaskolly@gmail.com',  // Empfänger-Adresse (ersetze mit deiner eigenen)
-      subject: 'Test E-Mail aus dem userController',
-      text: 'Dies ist eine Test-E-Mail aus dem userController, um sicherzustellen, dass alles funktioniert!',
-  };
-
-  try {
-      await transporter.sendMail(mailOptions);
-      res.status(200).json({ message: 'Test-E-Mail erfolgreich gesendet!' });
-  } catch (error) {
-      console.error('Fehler beim Senden der E-Mail:', error);
-      res.status(500).json({ message: 'Fehler beim Senden der E-Mail' });
-  }
-};
-module.exports = { sendTestEmail, register, login };
+module.exports = { register, verifyEmail, login };
