@@ -291,6 +291,20 @@ body {
     }
 }
 
+
+#menu {
+    display: none; /* Menü standardmäßig ausgeblendet */
+    background-color: #333; /* Hintergrundfarbe des Menüs */
+    color: white;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schatten für das Menü */
+    animation: fadeIn 0.3s ease-in-out; /* Animation beim Einblenden */
+}
+
 #menu ul {
     list-style: none; /* Entfernt die Standard-Aufzählungspunkte */
     margin: 0;
@@ -305,10 +319,27 @@ body {
 #menu ul li a {
     color: white; /* Textfarbe */
     text-decoration: none; /* Unterstreichung entfernen */
-    display: inline-block; /* Hält die Wörter zusammen und korrekt ausgerichtet */
-    padding: 5px; /* Innenabstand hinzufügen */
+    display: inline-block; /* Für eine saubere Ausrichtung */
+    padding: 10px 20px; /* Innenabstand, um einen rechteckigen Hintergrund zu erzeugen */
+    background-color: #444; /* Rechteckiger Hintergrund der Links */
+    border-radius: 5px; /* Leicht abgerundete Ecken */
+    transition: all 0.3s ease; /* Sanfter Übergang für Hover-Effekt */
 }
 
 #menu ul li a:hover {
-    color: #ffa500; /* Hover-Farbe für Links */
+    background-color: #ffa500; /* Hintergrundfarbe beim Hover */
+    color: black; /* Textfarbe beim Hover */
+    transform: scale(1.05); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Animation für das Einblenden des Menüs */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Startet unsichtbar */
+        transform: translateY(-10px); /* Leichte Verschiebung nach oben */
+    }
+    to {
+        opacity: 1; /* Voll sichtbar */
+        transform: translateY(0); /* Verschiebung zurück */
+    }
 }
