@@ -239,3 +239,29 @@ body {
         font-size: 20px; /* Kleinere Schriftgröße auf kleinen Geräten */
     }
 }
+
+#menu {
+    display: none; /* Menü standardmäßig ausblenden */
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    border-radius: 8px;
+}
+#menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#menu ul li {
+    margin: 10px 0;
+}
+#menu ul li a {
+    color: white;
+    text-decoration: none;
+}
+#menu ul li a:hover {
+    color: #ffa500; /* Farbe beim Hover */
+}
