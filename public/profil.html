@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilseite</title>
+    <link rel="stylesheet" href="style.css"> <!-- Optional: CSS für Styling -->
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Mein Profil</h1>
+        
+        <!-- Benutzerinformationen -->
+        <div class="profile-info">
+            <p><strong>Benutzername:</strong> <span id="username">MaxMustermann</span></p>
+            <p><strong>E-Mail-Adresse:</strong> <span id="email">max.mustermann@example.com</span></p>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="profile-actions">
+            <button id="edit-profile">Profil bearbeiten</button>
+            <button id="delete-account" class="danger">Account löschen</button>
+        </div>
+    </div>
+
+    <script>
+        // Beispiel für die Account-Löschfunktion
+        document.getElementById('delete-account').addEventListener('click', function() {
+            if (confirm('Bist du sicher, dass du deinen Account löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+                alert('Dein Account wurde gelöscht.'); 
+                // Hier könnte ein HTTP-Request an das Backend gesendet werden, um den Account tatsächlich zu löschen.
+            }
+        });
+    </script>
+</body>
+</html>
