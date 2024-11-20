@@ -30,6 +30,14 @@ label {
     color:rgb(255, 255, 255)
 }
 
+p {
+    color:rgb(255, 255, 255)
+}
+
+a {
+    color:rgb(255, 255, 255)
+}
+
 input::placeholder {
     color: #ffffff;
     font-size: 1rem;
