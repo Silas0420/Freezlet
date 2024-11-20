@@ -2,27 +2,29 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280"> 
     <title>Meine Lernseite</title>
-    <link rel="stylesheet" href="style.css"> <!-- Verlinkung zur CSS-Datei -->
-    <link rel="icon" href="Freezlet Logo.png"/>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <div class="menu-container">
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <div class="menu" id="menu">
-            <ul>
-                <li><a href="#karteikarten">Meine Karteikarten</a></li>
-                <li><a href="lernseterstellung.html">Karteikarten erstellen</a></li>
-                <li><a href="#startseite">Zur Startseite</a></li>
-            </ul>
+    <div class="home-container">
+        <div class="menu-container">
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            <div class="menu" id="menu">
+                <ul>
+                    <li><a href="#karteikarten">Meine Lernsets</a></li>
+                    <li><a href="#lernseterstellung">Karteikarten erstellen</a></li>
+                    <li><a href="#home">Zur Startseite</a></li>
+                    <li><a href="#profil">Mein Profil</a></li>
+                </ul>
+            </div>
         </div>
+        
+        <h1 class="home-title">Freezlet</h1>
+        <h2 class="home-subtitle">Dein smarter Lernbegleiter!</h2>
+        <p>Deine aktuellen Lernkarten:</p>
     </div>
-    
-    <hasodöihf1>Freezlet</h1>
-    <h2>Dein smarter Lernbegleiter!</h2>
-    <p>Deine aktuellen Lernkarten:</p>
 
-    <script src="script.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>
