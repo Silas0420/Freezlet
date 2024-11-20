@@ -240,28 +240,24 @@ body {
     }
 }
 
-#menu {
-    display: none; /* Menü standardmäßig ausblenden */
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    position: absolute;
-    top: 50px;
-    left: 20px;
-    border-radius: 8px;
-}
 #menu ul {
-    list-style: none;
+    list-style: none; /* Entfernt die Standard-Aufzählungspunkte */
     margin: 0;
     padding: 0;
 }
+
 #menu ul li {
-    margin: 10px 0;
+    margin: 10px 0; /* Abstand zwischen den Auswahlmöglichkeiten */
+    white-space: nowrap; /* Verhindert Zeilenumbrüche innerhalb eines Listenelements */
 }
+
 #menu ul li a {
-    color: white;
-    text-decoration: none;
+    color: white; /* Textfarbe */
+    text-decoration: none; /* Unterstreichung entfernen */
+    display: inline-block; /* Hält die Wörter zusammen und korrekt ausgerichtet */
+    padding: 5px; /* Innenabstand hinzufügen */
 }
+
 #menu ul li a:hover {
-    color: #ffa500; /* Farbe beim Hover */
+    color: #ffa500; /* Hover-Farbe für Links */
 }
