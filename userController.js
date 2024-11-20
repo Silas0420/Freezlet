@@ -112,6 +112,7 @@ const verifyEmail = async (req, res) => {
     await db.query('DELETE FROM UnbestaetigterBenutzer WHERE erstellungszeit < NOW() - INTERVAL 1 DAY');
 
     // Erfolgreiche Bestätigung
+    req.session.username = user.benutzername;
     res.redirect(`/verifizierung.html?success=true&message=${encodeURIComponent("E-Mail erfolgreich bestätigt")}`);
   } catch (error) {
     console.error(error);
