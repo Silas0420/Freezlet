@@ -26,9 +26,68 @@ h1 {
     text-align: center;
 }
 
+label {
+    color:rgb(255, 255, 255)
+}
+
+p {
+    color:rgb(255, 255, 255)
+}
+
+a {
+    color:rgb(255, 255, 255)
+}
+
 input::placeholder {
     color: #ffffff;
     font-size: 1rem;
+}
+
+button {
+    margin: 0;
+    align-items: center;
+    border: .125rem solid #0000;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    justify-content: center;
+    position: relative;
+    width: fit-content;
+    transition: all .12s cubic-bezier(.47,0,.745,.715);
+    min-height: 2.5rem;
+    font-weight: 600;
+    font-size: .875rem;
+    letter-spacing: normal;
+    line-height: 1.4285714285714286;
+    border-color: rgb(88,99,128);
+    color: #f6f7fb;
+    background: rgb(10, 9, 45);
+    padding: .375rem .875rem;
+}
+
+button:hover {
+    background-color: rgb(67, 75, 97);
+}
+
+input {
+    box-sizing: inherit;
+    margin: 0;
+    font: 12px/18px hurme_no2-webfont,-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: normal;
+    line-height: 1.5;
+    appearance: none;
+    border: none;
+    box-shadow: none;
+    color: rgb(255, 255, 255);
+    cursor: text;
+    filter: none;
+    flex: 1 1 auto;
+    background-color: rgb(88,99,128);
+    border-radius: .5rem;
 }
 
 .button1 {
@@ -237,5 +296,58 @@ body {
 
     .home-subtitle {
         font-size: 20px; /* Kleinere Schriftgröße auf kleinen Geräten */
+    }
+}
+
+
+#menu {
+    display: none; /* Menü standardmäßig ausgeblendet */
+    background-color: #333; /* Hintergrundfarbe des Menüs */
+    color: white;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schatten für das Menü */
+    animation: fadeIn 0.3s ease-in-out; /* Animation beim Einblenden */
+}
+
+#menu ul {
+    list-style: none; /* Entfernt die Standard-Aufzählungspunkte */
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    margin: 10px 0; /* Abstand zwischen den Auswahlmöglichkeiten */
+    white-space: nowrap; /* Verhindert Zeilenumbrüche innerhalb eines Listenelements */
+}
+
+#menu ul li a {
+    color: white; /* Textfarbe */
+    text-decoration: none; /* Unterstreichung entfernen */
+    display: inline-block; /* Für eine saubere Ausrichtung */
+    padding: 10px 20px; /* Innenabstand, um einen rechteckigen Hintergrund zu erzeugen */
+    background-color: #444; /* Rechteckiger Hintergrund der Links */
+    border-radius: 5px; /* Leicht abgerundete Ecken */
+    transition: all 0.3s ease; /* Sanfter Übergang für Hover-Effekt */
+}
+
+#menu ul li a:hover {
+    background-color: #ffa500; /* Hintergrundfarbe beim Hover */
+    color: black; /* Textfarbe beim Hover */
+    transform: scale(1.05); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Animation für das Einblenden des Menüs */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Startet unsichtbar */
+        transform: translateY(-10px); /* Leichte Verschiebung nach oben */
+    }
+    to {
+        opacity: 1; /* Voll sichtbar */
+        transform: translateY(0); /* Verschiebung zurück */
     }
 }
