@@ -78,10 +78,10 @@
                     cards.push({ vorderseite, rueckseite });
                 });
 
-                const newSet = { title, description, language, cards };
+                const newSet = { title, description, cards };
                 console.log(newSet);
 
-                            fetch('/api/sets', {
+                fetch('/lernseterstellung', {  // Ändere die URL hier
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newSet)
@@ -89,12 +89,13 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Lernset erstellt:', data);
-                    alert('Lernset erfolgreich erstellt!');
+                    window.location.href = '/lernset.html';
                 })
                 .catch(error => {
                     console.error('Fehler:', error);
                     alert('Fehler beim Erstellen des Lernsets');
                 });
+
             });
         </script>
           

@@ -127,7 +127,7 @@ const login = async (req, res) => {
 
   try {
     // Prüfen, ob die Eingabe eine E-Mail-Adresse ist
-    const isEmail = username.includes("@");
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
 
     // Abfrage vorbereiten basierend auf dem Eingabetyp
     const query = isEmail ? 
@@ -148,7 +148,10 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.passwort);
 
     if (isMatch) {
-      req.session.username = user.name;
+      // Benutzername und BenutzerID in der Session speichern
+      req.session.username = user.benutzername;
+      req.session.userID = user.ID; // Speichert die ID des Benutzers in der Session
+
       res.status(200).json({ message: "Anmeldung erfolgreich" });
     } else {
       return res.status(400).json({
@@ -160,5 +163,6 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Fehler bei der Anmeldung" });
   }
 };
+
 
 module.exports = { register, verifyEmail, login };

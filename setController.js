@@ -1,35 +1,50 @@
-// setsController.js
-const db = require('./db');  // Importiere die Datenbankverbindung
+const pool = require('./db'); // Stelle sicher, dass die Verbindung korrekt importiert wird
 
-// Funktion, um ein neues Lernset zu erstellen
-const createSet = async (req, res) => {
-  const { title, description, cards } = req.body;
-  const username = req.session.username;  // Den Benutzernamen aus der Session holen
+// Funktion zum Erstellen eines neuen Lernsets
+async function createSet(req, res) {
+    const { title, description, cards } = req.body;
 
-  if (!username) {
-    return res.status(401).send({ message: 'Benutzer nicht authentifiziert' });
-  }
+    if (!title || !cards || cards.length === 0) {
+        return res.status(400).json({ message: 'Titel und Karten sind erforderlich.' });
+    }
 
-  try {
-    // Erstelle das Lernset und speichere den Benutzernamen als 'ersteller'
-    const [result] = await db.query(
-      'INSERT INTO Lernset (titel, beschreibung, ersteller) VALUES (?, ?, ?)',
-      [title, description, username]
-    );
-    const lernsetID = result.insertId;
+    let connection;
+    try {
+        // Beginne eine Transaktion, um sicherzustellen, dass alle Operationen zusammen durchgeführt werden
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
 
-    // Füge Karten hinzu
-    const cardValues = cards.map(card => [card.vorderseite, card.rueckseite, lernsetID]);
-    await db.query(
-      'INSERT INTO Karte (vorderseite, rueckseite, setID) VALUES ?',
-      [cardValues]
-    );
+        // 1. Erstelle das Lernset
+        const [setResult] = await connection.query(
+            'INSERT INTO Lernset (titel, beschreibung, erstellerID) VALUES (?, ?, ?)',
+            [title, description || null, req.session.userID]  // Annahme: Der Benutzer ist in der Session gespeichert
+        );
 
-    res.status(201).send({ message: 'Lernset und Karten erfolgreich erstellt' });
-  } catch (error) {
-    console.error('Fehler beim Erstellen des Lernsets:', error);
-    res.status(500).send({ message: 'Fehler beim Erstellen des Lernsets' });
-  }
-};
-  
-module.exports = { createSet };  
+        const setID = setResult.insertId;
+
+        // 2. Erstelle die Karten
+        for (const card of cards) {
+            const { vorderseite, rueckseite } = card;
+            await connection.query(
+                'INSERT INTO Karte (vorderseite, rueckseite, setID) VALUES (?, ?, ?)',
+                [vorderseite, rueckseite, setID]
+            );
+        }
+
+        // 3. Commit der Transaktion
+        await connection.commit();
+
+        // Rückgabe der erfolgreichen Antwort
+        res.status(201).json({ message: 'Lernset erfolgreich erstellt!', setID });
+
+    } catch (error) {
+        console.error('Fehler beim Erstellen des Lernsets:', error);
+        if (connection) {
+            await connection.rollback();
+            connection.release();
+        }
+        res.status(500).json({ message: 'Fehler beim Erstellen des Lernsets.' });
+    }
+}
+
+module.exports = { createSet };
