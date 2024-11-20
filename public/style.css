@@ -237,9 +237,12 @@ body {
 }
 
 /* Menübutton */
+/* Menübutton */
 .menu-container {
-    margin-bottom: 40px;
-    position: absolute;
+    position: absolute; /* Positioniert das Element relativ zum Viewport */
+    top: 10px; /* Abstand von oben */
+    left: 10px; /* Abstand von links */
+    z-index: 1000; /* Stellt sicher, dass der Button über anderen Elementen liegt */
 }
 
 .menu-btn {
@@ -251,6 +254,7 @@ body {
     border-radius: 20px;
     cursor: pointer;
 }
+
 
 /* Menüstruktur */
 .menu {
