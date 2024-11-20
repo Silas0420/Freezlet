@@ -16,12 +16,6 @@
                 <button class="create-button" type="submit">Erstellen</button><br>
                 <label for="description">Beschreibung des Lernsets</label><br>
                 <input type="text" id="description" name="description" placeholder="Beschreibung hinzufügen..." class="input"><br>
-                <label for="language">Sprache auswählen (Rückseite)</label><br>
-                    <select id="language" name="language">
-                        <option value="de">Deutsch</option>
-                        <option value="en">Englisch</option>
-                        <option value="fr">Französisch</option>
-                    </select><br>
                 <span class="Unterstrich"></span>
                 <label for="import">Lernset importieren</label><br>
                 <button type="button" class="button1" id="importBtn">Importieren</button>
@@ -75,7 +69,6 @@
 
                 const title = document.getElementById('title').value;
                 const description = document.getElementById('description').value;
-                const language = document.getElementById('language').value;
 
                 const cards = [];
                 const entries = document.querySelectorAll('.container');

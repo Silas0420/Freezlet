@@ -13,9 +13,7 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-    },
-    logger: true, // Aktiviert das Logging
-    debug: true,  // Details zu den SMTP-Kommunikationen
+    }, // Details zu den SMTP-Kommunikationen
 });
 
 // E-Mail senden Funktion
@@ -43,7 +41,7 @@ const register = async (req, res) => {
   try {
     // Prüfen, ob der Benutzername bereits existiert
     const [users] = await db.query(
-      'SELECT * FROM benutzer WHERE benutzername = ? OR email = ?',
+      'SELECT * FROM Benutzer WHERE benutzername = ? OR email = ?',
       [username, email]
     );
     
@@ -64,12 +62,12 @@ const register = async (req, res) => {
     const token = crypto.randomBytes(32).toString('hex');
 
     await db.query(
-      'INSERT INTO unbestaetigtbenutzer (email, benutzername, passwort, token) VALUES (?, ?, ?, ?)',
+      'INSERT INTO UnbestaetigterBenutzer (email, benutzername, passwort, token) VALUES (?, ?, ?, ?)',
       [email, username, hashedPassword, token]
     );
 
     // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `http://localhost:3000/emailbestätigung.html?token=${token}`;
+    const confirmationLink = `http://localhost:3000/verifizierung?token=${token}`;
     await sendEmail(
         email,
         'E-Mail-Bestätigung',
@@ -89,35 +87,37 @@ const verifyEmail = async (req, res) => {
   const { token } = req.query; // Das Token wird aus der URL entnommen
 
   if (!token) {
-    return res.status(400).json({ message: 'Kein Token angegeben.' });
-  }
+    return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Token für die Verifizierung fehlt")}`);
+  } // Fehlermeldung im JSON-Format
+  
 
   try {
     // Suchen nach dem Token in der Datenbank
-    const [rows] = await db.query('SELECT * FROM unbestaetigtbenutzer WHERE token = ?', [token]);
+    const [rows] = await db.query('SELECT * FROM UnbestaetigterBenutzer WHERE token = ?', [token]);
 
     if (rows.length === 0) {
-      return res.status(400).json({ message: 'Ungültiger oder abgelaufener Token.' });
+      return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Token für die Verifizierung ist ungültig oder abgelaufen")}`);
     }
 
     const user = rows[0];
 
     // Benutzer in die 'benutzer'-Tabelle übertragen
-    await db.query('INSERT INTO benutzer (benutzername, passwort, email) VALUES (?, ?, ?)', 
+    await db.query('INSERT INTO Benutzer (benutzername, passwort, email) VALUES (?, ?, ?)', 
       [user.benutzername, user.passwort, user.email]);
-    
 
     // Benutzer aus der unbestaetigtbenutzer-Tabelle löschen
-    await db.query('DELETE FROM unbestaetigtbenutzer WHERE token = ?', [token]);
-      await db.query('DELETE FROM unbestaetigtbenutzer WHERE erstellungszeit < NOW() - INTERVAL 1 DAY');
-    // Erfolg: Bestätigungsnachricht
-    res.json({ success: true, message: 'E-Mail erfolgreich bestätigt.' });
+    await db.query('DELETE FROM UnbestaetigterBenutzer WHERE token = ?', [token]);
+
+    // Optional: Token, das älter als 1 Tag ist, entfernen
+    await db.query('DELETE FROM UnbestaetigterBenutzer WHERE erstellungszeit < NOW() - INTERVAL 1 DAY');
+
+    // Erfolgreiche Bestätigung
+    res.redirect(`/verifizierung.html?success=true&message=${encodeURIComponent("E-Mail erfolgreich bestätigt")}`);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Fehler bei der E-Mail-Verifizierung.' });
+    res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Fehler bei der Verifizierung")}`); // Fehlerantwort im JSON-Format
   }
 };
-
 
 
 // Benutzer anmelden
@@ -130,8 +130,8 @@ const login = async (req, res) => {
 
     // Abfrage vorbereiten basierend auf dem Eingabetyp
     const query = isEmail ? 
-      'SELECT * FROM benutzer WHERE email = ?' : 
-      'SELECT * FROM benutzer WHERE benutzername = ?';
+      'SELECT * FROM Benutzer WHERE email = ?' : 
+      'SELECT * FROM Benutzer WHERE benutzername = ?';
 
     // Benutzerdaten aus der Datenbank abfragen
     const [rows] = await db.query(query, [username]);
@@ -147,6 +147,7 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.passwort);
 
     if (isMatch) {
+      req.session.username = user.name;
       res.status(200).json({ message: "Anmeldung erfolgreich" });
     } else {
       return res.status(400).json({
