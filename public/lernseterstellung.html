@@ -13,14 +13,27 @@
             <form id="createSetForm">
                 <label for="title">Titel des Lernsets</label><br>
                 <input type="text" id="title" name="title" placeholder="Gib einen Titel ein" class="input">
-                <button class="create-button" type="submit">Erstellen</button><br>
+                <button id="saveSetButton" class="create-button" type="button">Lernset erstellen</button><br>
                 <label for="description">Beschreibung des Lernsets</label><br>
                 <input type="text" id="description" name="description" placeholder="Beschreibung hinzufügen..." class="input"><br>
                 <span class="Unterstrich"></span>
-                <label for="import">Lernset importieren</label><br>
-                <button type="button" class="button1" id="importBtn">Importieren</button>
+                <label for="openButton">Lernkarten importieren</label><br>
+                <button type="button" id="openButton">Importieren</button>
             </form>
         </div>
+        <!-- Overlay -->
+<div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center;">
+      <h2>Lernkarten importieren</h2>
+      <textarea id="importText" rows="10" cols="50" placeholder="Vorderseite TAB Rückseite&#10;Vorderseite TAB Rückseite"></textarea>
+      <br>
+      <button type="button" id="saveButton">Speichern</button>
+      <button type="button" id="closeButton">Abbrechen</button>
+    </div>
+  </div>
+  
+  <!-- Button zum Öffnen -->
+  
         <br>
         <div id="cardContainer">
             <!-- Dynamische Karteien werden hier hinzugefügt -->
@@ -64,39 +77,91 @@
                 });
             }
 
-            document.getElementById('createSetForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+            // Event-Listener für den neuen "Set speichern"-Button
+document.getElementById('saveSetButton').addEventListener('click', function() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
 
-                const title = document.getElementById('title').value;
-                const description = document.getElementById('description').value;
+    const cards = [];
+    const entries = document.querySelectorAll('.container');
+    entries.forEach(entry => {
+        const vorderseite = entry.querySelector('input[id^="vorderseite"]').value;
+        const rueckseite = entry.querySelector('input[id^="rueckseite"]').value;
+        cards.push({ vorderseite, rueckseite });
+    });
 
-                const cards = [];
-                const entries = document.querySelectorAll('.container');
-                entries.forEach(entry => {
-                    const vorderseite = entry.querySelector('input[id^="vorderseite"]').value;
-                    const rueckseite = entry.querySelector('input[id^="rueckseite"]').value;
-                    cards.push({ vorderseite, rueckseite });
-                });
+    const newSet = { title, description, cards };
+    console.log(newSet);
 
-                const newSet = { title, description, cards };
-                console.log(newSet);
+    fetch('/lernseterstellung', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSet)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Lernset erfolgreich erstellt!') {
+            console.log('Lernset erstellt:', data);
+            window.location.href = '/lernset.html';
+        }
+    })
+    .catch(error => {
+        console.error('Fehler:', error);
+        alert('Fehler beim Erstellen des Lernsets');
+    });
+});
 
-                fetch('/lernseterstellung', {  // Ändere die URL hier
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newSet)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Lernset erstellt:', data);
-                    window.location.href = '/lernset.html';
-                })
-                .catch(error => {
-                    console.error('Fehler:', error);
-                    alert('Fehler beim Erstellen des Lernsets');
-                });
+//importieren
+document.getElementById('openButton').addEventListener('click', () => {
+  document.getElementById('overlay').style.display = 'block';
+});
 
-            });
+document.getElementById('closeButton').addEventListener('click', () => {
+  document.getElementById('overlay').style.display = 'none';
+});
+
+document.getElementById('saveButton').addEventListener('click', () => {
+    const importText = document.getElementById('importText').value;
+
+    // Schließe das Overlay
+    document.getElementById('overlay').style.display = 'none';
+
+    // Verarbeite die importierten Karten
+    const cardContainer = document.getElementById('cardContainer');
+    const lines = importText.split('\n'); // Zeilenweise aufteilen
+
+    lines.forEach((line) => {
+        const parts = line.split('\t'); // Tabulator als Trenner verwenden
+
+        if (parts.length === 2) { // Überprüfe, ob Vorderseite und Rückseite existieren
+            const [vorderseite, rueckseite] = parts;
+
+            if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Werte nicht leer sind
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('container');
+                const cardCount = cardContainer.children.length + 1;
+                cardDiv.innerHTML = `
+                    <div class="entry">
+                        <div class="entry-number">${cardContainer.children.length + 1}</div>
+                        <div class="entry-content">
+                            <div class="field">
+                                <label>Vorderseite</label>
+                                <input type="text" id="vorderseite-${cardCount}" value="${vorderseite}" readonly>
+                            </div>
+                            <div class="field">
+                                <label>Rückseite</label>
+                                <input type="text" id="rueckseite-${cardCount}" value="${rueckseite}" readonly>
+                            </div>
+                        </div>
+                        <div class="delete-icon" onclick="deleteCard(this)">&times;</div>
+                    </div>
+                `;
+                cardContainer.appendChild(cardDiv);
+            }
+        }
+    });
+});
+
         </script>
           
     </body>

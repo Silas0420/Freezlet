@@ -47,4 +47,55 @@ async function createSet(req, res) {
     }
 }
 
-module.exports = { createSet };
+//importieren
+async function importCards(req, res) {
+    const { text } = req.body;
+  
+    if (!text || !req.session.userID) {
+      return res.status(400).json({ message: 'Fehlerhafte Eingabe oder Benutzer nicht angemeldet.' });
+    }
+  
+    const lines = text.split('\n'); // Teilt den Text in Zeilen auf
+    const cards = lines
+      .map(line => line.split('\t')) // Teilt jede Zeile in Vorderseite und Rückseite
+      .filter(parts => parts.length === 2) // Ignoriert ungültige Zeilen
+      .map(([vorderseite, rueckseite]) => ({ vorderseite, rueckseite }));
+  
+    if (cards.length === 0) {
+      return res.status(400).json({ message: 'Keine gültigen Karten gefunden.' });
+    }
+  
+    let connection;
+    try {
+      connection = await pool.getConnection();
+      await connection.beginTransaction();
+  
+      // Lernset erstellen
+      const [setResult] = await connection.query(
+        'INSERT INTO Lernset (titel, beschreibung, erstellerID) VALUES (?, ?, ?)',
+        ['Importiertes Set', null, req.session.userID]
+      );
+  
+      const setID = setResult.insertId;
+  
+      // Karten einfügen
+      for (const card of cards) {
+        await connection.query(
+          'INSERT INTO Karte (vorderseite, rueckseite, setID) VALUES (?, ?, ?)',
+          [card.vorderseite, card.rueckseite, setID]
+        );
+      }
+  
+      await connection.commit();
+      res.status(201).json({ message: 'Import erfolgreich!', count: cards.length, setID });
+    } catch (error) {
+      console.error('Fehler beim Importieren von Karten:', error);
+      if (connection) await connection.rollback();
+      res.status(500).json({ message: 'Fehler beim Import.' });
+    } finally {
+      if (connection) connection.release();
+    }
+  }
+  
+
+module.exports = { createSet, importCards };

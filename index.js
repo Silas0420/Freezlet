@@ -27,6 +27,11 @@ app.get('/verifizierung', verifyEmail);
 
 app.post('/lernseterstellung', createSet);
 
+const { importCards } = require('./setController');
+
+app.post('/import', importCards);
+
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);
