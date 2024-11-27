@@ -9,14 +9,13 @@ body {
     font-family: Arial, sans-serif;
     background-color: rgb(10, 9, 45);
     color: #333;
-    margin: 0;
-    padding: 0;
+    margin: 1rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: start;
     min-height: 100vh;
-    justify-content: center;
+    justify-content: flex-start;
     height: 50vh;
 }
 
@@ -406,4 +405,8 @@ img {
     margin-top: 1rem;
     width: 100%;
     box-shadow: 0 70px 300px rgba(0, 0, 0, 0.4);
+}
+
+.feedback {
+    font-size: 14px;
 }
