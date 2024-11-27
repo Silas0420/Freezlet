@@ -395,3 +395,29 @@ body {
 .lernset-container p {
     margin-top: 0px; /* Abstand zum vorherigen Element verringern */
 }
+
+.Lernen-Karte {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
+    margin-bottom: 50px;
+}
+
+.Lernen-Schriftfarbe {
+    color: #555;
+}
+
+.Lernen-Button-Blau{
+    background-color: #1a73e8;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.Lernen-Button-Blau:hover {
+    background-color: #135ba1;
+    margin-bottom: 15px;
+}
+    

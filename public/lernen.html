@@ -10,11 +10,11 @@
 <body>
     <h1>Lernset</h1>
     <div id="cardContainer">
-        <p id="cardFront">Vorne</p>
-        <div>
-            <label for="userAnswer">Gib die Rückseite ein:</label>
-            <input type="text" id="userAnswer">
-            <button onclick="checkAnswer()">Antwort prüfen</button>
+        <div class="Lernen-Karte">
+            <p id="cardFront" class="Lernen-Schriftfarbe">Vorne</p>
+            <label for="userAnswer" class="Lernen-Schriftfarbe">Gib die Rückseite ein:</label>
+            <input class="input" type="text" id="userAnswer">
+            <button class="Lernen-Button-Blau" onclick="checkAnswer()">Antwort prüfen</button>
         </div>
         <div id="feedback"></div>
         <img id="resultimage" style="display:none;" src="https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp" alt="" srcset="">
