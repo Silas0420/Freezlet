@@ -53,6 +53,20 @@ app.get('/getFolder', getFolder)
 const {getSet} = require('./setController');
 app.get('/getSet', getSet)
 
+
+const {updateusername} = require('./userController');
+app.post('/updateusername', updateusername)
+
+
+const {updatepassword} = require('./userController');
+app.post('/updatepassword', updatepassword)
+
+const {deleteAccount} = require('./userController');
+app.post('/deleteaccount', deleteAccount)
+
+const {getuserdata} = require('./userController');
+app.get('/getuserdata', getuserdata)
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);

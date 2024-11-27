@@ -164,5 +164,109 @@ const login = async (req, res) => {
   }
 };
 
+// Funktion zum Aktualisieren des Benutzernamens
+const updateusername = async (req, res) => {
+  const { username } = req.body;
+  
+  if (!username || username.trim().length === 0) {
+      return res.status(400).json({ message: 'Benutzername ist erforderlich.' });
+  }
 
-module.exports = { register, verifyEmail, login };
+  try {
+      const userId = req.session.userID;  // Der Benutzer, der in der Session gespeichert ist
+      // Stelle sicher, dass der Benutzername nicht bereits existiert (optional)
+      const [existingUser] = await pool.query('SELECT * FROM Benutzer WHERE benutzername = ?', [username]);
+      if (existingUser.length > 0) {
+          return res.status(400).json({ message: 'Benutzername bereits vergeben.' });
+      }
+
+      // Benutzernamen in der Datenbank aktualisieren
+      await pool.query('UPDATE Benutzer SET benutzername = ? WHERE id = ?', [username, userId]);
+
+      // Rückmeldung, dass die Änderung erfolgreich war
+      res.json({ success: true, message: 'Benutzername wurde erfolgreich geändert.' });
+  } catch (error) {
+      console.error('Fehler beim Aktualisieren des Benutzernamens:', error);
+      res.status(500).json({ message: 'Fehler beim Aktualisieren des Benutzernamens.' });
+  }
+};
+
+// Funktion zum Aktualisieren des Passworts
+const updatepassword = async (req, res) => {
+  const { password } = req.body;
+  
+  if (!password || password.length < 6) {
+      return res.status(400).json({ message: 'Passwort muss mindestens 6 Zeichen lang sein.' });
+  }
+
+  try {
+      const userId = req.session.userID;  // Der Benutzer, der in der Session gespeichert ist
+      const hashedPassword = await bcrypt.hash(password, 10);  // Passwort verschlüsseln
+
+      // Passwort in der Datenbank aktualisieren
+      await pool.query('UPDATE Benutzer SET passwort = ? WHERE id = ?', [hashedPassword, userId]);
+
+      // Rückmeldung, dass die Änderung erfolgreich war
+      res.json({ success: true, message: 'Passwort wurde erfolgreich geändert.' });
+  } catch (error) {
+      console.error('Fehler beim Aktualisieren des Passworts:', error);
+      res.status(500).json({ message: 'Fehler beim Aktualisieren des Passworts.' });
+  }
+};
+
+// Funktion zum Löschen des Accounts
+const deleteAccount = async (req, res) => {
+  const userId = req.session.userID;
+
+  try {
+      // Lösche alle Daten des Benutzers aus der Datenbank
+      await pool.query('DELETE FROM Benutzer WHERE id = ?', [userId]);
+      
+      // Ende der Session nach dem Löschen
+      req.session.destroy((err) => {
+          if (err) {
+              return res.status(500).json({ message: 'Fehler beim Beenden der Sitzung.' });
+          }
+          res.json({ success: true, message: 'Account wurde erfolgreich gelöscht.' });
+      });
+  } catch (error) {
+      console.error('Fehler beim Löschen des Accounts:', error);
+      res.status(500).json({ message: 'Fehler beim Löschen des Accounts.' });
+  }
+};
+
+// Funktion zum Abrufen von Benutzerdaten (Username und E-Mail)
+// Funktion zum Abrufen von Benutzerdaten (Username und E-Mail)
+const getuserdata = async (req, res) => {
+  const userId = req.session.userID;
+
+  if (!userId) {
+      return res.status(401).json({ message: 'Benutzer nicht angemeldet.' });
+  }
+
+  try {
+      // Hole den Benutzernamen und die E-Mail-Adresse anhand der userID
+      const [userData] = await db.query( // Verwendet 'db', nicht 'pool'
+          'SELECT benutzername, email FROM Benutzer WHERE id = ?',
+          [userId]
+      );
+
+      if (userData.length === 0) {
+          return res.status(404).json({ message: 'Benutzer nicht gefunden.' });
+      }
+
+      // Rückgabe des Benutzernamens und der E-Mail-Adresse
+      res.json({
+          username: userData[0].benutzername,
+          email: userData[0].email
+      });
+  } catch (error) {
+      console.error('Fehler beim Abrufen der Benutzerdaten:', error);
+      res.status(500).json({ message: 'Fehler beim Abrufen der Benutzerdaten.' });
+  }
+};
+
+
+
+
+module.exports = { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata};
