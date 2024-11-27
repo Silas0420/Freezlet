@@ -82,6 +82,16 @@ document.getElementById('saveSetButton').addEventListener('click', function() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
 
+    if (!title) {
+        alert('Bitte geben Sie einen Titel für das Lernset ein.');
+        return; // Abbrechen, wenn kein Titel vorhanden ist
+    }
+
+    if (entries.length === 0) {
+        alert('Bitte fügen Sie mindestens eine Karte zum Lernset hinzu.');
+        return; // Aktion abbrechen
+    }
+
     const cards = [];
     const entries = document.querySelectorAll('.container');
     entries.forEach(entry => {
