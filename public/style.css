@@ -347,3 +347,51 @@ body {
         transform: translateY(0); /* Verschiebung zurück */
     }
 }
+
+/* Lernset CSS Darstellung */
+/* Container für die Lernset-Seite */
+.lernset-container {
+    text-align: center; /* Zentriert den gesamten Text und Button */
+    margin-top: 10vh;
+    padding: 30px;
+    background: linear-gradient(135deg, #3a3f8d, #4347c7);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 50px 200px rgba(254, 106, 252, 0.4); /* Schatten für mehr Tiefe */
+}
+
+/* Button zentrieren */
+.create-button {
+    display: inline-block; /* Sicherstellen, dass der Button als Blockelement behandelt wird */
+    margin: 0 auto; /* Zentriert den Button */
+    font-size: 1.5rem; /* Größere Schrift */
+    padding: 20px 50px; /* Mehr Innenabstand */
+    margin-top: 10px; /* Abstand zum Text */
+    background-color: #4347c7;
+    border-radius: 10px; /* Abgerundete Ecken */
+    color: #ffffff; /* Weiße Schrift */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Button-Schatten */
+    border: none;
+    cursor: pointer;
+
+}
+
+/* Hover-Effekt für den Button */
+.create-button:hover {
+    background-color: #5a5fdf; /* Helleres Blau bei Hover */
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+/* Überschrift Abstand anpassen */
+.lernset-container h1 {
+    margin-bottom: 0px; /* Reduziert den Abstand nach unten */
+}
+
+/* Abstand des Textes anpassen */
+.lernset-container p {
+    margin-top: 0px; /* Abstand zum vorherigen Element verringern */
+}
