@@ -26,7 +26,6 @@ app.post('/login', login);
 app.get('/verifizierung', verifyEmail);
 
 app.post('/lernseterstellung', createSet);
-
 const { importCards } = require('./setController');
 
 app.post('/import', importCards);
@@ -34,6 +33,12 @@ app.post('/import', importCards);
 const { getCards } = require('./cardController');
 // In index.js
 app.get('/lernen', getCards);
+
+const { updateLernstand } = require('./cardController');
+app.post('/updateLernstand', updateLernstand);
+
+const {resetLernstand} = require('./cardController');
+app.post('/resetLernstand', resetLernstand)
 
 const PORT = 3000;
 app.listen(PORT, () => {

@@ -1,4 +1,5 @@
-let cardBack = ''; // Globale Variable für die Rückseite der Karte
+let cardBack = '';
+let cardID = ''; // Globale Variable für die Rückseite der Karte
 
 // Funktion, um die Karten vom Backend zu holen
 async function loadRandomCard() {
@@ -18,12 +19,35 @@ async function loadRandomCard() {
 
             // Speichere die Rückseite in der globalen Variable
             cardBack = randomCard.rueckseite;
+            cardID = randomCard.kartenID;
 
         } else {
-            console.log("Keine Karten gefunden");
+            cardContainer.style.display = 'none'; // Verstecke das Karten-Container
+            feedbackElement.innerHTML = `
+                <p>Super, du hast schon alles gelernt!</p>
+                <button id="restartButton">Nochmal lernen</button>
+            `;
+            document.getElementById('restartButton').onclick = resetAllLearning;
         }
     } catch (error) {
         console.error('Fehler beim Abrufen der Karten:', error);
+    }
+}
+// Funktion zum Zurücksetzen des Lernstands aller Karten
+async function resetAllLearning() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const lernsetId = urlParams.get('id'); // Lernset-ID aus der URL
+
+    try {
+        await fetch(`/resetLernstand?id=${lernsetId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        // Lade die erste Karte nach dem Zurücksetzen
+        loadRandomCard();
+    } catch (error) {
+        console.error('Fehler beim Zurücksetzen des Lernstands:', error);
     }
 }
 
@@ -46,24 +70,56 @@ async function checkAnswer() {
         return;
     }
 
-    if (userAnswer === correctAnswer) {
-        feedbackElement.innerText = 'Richtig! Gut gemacht.';
-        feedbackElement.style.color = 'green';
-        imageElement.src = 'https://conjugaison.tatitotu.ch/static/gifs/happy/happy38.webp';
-    } else {
-        // Falsche Antwort, zeige Rückseite an und den "Weiter"-Button
-        feedbackElement.innerHTML = `Leider falsch. Die richtige Antwort war: <strong>${correctAnswer}</strong>`;
-        feedbackElement.style.color = 'red'; // Fehlerfarbe
-    }
+    const isCorrect = userAnswer === correctAnswer;
+    feedbackElement.innerText = isCorrect
+        ? 'Richtig! Gut gemacht.'
+        : `Leider falsch. Die richtige Antwort war: ${correctAnswer}`;
+    feedbackElement.style.color = isCorrect ? 'green' : 'red';
+    imageElement.src = isCorrect
+        ? 'https://conjugaison.tatitotu.ch/static/gifs/happy/happy38.webp'
+        : 'https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp';
     imageElement.style.display = 'block';
 
-    // "Weiter"-Button erstellen, der nach einer falschen Antwort angezeigt wird
-    const weiterButton = document.createElement('button');
-    weiterButton.innerText = 'Weiter';
-    weiterButton.onclick = loadRandomCard; // Funktion zum Laden der nächsten Karte
-    // Button zum Feedback hinzufügen
-    feedbackElement.appendChild(weiterButton);
-}
+    try {
+        await fetch('/updateLernstand', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ kartenID: cardID, korrekt: isCorrect })
+        });
+    } catch (error) {
+        console.error('Fehler beim Aktualisieren des Lernstands:', error);
+    }
+
+
+       // "Weiter"-Button erstellen, der nach einer falschen Antwort angezeigt wird
+       const weiterButton = document.createElement('button');
+       weiterButton.innerText = 'Weiter';
+       weiterButton.id = 'weiter'; 
+       weiterButton.onclick = () => {
+           // Setze das Feedback und den Weiter-Button zurück, wenn "Weiter" gedrückt wird
+           resetFeedback();
+           loadRandomCard(); // Funktion zum Laden der nächsten Karte
+       };
+       // Button zum Feedback hinzufügen
+       feedbackElement.appendChild(weiterButton);
+   }
+   
+   // Funktion zum Zurücksetzen des Feedbacks
+   function resetFeedback() {
+       const feedbackElement = document.getElementById('feedback');
+       const imageElement = document.getElementById('resultimage');
+       const weiterButton = document.getElementById('weiter');
+   
+       // Entferne den "Weiter"-Button und das Feedback
+       if (weiterButton) {
+           weiterButton.remove();
+       }
+   
+       // Setze das Bild zurück
+       imageElement.style.display = 'none';
+       feedbackElement.innerText = ''; // Lösche das Feedback
+   }
+
 
 // Beim Laden der Seite eine zufällige Karte laden
 window.onload = loadRandomCard;

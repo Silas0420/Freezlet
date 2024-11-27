@@ -13,10 +13,10 @@ const getCards = async (req, res) => {
 
         // Hole Karten des Lernsets zusammen mit dem Lernfortschritt
         const [cards] = await connection.query(
-            `SELECT k.ID AS kartenID, k.vorderseite, k.rueckseite, IFNULL(ls.lernstand, 0) AS lernstand
+            `SELECT k.ID AS kartenID, k.vorderseite, k.rueckseite, ls.lernstand AS lernstand
              FROM Karte k
              LEFT JOIN Lernstand ls ON ls.kartenID = k.ID AND ls.benutzerID = ? 
-             WHERE k.setID = ?`,
+             WHERE k.setID = ? AND ls.lernstand < 3`,
             [req.session.userID, lernsetId]  // Benutzer-ID aus der Session
         );
 
@@ -30,4 +30,67 @@ const getCards = async (req, res) => {
     }
 }
 
-module.exports = {getCards};
+const updateLernstand = async (req, res) => {
+
+    const { kartenID, korrekt } = req.body; // Karte-ID und Ergebnis (true/false)
+  
+
+    const userID = req.session.userID; // Benutzer-ID aus der Session
+
+    if (!kartenID || userID === undefined) {
+        return res.status(400).json({ message: 'Karten-ID oder Benutzer-ID fehlt.' });
+    }
+
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        // Berechne den neuen Lernstand: +1 bei korrekt, -1 bei falsch
+        const delta = korrekt ? 1 : -1;
+        
+            // Update des Lernstands
+            await connection.query(
+                `UPDATE Lernstand SET lernstand = GREATEST(-3, lernstand + ?) WHERE kartenID = ? AND benutzerID = ?`,
+                [delta, kartenID, userID]
+            );
+            
+
+
+        res.json({ message: 'Lernstand aktualisiert.' });
+    } catch (error) {
+        console.error('Fehler beim Aktualisieren des Lernstands:', error);
+        res.status(500).json({ message: 'Fehler beim Aktualisieren des Lernstands.' });
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+// Neue Route zum Zurücksetzen des Lernstands
+const resetLernstand = async (req, res) => {
+    const lernsetId = req.query.id; // Lernset-ID aus der URL
+    const userID = req.session.userID; // Benutzer-ID aus der Session
+
+    if (!lernsetId || !userID) {
+        return res.status(400).json({ message: 'Lernset-ID oder Benutzer-ID fehlt.' });
+    }
+
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        // Setze den Lernstand für alle Karten des Lernsets auf 0
+        await connection.query(
+            `UPDATE Lernstand SET lernstand = 0 WHERE benutzerID = ? AND kartenID IN (SELECT ID FROM Karte WHERE setID = ?)`,
+            [userID, lernsetId]
+        );
+
+        res.json({ message: 'Lernstand zurückgesetzt.' });
+    } catch (error) {
+        console.error('Fehler beim Zurücksetzen des Lernstands:', error);
+        res.status(500).json({ message: 'Fehler beim Zurücksetzen des Lernstands.' });
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+module.exports = { getCards, updateLernstand, resetLernstand };

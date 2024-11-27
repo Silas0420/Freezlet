@@ -87,11 +87,6 @@ document.getElementById('saveSetButton').addEventListener('click', function() {
         return; // Abbrechen, wenn kein Titel vorhanden ist
     }
 
-    if (entries.length === 0) {
-        alert('Bitte fügen Sie mindestens eine Karte zum Lernset hinzu.');
-        return; // Aktion abbrechen
-    }
-
     const cards = [];
     const entries = document.querySelectorAll('.container');
     entries.forEach(entry => {
@@ -102,6 +97,10 @@ document.getElementById('saveSetButton').addEventListener('click', function() {
 
     const newSet = { title, description, cards };
     console.log(newSet);
+    if (entries.length === 0) {
+        alert('Bitte fügen Sie mindestens eine Karte zum Lernset hinzu.');
+        return; // Aktion abbrechen
+    }
 
     fetch('/lernseterstellung', {
         method: 'POST',
