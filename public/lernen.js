@@ -56,13 +56,14 @@ async function checkAnswer() {
     const userAnswer = document.getElementById('userAnswer').value.trim();
     const feedbackElement = document.getElementById('feedback');
     const cardFrontElement = document.getElementById('cardFront'); // Vorderseite der Karte
-    const imageElement = document.getElementById('resultimage');
+    const image = document.createElement('img');
 
     // Die Rückseite kommt jetzt aus der globalen Variablen
     const correctAnswer = cardBack;
 
     // Leere das Eingabefeld nach jeder Antwort
-    document.getElementById('userAnswer').value = '';
+    document.getElementById('cardContainer').style.display = 'none';
+
 
     if (!userAnswer) {
         feedbackElement.innerText = 'Bitte eine Antwort eingeben.';
@@ -75,10 +76,9 @@ async function checkAnswer() {
         ? 'Richtig! Gut gemacht.'
         : `Leider falsch. Die richtige Antwort war: ${correctAnswer}`;
     feedbackElement.style.color = isCorrect ? 'green' : 'red';
-    imageElement.src = isCorrect
+    image.src = isCorrect
         ? 'https://conjugaison.tatitotu.ch/static/gifs/happy/happy38.webp'
         : 'https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp';
-    imageElement.style.display = 'block';
 
     try {
         await fetch('/updateLernstand', {
@@ -102,12 +102,12 @@ async function checkAnswer() {
        };
        // Button zum Feedback hinzufügen
        feedbackElement.appendChild(weiterButton);
+       feedbackElement.appendChild(image);
    }
    
    // Funktion zum Zurücksetzen des Feedbacks
    function resetFeedback() {
        const feedbackElement = document.getElementById('feedback');
-       const imageElement = document.getElementById('resultimage');
        const weiterButton = document.getElementById('weiter');
    
        // Entferne den "Weiter"-Button und das Feedback
@@ -116,8 +116,9 @@ async function checkAnswer() {
        }
    
        // Setze das Bild zurück
-       imageElement.style.display = 'none';
        feedbackElement.innerText = ''; // Lösche das Feedback
+       document.getElementById('userAnswer').value = ''
+       document.getElementById('cardContainer').style.display = 'block';
    }
 
 
