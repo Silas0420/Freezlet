@@ -67,6 +67,7 @@ async function checkAnswer() {
     if (!userAnswer) {
         feedbackElement.innerText = 'Bitte eine Antwort eingeben.';
         feedbackElement.style.color = 'red'; // Fehlerfarbe
+        feedbackElement.style.paddingTop = '1rem';
         return;
     }
 
@@ -75,6 +76,7 @@ async function checkAnswer() {
         ? 'Richtig! Gut gemacht.'
         : `Leider falsch. Die richtige Antwort war: ${correctAnswer}`;
     feedbackElement.style.color = isCorrect ? 'green' : 'red';
+    feedbackElement.style.paddingTop = '1rem';
     imageElement.src = isCorrect
         ? 'https://conjugaison.tatitotu.ch/static/gifs/happy/happy38.webp'
         : 'https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp';
@@ -119,6 +121,7 @@ async function checkAnswer() {
        // Setze das Bild zurück
        imageElement.style.display = 'none';
        feedbackElement.innerText = ''; // Lösche das Feedback
+       feedbackElement.style.paddingTop = '0rem';
    }
 
 
