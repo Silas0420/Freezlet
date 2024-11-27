@@ -16,6 +16,8 @@ body {
     align-items: center;
     justify-content: start;
     min-height: 100vh;
+    justify-content: center;
+    height: 50vh;
 }
 
 .title {
@@ -189,18 +191,6 @@ input::placeholder {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-/* Allgemeine Gestaltung */
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(10, 9, 45);
-    color: #ff7777;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-    padding: 300px;
 }
 
 /* Container für den gesamten Inhalt */
@@ -411,12 +401,9 @@ body {
     background-color: #135ba1;
 }
 
-.feedback {
-    
-}
-
 img {
     border-radius: 0.5rem;
-    margin: 1rem;
+    margin-top: 1rem;
+    width: 100%;
     box-shadow: 0 70px 300px rgba(0, 0, 0, 0.4);
 }
