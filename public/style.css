@@ -8,9 +8,16 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(10, 9, 45);
-    color: #ffffff;
-    margin: 10px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: start;
+    min-height: 100vh;
+    justify-content: center;
+    height: 50vh;
 }
 
 .title {
@@ -46,7 +53,7 @@ input::placeholder {
 button {
     margin: 0;
     align-items: center;
-    border: .125rem solid #0000;
+    border: .125rem solid #00000000;
     border-radius: .5rem;
     box-sizing: border-box;
     cursor: pointer;
@@ -71,23 +78,27 @@ button:hover {
     background-color: rgb(67, 75, 97);
 }
 
+/* Input Einstellungen*/
+
 input {
-    box-sizing: inherit;
-    margin: 0;
-    font: 12px/18px hurme_no2-webfont,-apple-system,BlinkMacSystemFont,sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: normal;
-    line-height: 1.5;
-    appearance: none;
-    border: none;
-    box-shadow: none;
-    color: rgb(255, 255, 255);
-    cursor: text;
-    filter: none;
-    flex: 1 1 auto;
-    background-color: rgb(88,99,128);
-    border-radius: .5rem;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0,0,0);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: #3fdc3a;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgb(0,0,0);
+    font-size: 14px;
 }
 
 .button1 {
@@ -173,27 +184,6 @@ input {
     background-color: rgb(67, 75, 97);
 }
 
-.input {
-    box-sizing: inherit;
-    margin: 0;
-    padding: .5rem;
-    font: 12px/18px hurme_no2-webfont,-apple-system,BlinkMacSystemFont,sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: normal;
-    line-height: 1.5;
-    appearance: none;
-    border: none;
-    box-shadow: none;
-    color: rgb(255, 255, 255);
-    cursor: text;
-    filter: none;
-    flex: 1 1 auto;
-    background-color: rgb(88,99,128);
-    padding-right: 1rem;
-    border-radius: .5rem;
-}
-
 /*CSS vom Home.HTML*/
 
 /* Grundlegende Reset-Regeln */
@@ -201,19 +191,6 @@ input {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-/* Allgemeine Gestaltung */
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(10, 9, 45);
-    color: #ff7777;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-    line-height: 100px;
-    padding: 300px;
 }
 
 /* Container für den gesamten Inhalt */
@@ -403,21 +380,30 @@ body {
     border-radius: 30px;
     box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
     margin-bottom: 50px;
+    height: auto;
 }
 
 .Lernen-Schriftfarbe {
+    font-size: 14px;
+    font-weight: bold;
     color: #555;
+    display: inline-block;
 }
 
 .Lernen-Button-Blau{
     background-color: #1a73e8;
     color: white;
     margin-top: 10px;
-    margin-bottom: 15px;
+    border: none;
 }
 
 .Lernen-Button-Blau:hover {
     background-color: #135ba1;
-    margin-bottom: 15px;
 }
-    
+
+img {
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    box-shadow: 0 70px 300px rgba(0, 0, 0, 0.4);
+}
