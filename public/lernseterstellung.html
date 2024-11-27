@@ -102,7 +102,7 @@ document.getElementById('saveSetButton').addEventListener('click', function() {
     .then(data => {
         if (data.message === 'Lernset erfolgreich erstellt!') {
             console.log('Lernset erstellt:', data);
-            window.location.href = '/lernset.html';
+            window.location.href = `/lernset.html?id=${data.setID}`;
         }
     })
     .catch(error => {

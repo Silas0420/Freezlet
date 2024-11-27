@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lernen</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Freezlet Logo.png"/>
 </head>
 <body>
-    <p>asdf</p>
+    <h1>Lernset</h1>
+    <div id="cardContainer">
+        <p id="cardFront"></p>
+        <div>
+            <label for="userAnswer">Gib die Rückseite ein:</label>
+            <input type="text" id="userAnswer">
+            <button onclick="checkAnswer()">Antwort prüfen</button>
+        </div>
+        <div id="feedback"></div>
+        <img id="resultimage" style="display:none;" src="https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp" alt="" srcset="">
+    </div>
+
+    <script src="lernen.js"></script>
 </body>
 </html>

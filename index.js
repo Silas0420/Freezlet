@@ -31,6 +31,9 @@ const { importCards } = require('./setController');
 
 app.post('/import', importCards);
 
+const { getCards } = require('./cardController');
+// In index.js
+app.get('/lernen', getCards);
 
 const PORT = 3000;
 app.listen(PORT, () => {

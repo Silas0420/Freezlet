@@ -1,6 +1,7 @@
 const pool = require('./db'); // Stelle sicher, dass die Verbindung korrekt importiert wird
 
 // Funktion zum Erstellen eines neuen Lernsets
+// Funktion zum Erstellen eines neuen Lernsets (mit Lernstand für jede Karte)
 async function createSet(req, res) {
     const { title, description, cards } = req.body;
 
@@ -22,12 +23,22 @@ async function createSet(req, res) {
 
         const setID = setResult.insertId;
 
-        // 2. Erstelle die Karten
+        // 2. Erstelle die Karten und den Lernstand
         for (const card of cards) {
             const { vorderseite, rueckseite } = card;
-            await connection.query(
+            
+            // 2.1 Karte einfügen
+            const [cardResult] = await connection.query(
                 'INSERT INTO Karte (vorderseite, rueckseite, setID) VALUES (?, ?, ?)',
                 [vorderseite, rueckseite, setID]
+            );
+
+            const cardID = cardResult.insertId;
+
+            // 2.2 Lernstand für jede Karte erstellen
+            await connection.query(
+                'INSERT INTO Lernstand (benutzerID, kartenID, lernstand) VALUES (?, ?, ?)',
+                [req.session.userID, cardID, 0]  // Lernstand startet mit 0
             );
         }
 
@@ -46,6 +57,7 @@ async function createSet(req, res) {
         res.status(500).json({ message: 'Fehler beim Erstellen des Lernsets.' });
     }
 }
+
 
 //importieren
 async function importCards(req, res) {
