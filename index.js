@@ -44,6 +44,15 @@ const { getLernsetName } = require('./setController');
 
 app.get('/lernsetName', getLernsetName);
 
+const {createFolder} = require('./folderController');
+app.post('/ordnererstellung', createFolder)
+
+const {getFolder} = require('./folderController');
+app.get('/getFolder', getFolder)
+
+const {getSet} = require('./setController');
+app.get('/getSet', getSet)
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);

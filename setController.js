@@ -139,5 +139,18 @@ async function importCards(req, res) {
     }
 };
 
+// Alle Ordner des Benutzers abrufen
+const getSet = async (req, res) => {
+  try {
+      const [sets] = await pool.query(
+          'SELECT * FROM Lernset WHERE erstellerID = ?',
+          [req.session.userID]
+      );
+      res.status(200).json(sets);
+  } catch (error) {
+      console.error('Fehler beim Abrufen der Sets:', error);
+      res.status(500).json({ message: 'Fehler beim Abrufen der Sets.' });
+  }
+};
 
-module.exports = { createSet, importCards,getLernsetName  };
+module.exports = { createSet, importCards,getLernsetName , getSet };
