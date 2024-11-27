@@ -1,7 +1,7 @@
 const pool = require('./db'); // Verbindung zur Datenbank
 
 const getCards = async (req, res) => {
-    const lernsetId = req.query.lernsetId; // Lernset-ID aus der URL
+    const lernsetId = req.query.id; // Lernset-ID aus der URL
 
     if (!lernsetId) {
         return res.status(400).json({ message: 'Lernset-ID fehlt.' });

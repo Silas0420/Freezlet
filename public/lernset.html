@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lernset</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="icon" href="Freezlet Logo.png"/>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernset</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Freezlet Logo.png"/>
+</head>
 <body>
-    <div id="asoidfh"><p>öoasdjhjfojbh</p></div>
-    <button id="goToLearningButton">Zum Lernen</button>
+    <div class="lernset-container">
+        <h1 class="title">Lernset</h1>
+        <p>Bereit, um zu lernen? Drücke den Knopf unten, um loszulegen!</p>
+        <button id="goToLearningButton" class="create-button">Zum Lernen</button>
+    </div>
     <script>
         document.getElementById('goToLearningButton').addEventListener('click', function() {
-    // Hole die Lernset-ID aus der aktuellen URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const lernsetId = urlParams.get('id');
+            // Hole die Lernset-ID aus der aktuellen URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const lernsetId = urlParams.get('id');
 
-    if (lernsetId) {
-        // Leite den Benutzer weiter und füge die id zur URL von lernen.html hinzu
-        window.location.href = `lernen.html?id=${lernsetId}`;
-    } else {
-        alert('Lernset-ID nicht gefunden.');
-    }
-});
-
+            if (lernsetId) {
+                // Leite den Benutzer weiter und füge die id zur URL von lernen.html hinzu
+                window.location.href = `lernen.html?id=${lernsetId}`;
+            } else {
+                alert('Lernset-ID nicht gefunden.');
+            }
+        });
     </script>
 </body>
 </html>
