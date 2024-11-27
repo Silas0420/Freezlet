@@ -6,7 +6,7 @@ async function loadRandomCard() {
     const lernsetId = urlParams.get('id'); // Lernset-ID aus der URL
 
     try {
-        const response = await fetch(`/lernen?lernsetId=${lernsetId}`);  // GET statt POST
+        const response = await fetch(`/lernen?id=${lernsetId}`);  // GET statt POST
         const cards = await response.json();
 
         if (cards.length > 0) {
@@ -54,10 +54,6 @@ async function checkAnswer() {
         // Falsche Antwort, zeige Rückseite an und den "Weiter"-Button
         feedbackElement.innerHTML = `Leider falsch. Die richtige Antwort war: <strong>${correctAnswer}</strong>`;
         feedbackElement.style.color = 'red'; // Fehlerfarbe
-
-        // Zeige die Rückseite der Karte an
-        document.getElementById('cardBack').style.display = 'block'; // Sichtbar machen
-        cardFrontElement.style.display = 'none'; // Vorderseite ausblenden
     }
     imageElement.style.display = 'block';
 
