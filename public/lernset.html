@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="lernset-container">
-        <h1 class="title">Lernset</h1>
+        <h1 class="title" id="lernsetName"></h1> <!-- Hier wird der Name des Lernsets angezeigt -->
         <p>
             Bereit, um zu lernen? <br>Drücke den Knopf unten, um loszulegen!
         </p>
@@ -17,11 +17,27 @@
     </div>
 
     <script>
-        document.getElementById('goToLearningButton').addEventListener('click', function() {
-            // Hole die Lernset-ID aus der aktuellen URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const lernsetId = urlParams.get('id');
+        // Hole die Lernset-ID aus der URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const lernsetId = urlParams.get('id');
 
+        if (lernsetId) {
+            // Hole den Namen des Lernsets von der Backend-API
+            fetch(`/lernsetName?id=${lernsetId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.name) {
+                        // Setze den Namen des Lernsets in den Titel
+                        document.getElementById('lernsetName').innerText = data.name;
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler beim Abrufen des Lernset-Namens:', error);
+                });
+        }
+
+        // Weiterleitung zum Lernmodus
+        document.getElementById('goToLearningButton').addEventListener('click', function() {
             if (lernsetId) {
                 // Leite den Benutzer weiter und füge die id zur URL von lernen.html hinzu
                 window.location.href = `lernen.html?id=${lernsetId}`;

@@ -40,6 +40,10 @@ app.post('/updateLernstand', updateLernstand);
 const {resetLernstand} = require('./cardController');
 app.post('/resetLernstand', resetLernstand)
 
+const { getLernsetName } = require('./setController');
+
+app.get('/lernsetName', getLernsetName);
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);
