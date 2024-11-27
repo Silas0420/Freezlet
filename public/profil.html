@@ -13,25 +13,15 @@
         <!-- Benutzerinformationen mit Änderungsmöglichkeiten -->
         <div class="profile-info">
             <p><strong>Benutzername:</strong> <span id="username">MaxMustermann</span></p>
-            <button id="button" class="button">Benutzername ändern</button>
+            <button id="usernamechange" class="button">Benutzername ändern</button>
             <p><strong>E-Mail-Adresse:</strong> <span id="email">max.mustermann@example.com</span></p>
-            <button id="button" class="button">E-Mail-Adresse ändern</button>
+            <button id="emailchange" class="button">E-Mail-Adresse ändern</button>
+            <button id="passwordchange" class="button">Passwort ändern</button>
         </div>
         
         <!-- Buttons -->
-        <div class="profile-actions">
             <button id="delete-account" class="danger">Account löschen</button>
-        </div>
     </div>
-
-    <script>
-        // Beispiel für die Account-Löschfunktion
-        document.getElementById('delete-account').addEventListener('click', function() {
-            if (confirm('Bist du sicher, dass du deinen Account löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.')) {
-                alert('Dein Account wurde gelöscht.'); 
-                // Hier könnte (falls wir wollen) ein HTTP-Request an das Backend gesendet werden, um den Account tatsächlich zu löschen.
-            }
-        });
-    </script>
+    <script src="profil.js"></script>
 </body>
 </html>
