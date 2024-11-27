@@ -11,12 +11,12 @@
     <h1>Lernset lernen</h1>
     <div id="cardContainer">
         <div class="Lernen-Karte">
-            <p id="cardFront" class="Lernen-Schriftfarbe">Wort</p>
-            <input class="input" type="text" id="userAnswer" placeholder="Antwort">
+            <p id="cardFront" class="Lernen-Schriftfarbe">Vorseite: Test</p>
+            <input type="text" id="userAnswer" placeholder="Antwort">
             <button class="Lernen-Button-Blau" onclick="checkAnswer()">Antwort prüfen</button>
+            <div id="feedback" class="feedback"></div>
+            <img id="resultimage" style="display:none;" src="https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp" alt="" srcset="">
         </div>
-        <div id="feedback"></div>
-        <img id="resultimage" style="display:none;" src="https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp" alt="" srcset="">
     </div>
 
     <script src="lernen.js"></script>

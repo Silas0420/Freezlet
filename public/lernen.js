@@ -95,6 +95,7 @@ async function checkAnswer() {
        const weiterButton = document.createElement('button');
        weiterButton.innerText = 'Weiter';
        weiterButton.id = 'weiter'; 
+       weiterButton.className = 'Lernen-Button-Blau';
        weiterButton.onclick = () => {
            // Setze das Feedback und den Weiter-Button zurück, wenn "Weiter" gedrückt wird
            resetFeedback();
