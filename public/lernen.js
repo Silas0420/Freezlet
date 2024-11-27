@@ -78,7 +78,7 @@ async function checkAnswer() {
         : `Leider falsch. Die richtige Antwort war: ${correctAnswer}`;
     feedbackElement.style.color = isCorrect ? 'green' : 'red';
     feedbackElement.style.paddingTop = '1rem';
-    imageElement.src = isCorrect
+    image.src = isCorrect
         ? 'https://conjugaison.tatitotu.ch/static/gifs/happy/happy38.webp'
         : 'https://conjugaison.tatitotu.ch/static/gifs/fail/fail1.webp';
 
