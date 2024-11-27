@@ -416,3 +416,49 @@ img {
     margin-bottom: 50px;
     height: auto;
 }
+
+.profile-info {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
+    margin-bottom: 50px;
+    height: auto;
+}
+
+.Profil-Button-Blau{
+    background-color: #1a73e8;
+    color: white;
+    margin-top: 10px;
+    border: none;
+}
+
+.Profil-Button-Blau:hover {
+    background-color: #135ba1;
+}
+
+.Profil-Text{
+    margin-top: 10px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-color: #ff8c00;
+    border-style: solid;
+    border-width: medium;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+}
+
+.Profil-Text:first-child{
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-color: #ff8c00;
+    border-style: solid;
+    border-width: medium;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+}
