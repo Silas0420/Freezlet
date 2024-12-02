@@ -16,7 +16,7 @@ const getCards = async (req, res) => {
             `SELECT k.ID AS kartenID, k.vorderseite, k.rueckseite, ls.lernstand AS lernstand
              FROM Karte k
              LEFT JOIN Lernstand ls ON ls.kartenID = k.ID AND ls.benutzerID = ? 
-             WHERE k.setID = ? AND ls.lernstand < 3`,
+             WHERE k.lernsetID = ? AND ls.lernstand < 3`,
             [req.session.userID, lernsetId]  // Benutzer-ID aus der Session
         );
 
@@ -80,7 +80,7 @@ const resetLernstand = async (req, res) => {
 
         // Setze den Lernstand für alle Karten des Lernsets auf 0
         await connection.query(
-            `UPDATE Lernstand SET lernstand = 0 WHERE benutzerID = ? AND kartenID IN (SELECT ID FROM Karte WHERE setID = ?)`,
+            `UPDATE Lernstand SET lernstand = 0 WHERE benutzerID = ? AND kartenID IN (SELECT ID FROM Karte WHERE lernsetID = ?)`,
             [userID, lernsetId]
         );
 

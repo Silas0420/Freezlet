@@ -23,7 +23,7 @@ async function loadRandomCard() {
 
         } else {
             cardContainer.style.display = 'none'; // Verstecke das Karten-Container
-            feedbackElement.innerHTML = `
+            document.getElementById('feedback').innerHTML = `
                 <p>Super, du hast schon alles gelernt!</p>
                 <button id="restartButton">Nochmal lernen</button>
             `;
@@ -100,8 +100,8 @@ async function checkAnswer() {
        weiterButton.className = 'Lernen-Button-Blau';
        weiterButton.onclick = () => {
            // Setze das Feedback und den Weiter-Button zurück, wenn "Weiter" gedrückt wird
-           resetFeedback();
-           loadRandomCard(); // Funktion zum Laden der nächsten Karte
+           // Aktuelle Seite neu laden
+            return window.location.reload();
        };
        // Button zum Feedback hinzufügen
        feedbackElement.appendChild(weiterButton);

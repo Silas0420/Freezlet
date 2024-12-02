@@ -57,7 +57,7 @@ CREATE TABLE Karte (
     vorderseite TEXT NOT NULL,
     rueckseite TEXT NOT NULL,
     setID INT NOT NULL,
-    FOREIGN KEY (setID) REFERENCES Lernset(ID) ON DELETE CASCADE
+    FOREIGN KEY (lernsetID) REFERENCES Lernset(ID) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- Tabelle für Fortschritt
