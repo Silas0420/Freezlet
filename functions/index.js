@@ -1,73 +1,58 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const session = require('express-session');
+const serverless = require('serverless-http'); // Hinzugefügt
+
+// Controller-Importe
 const { register, login, verifyEmail } = require('./userController');
 const { createSet } = require('./setController'); 
+const { importCards } = require('./setController');
+const { getCards } = require('./cardController');
+const { updateLernstand } = require('./cardController');
+const { resetLernstand } = require('./cardController');
+const { getLernsetName } = require('./setController');
+const { createFolder } = require('./folderController');
+const { getFolder } = require('./folderController');
+const { getSet } = require('./setController');
+const { updateusername } = require('./userController');
+const { updatepassword } = require('./userController');
+const { deleteAccount } = require('./userController');
+const { getuserdata } = require('./userController');
 
+const app = express();
+
+// Middleware und Session-Handling
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'Freezlettelzeerf01928373645', // Korrekte Schreibweise: 'secret' statt 'ssecret'
-  resave: false,                // Setze auf false, um die Session nicht bei jeder Anfrage zu speichern
-  saveUninitialized: true,      // Setze auf true, um uninitialisierte Sessions zu speichern
-  cookie: { secure: false }     // Setze auf true, wenn du HTTPS verwendest
+  secret: process.env.SESSION_SECRET || 'Freezlettelzeerf01928373645',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
 }));
 
-app.use(express.json()); // Middleware für JSON-Parsing
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// Routen
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html')); // Korrektur: index.html anstelle von nur "public"
 });
 
-
-// Benutzer-Registrierung und Anmeldung
 app.post('/register', register);
 app.post('/login', login);
 app.get('/verifizierung', verifyEmail);
-
 app.post('/lernseterstellung', createSet);
-const { importCards } = require('./setController');
-
 app.post('/import', importCards);
-
-const { getCards } = require('./cardController');
-// In index.js
 app.get('/lernen', getCards);
-
-const { updateLernstand } = require('./cardController');
 app.post('/updateLernstand', updateLernstand);
-
-const {resetLernstand} = require('./cardController');
-app.post('/resetLernstand', resetLernstand)
-
-const { getLernsetName } = require('./setController');
-
+app.post('/resetLernstand', resetLernstand);
 app.get('/lernsetName', getLernsetName);
+app.post('/ordnererstellung', createFolder);
+app.get('/getFolder', getFolder);
+app.get('/getSet', getSet);
+app.post('/updateusername', updateusername);
+app.post('/updatepassword', updatepassword);
+app.post('/deleteaccount', deleteAccount);
+app.get('/getuserdata', getuserdata);
 
-const {createFolder} = require('./folderController');
-app.post('/ordnererstellung', createFolder)
-
-const {getFolder} = require('./folderController');
-app.get('/getFolder', getFolder)
-
-const {getSet} = require('./setController');
-app.get('/getSet', getSet)
-
-
-const {updateusername} = require('./userController');
-app.post('/updateusername', updateusername)
-
-
-const {updatepassword} = require('./userController');
-app.post('/updatepassword', updatepassword)
-
-const {deleteAccount} = require('./userController');
-app.post('/deleteaccount', deleteAccount)
-
-const {getuserdata} = require('./userController');
-app.get('/getuserdata', getuserdata)
-
-const PORT = 3000;
-module.exports.handler = async (event, context) => {
-  return app(event, context);
-};
+// Exportiere die Funktion als Netlify Handler
+module.exports.handler = serverless(app); // Verwendet serverless-http

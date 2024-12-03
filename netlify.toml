@@ -6,3 +6,8 @@
   functions = "functions"   # Auch für den lokalen Entwicklungsserver
   publish = "public"        # Der statische Ordner
   port = 8888               # Der Port, auf dem der lokale Server läuft (kann geändert werden)
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
