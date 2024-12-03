@@ -56,7 +56,7 @@ CREATE TABLE Karte (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     vorderseite TEXT NOT NULL,
     rueckseite TEXT NOT NULL,
-    setID INT NOT NULL,
+    lernsetID INT NOT NULL,
     FOREIGN KEY (lernsetID) REFERENCES Lernset(ID) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 

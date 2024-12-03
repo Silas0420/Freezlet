@@ -1,0 +1,8 @@
+[build]
+  functions = "functions"   # Gibt an, dass der "functions"-Ordner für die Serverless-Funktionen verwendet wird.
+  publish = "public"        # Gibt den Ordner an, in dem die statischen Dateien (wie index.html) gespeichert sind.
+
+[dev]
+  functions = "functions"   # Auch für den lokalen Entwicklungsserver
+  publish = "public"        # Der statische Ordner
+  port = 8888               # Der Port, auf dem der lokale Server läuft (kann geändert werden)
