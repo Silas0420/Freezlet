@@ -30,7 +30,7 @@ async function createSet(req, res) {
             
             // 2.1 Karte einfügen
             const [cardResult] = await connection.query(
-                'INSERT INTO Karte (vorderseite, rueckseite, setID) VALUES (?, ?, ?)',
+                'INSERT INTO Karte (vorderseite, rueckseite, lernsetID) VALUES (?, ?, ?)',
                 [vorderseite, rueckseite, setID]
             );
 
@@ -42,7 +42,6 @@ async function createSet(req, res) {
                 [req.session.userID, cardID, 0]  // Lernstand startet mit 0
             );
         }
-        console.log('Datenbank-Ergebnis:', result);
         // 3. Commit der Transaktion
         await connection.commit();
 
