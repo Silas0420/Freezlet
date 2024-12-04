@@ -122,7 +122,7 @@ async function importCards(req, res) {
 
         // Hole den Titel des Lernsets (oder name, je nach der Spaltenbezeichnung)
         const [result] = await connection.query(
-            'SELECT titel FROM Lernset WHERE id = ?', [lernsetId]
+            'SELECT titel FROM Lernset WHERE ID = ?', [lernsetId]
         );
 
         if (result.length === 0) {
@@ -153,4 +153,62 @@ const getSet = async (req, res) => {
   }
 };
 
-module.exports = { createSet, importCards,getLernsetName , getSet };
+const teilen = async (req, res) => {
+  const { id } = req.query;
+
+  if (!id) {
+    //return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Token für die Verifizierung fehlt")}`);
+  } else {
+    return res.redirect(`/setübernehmen.html?id=${id}`);
+  }
+};
+
+const lernsetuebernahme = async (req, res) => {
+  const { lernsetId } = req.body;  // Entnehmen der ID aus dem Request-Body
+
+  if (!lernsetId) {
+    return res.status(400).json({ message: 'Lernset-ID fehlt in der Anfrage.' });
+  }
+
+    let connection;
+    try {
+        // Beginne eine Transaktion, um sicherzustellen, dass alle Operationen zusammen durchgeführt werden
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+  
+
+        const [setResult] = await connection.query(
+            'INSERT INTO Lernset2Benutzer (benutzerID, lernsetID) VALUES (?, ?)',
+            [req.session.userID, lernsetId]  // Annahme: Der Benutzer ist in der Session gespeichert
+        );
+        const cardsInSet = await connection.query('SELECT ID FROM Karte WHERE lernsetID = ?', [lernsetId]);
+
+          console.log("Karten im Lernset:", cardsInSet); // Debugging-Ausgabe
+
+          // Überprüfen, ob Karten vorhanden sind
+          if (cardsInSet.length === 0) {
+            return res.status(404).json({ message: 'Keine Karten im Lernset gefunden.' });
+          }
+          for (let card of cardsInSet[0]) {
+          await connection.query('INSERT INTO Lernstand (benutzerID, kartenID) VALUES (?, ?)',
+            [req.session.userID, card.ID]
+          );
+        }
+        // 3. Commit der Transaktion
+        await connection.commit();
+
+        // Rückgabe der erfolgreichen Antwort
+        res.status(201).json({ message: 'Lernset erfolgreich hinzugefügt!', lernsetId });
+
+    } catch (error) {
+        console.error('Fehler beim Erstellen des Lernsets:', error);
+        if (connection) {
+            await connection.rollback();
+            connection.release();
+        }
+        res.status(500).json({ message: 'Fehler beim Erstellen des Lernsets.' });
+    }
+};
+
+
+module.exports = { createSet, importCards,getLernsetName , getSet ,teilen ,lernsetuebernahme};

@@ -1,0 +1,84 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Freezlet Logo.png"/>
+</head>
+<body>
+
+    <div>
+        <h2>Anmelden</h2>
+        <form id="login-form">
+            <label for="username">Benutzername oder E-Mail</label><br>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Passwort:</label><br>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Anmelden</button>
+        </form>
+        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+
+  <p>Noch kein Konto? <a href="registrierung.html"><button>Registriere dich hier</button></a>.</p>
+
+    <script>
+        // Formular-Submit handler
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+          e.preventDefault(); // Verhindert das Standard-Formular-Submit
+    
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+    
+          document.getElementById('error-message').innerText = '';
+
+          try {
+              const response = await fetch('/login', { //Noch ändern bei Online!!!
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username, password }),
+            });
+      
+            const data = await response.json();
+      
+            if (response.ok) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const lernsetId = urlParams.get('id');
+                try{
+                    const response = await fetch('/lernsetuebernahme', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Optional, aber vielleicht trotzdem sinnvoll, um den Server zu informieren
+                    },
+                    body: JSON.stringify({
+                        lernsetId: lernsetId, // Lernset-ID in der Anfrage mitgeben
+                    }),
+                });
+                const data = await response.json();
+                    if (response.ok) {
+                        alert('Du hast erfolgreich das Lernset zu deinen hinzugefügt.');
+                        window.location.href = '/lernsets.html';;
+                    } else {
+                    document.getElementById('error-message').innerText = data.message;
+                    }
+                } catch (error) {
+                    console.error('Fehler bei der Anfrage:', error);
+                    document.getElementById('error-message').innerText = 'Ein unerwarteter Fehler ist aufgetreten.';
+                }
+            } else {
+              document.getElementById('error-message').innerText = data.message;
+            }
+          } catch (error) {
+            console.error('Fehler bei der Anfrage:', error);
+            document.getElementById('error-message').innerText = 'Ein unerwarteter Fehler ist aufgetreten.';
+          }
+
+        });
+      </script>
+</body>
+</html>

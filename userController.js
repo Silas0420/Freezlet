@@ -66,7 +66,7 @@ const register = async (req, res) => {
     );
 
     // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `http://localhost:3000//verifizierung?token=${token}`;
+    const confirmationLink = `http://localhost:3000/verifizierung?token=${token}`;
     await sendEmail(
         email,
         'E-Mail-Bestätigung',

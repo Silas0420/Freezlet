@@ -16,6 +16,8 @@ const { updateusername } = require('./userController');
 const { updatepassword } = require('./userController');
 const { deleteAccount } = require('./userController');
 const { getuserdata } = require('./userController');
+const { teilen } = require('./setController');
+const { lernsetuebernahme } = require('./setController');
 
 const app = express();
 
@@ -52,6 +54,8 @@ app.post('/updateusername', updateusername);
 app.post('/updatepassword', updatepassword);
 app.post('/deleteaccount', deleteAccount);
 app.get('/getuserdata', getuserdata);
+app.get('/teilen', teilen);
+app.post('/lernsetuebernahme', lernsetuebernahme)
 
 // Den Server starten
 const port = process.env.PORT || 3000;
