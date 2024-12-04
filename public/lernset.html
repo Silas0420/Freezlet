@@ -15,36 +15,17 @@
         </p>
         <button id="goToLearningButton" class="create-button">Zum Lernen</button>
     </div>
-
-    <script>
-        // Hole die Lernset-ID aus der URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const lernsetId = urlParams.get('id');
-
-        if (lernsetId) {
-            // Hole den Namen des Lernsets von der Backend-API
-            fetch(`/lernsetName?id=${lernsetId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.name) {
-                        // Setze den Namen des Lernsets in den Titel
-                        document.getElementById('lernsetName').innerText = data.name;
-                    }
-                })
-                .catch(error => {
-                    console.error('Fehler beim Abrufen des Lernset-Namens:', error);
-                });
-        }
-
-        // Weiterleitung zum Lernmodus
-        document.getElementById('goToLearningButton').addEventListener('click', function() {
-            if (lernsetId) {
-                // Leite den Benutzer weiter und füge die id zur URL von lernen.html hinzu
-                window.location.href = `lernen.html?id=${lernsetId}`;
-            } else {
-                alert('Lernset-ID nicht gefunden.');
-            }
-        });
-    </script>
+    <button id="teilen">Lernset teilen</button>
+            <!-- Overlay -->
+    <div id="overlayTeilen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+      <h2>Lernkarten importieren</h2>
+      <input type="text" id="linkInput" readonly>
+      <br>
+      <button onclick="copyLink()">Kopieren</button>
+      <button type="button" id="closeButton">Abbrechen</button>
+    </div>
+  </div>
+    <script src="lernset.js"></script>
 </body>
 </html>
