@@ -4,10 +4,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Neues Lernset erstellen</title>
-        <link rel="stylesheet" href="lernseterstellung.css">
+        <link rel="stylesheet" href="style.css">
         <link rel="icon" href="Freezlet Logo.png"/>
     </head>
     <body>
+        <nav class="navbar">
+            <ul class="navbar-list">
+                <li><a href="lernsets.html">Meine Lernsets</a></li>
+                <li><a href="lernseterstellung.html">Lernsets erstellen</a></li>
+                <li><a href="home.html">Zur Startseite</a></li>
+                <li><a href="profil.html">Mein Profil</a></li>
+                <li><a href="ordner.html">Ordner</a></li>
+            </ul>
+        </nav>
         <div>
             <h1 class="title">Neues Lernset erstellen</h1>
             <form id="createSetForm">
@@ -22,10 +31,10 @@
             </form>
         </div>
         <!-- Overlay -->
-<div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center;">
+<div class="Overlay-Box" id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
       <h2>Lernkarten importieren</h2>
-      <textarea id="importText" rows="10" cols="50" placeholder="Vorderseite TAB Rückseite&#10;Vorderseite TAB Rückseite"></textarea>
+      <textarea id="importText" rows="10" cols="50" placeholder="Vorderseite TAB Rückseite&#10;Vorderseite TAB Rückseite" style="resize: none;"></textarea>
       <br>
       <button type="button" id="saveButton">Speichern</button>
       <button type="button" id="closeButton">Abbrechen</button>
