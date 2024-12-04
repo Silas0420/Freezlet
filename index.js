@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
-const serverless = require('serverless-http');
 
 const { register, login, verifyEmail } = require('./userController');
 const { createSet } = require('./setController');
@@ -29,16 +28,18 @@ app.use(session({
 }));
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Beispiel: Stelle sicher, dass der öffentliche Ordner für statische Dateien verwendet wird
+app.use(express.static(path.join(__dirname, 'public'))); // Setze den Pfad zu deinem 'public' Ordner
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Stelle sicher, dass der Pfad stimmt
+});
+
 
 // Deine Routen
 app.post('/register', register);
 app.post('/login', login);
 app.get('/verifizierung', verifyEmail);
-app.post('/lernseterstellung', (req, res) => {
-  console.log('Anfrage erhalten:', req.body); // Logge die Eingabe
-  createSet(req, res);
-});
+app.post('/lernseterstellung', createSet);
 app.post('/import', importCards);
 app.get('/lernen', getCards);
 app.post('/updateLernstand', updateLernstand);
@@ -52,5 +53,8 @@ app.post('/updatepassword', updatepassword);
 app.post('/deleteaccount', deleteAccount);
 app.get('/getuserdata', getuserdata);
 
-// Exportiere die Express-App als serverless Funktion
-module.exports.handler = serverless(app);
+// Den Server starten
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server läuft auf http://localhost:${port}`);
+});

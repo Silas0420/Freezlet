@@ -174,13 +174,13 @@ const updateusername = async (req, res) => {
   try {
       const userId = req.session.userID;  // Der Benutzer, der in der Session gespeichert ist
       // Stelle sicher, dass der Benutzername nicht bereits existiert (optional)
-      const [existingUser] = await pool.query('SELECT * FROM Benutzer WHERE benutzername = ?', [username]);
+      const [existingUser] = await db.query('SELECT * FROM Benutzer WHERE benutzername = ?', [username]);
       if (existingUser.length > 0) {
           return res.status(400).json({ message: 'Benutzername bereits vergeben.' });
       }
 
       // Benutzernamen in der Datenbank aktualisieren
-      await pool.query('UPDATE Benutzer SET benutzername = ? WHERE id = ?', [username, userId]);
+      await db.query('UPDATE Benutzer SET benutzername = ? WHERE id = ?', [username, userId]);
 
       // Rückmeldung, dass die Änderung erfolgreich war
       res.json({ success: true, message: 'Benutzername wurde erfolgreich geändert.' });
@@ -203,7 +203,7 @@ const updatepassword = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);  // Passwort verschlüsseln
 
       // Passwort in der Datenbank aktualisieren
-      await pool.query('UPDATE Benutzer SET passwort = ? WHERE id = ?', [hashedPassword, userId]);
+      await db.query('UPDATE Benutzer SET passwort = ? WHERE id = ?', [hashedPassword, userId]);
 
       // Rückmeldung, dass die Änderung erfolgreich war
       res.json({ success: true, message: 'Passwort wurde erfolgreich geändert.' });
@@ -219,7 +219,7 @@ const deleteAccount = async (req, res) => {
 
   try {
       // Lösche alle Daten des Benutzers aus der Datenbank
-      await pool.query('DELETE FROM Benutzer WHERE id = ?', [userId]);
+      await db.query('DELETE FROM Benutzer WHERE id = ?', [userId]);
       
       // Ende der Session nach dem Löschen
       req.session.destroy((err) => {
