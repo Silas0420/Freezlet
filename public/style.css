@@ -26,6 +26,7 @@ body {
 }
 
 h1 {
+    margin-top: 50px; /* Erhöhe diesen Wert nach Bedarf */
     font-size: 24px;
     color: rgb(255, 255, 255);
     margin-bottom: 20px;
@@ -198,130 +199,28 @@ input::placeholder {
     max-width: 300px; /* Erhöhe den maximalen Wert */
     max-width: 1200px; /* Maximale Breite für große Bildschirme */
     margin: 0 auto;  /* Zentriert den Container */
-    padding: 60px;
+    padding: 40px 60px; /* Reduziere das Padding oben (40px statt 60px) */
     background: linear-gradient(135deg, #3a3f8d, #4347c7); /* Sanfter Farbverlauf */
     color: #e0e0e0;
     border-radius: 60px;
     text-align: center;
     box-shadow: 0 50px 200px rgba(221, 168, 63, 0.4); /* Schatten für mehr Tiefe */
+    margin-top: 100px;
 }
 
 /* Styling für die Hauptüberschrift */
 .home-title {
     font-size: 70px;
     color: #ffffff;
-    margin-bottom: -30px;
+    margin-top: 0; /* Entferne Abstand nach oben */
+    margin-bottom: 10px; /* Beibehalten des Abstands nach unten */
 }
 
 /* Styling für die Unterüberschrift */
 .home-subtitle {
     font-size: 40px;
     color: #ffffff;
-    margin-bottom: 0px;
-}
-
-/* Menübutton */
-/* Menübutton */
-.menu-container {
-    position: absolute; /* Positioniert das Element relativ zum Viewport */
-    top: 10px; /* Abstand von oben */
-    left: 10px; /* Abstand von links */
-    z-index: 1000; /* Stellt sicher, dass der Button über anderen Elementen liegt */
-}
-
-.menu-btn {
-    font-size: 40px;
-    color: #ffffff;
-    background-color: #333;
-    padding: 20px 30px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-
-/* Menüstruktur */
-.menu {
-    display: none; /* Standardmäßig ausgeblendet */
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.menu ul li {
-    margin: 10px 0;
-}
-
-.menu ul li a {
-    color: #f0f0f0;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.menu ul li a:hover {
-    color: #ffa500;
-}
-
-/* Media Query für mobile Geräte */
-@media (max-width: 768px) {
-    .home-container {
-        width: 90%;  /* Für kleinere Bildschirme wird die Breite angepasst */
-    }
-
-    .home-title {
-        font-size: 30px; /* Kleinere Schriftgröße auf kleinen Geräten */
-    }
-
-    .home-subtitle {
-        font-size: 20px; /* Kleinere Schriftgröße auf kleinen Geräten */
-    }
-}
-
-
-#menu {
-    animation: fadeIn 0.35s ease-in-out; /* Animation beim Einblenden */
-}
-
-#menu ul {
-    list-style: none; /* Entfernt die Standard-Aufzählungspunkte */
-    margin: 0;
-    padding: 0;
-}
-
-#menu ul li {
-    margin: 20px 0; /* Abstand zwischen den Auswahlmöglichkeiten */
-    white-space: nowrap; /* Verhindert Zeilenumbrüche innerhalb eines Listenelements */
-}
-
-#menu ul li a {
-    color: white; /* Textfarbe */
-    text-decoration: none; /* Unterstreichung entfernen */
-    display: inline-block; /* Für eine saubere Ausrichtung */
-    padding: 7px 13px; /* Innenabstand, um einen rechteckigen Hintergrund zu erzeugen */
-    background-color: #3f30a4; /* Rechteckiger Hintergrund der Links */
-    border-radius: 10px; /* Leicht abgerundete Ecken */
-    transition: all 0.35s ease; /* Sanfter Übergang für Hover-Effekt */
-    box-shadow: 0 50px 200px rgba(254, 106, 252, 0.4); /* Schatten für mehr Tiefe */
-}
-
-#menu ul li a:hover {
-    background-color: #5862cf; /* Hintergrundfarbe beim Hover */
-    color: rgb(225, 182, 228); /* Textfarbe beim Hover */
-    transform: scale(1.15); /* Leichte Vergrößerung beim Hover */
-}
-
-/* Animation für das Einblenden des Menüs */
-@keyframes fadeIn {
-    from {
-        opacity: 0; /* Startet unsichtbar */
-        transform: translateY(-10px); /* Leichte Verschiebung nach oben */
-    }
-    to {
-        opacity: 1; /* Voll sichtbar */
-        transform: translateY(0); /* Verschiebung zurück */
-    }
+    margin-bottom: 10px;
 }
 
 /* Lernset CSS Darstellung */
@@ -461,4 +360,77 @@ img {
     font-weight: bold;
     color: #555;
     display: inline-block;
+}
+
+/* Navigation */
+.navbar {
+    width: 100%;
+    background-color: rgba(221, 168, 63, 0.4); 
+    overflow: hidden;
+    position: fixed; /* Bleibt oben fixiert */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Sicherstellen, dass die Navigation über allem liegt */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Leichter Schatten unter der Navigation */
+    animation: slideDown 0.5s ease-out; /* Animation beim Laden */
+}
+
+.navbar-list {
+    display: flex;
+    justify-content: center; /* Zentriert die Navigation */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.navbar-list li {
+    margin: 0 20px; /* Abstand zwischen den Navigationselementen */
+    transform: translateY(-10px);
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-in-out forwards;
+}
+
+.navbar-list li:nth-child(1) { animation-delay: 0.1s; }
+.navbar-list li:nth-child(2) { animation-delay: 0.2s; }
+.navbar-list li:nth-child(3) { animation-delay: 0.3s; }
+.navbar-list li:nth-child(4) { animation-delay: 0.4s; }
+.navbar-list li:nth-child(5) { animation-delay: 0.5s; }
+
+.navbar-list a {
+    text-decoration: none;
+    color: white; /* Schriftfarbe */
+    font-size: 18px;
+    padding: 14px 20px;
+    display: block;
+    transition: all 0.3s ease; /* Sanfter Übergang für Hover-Effekte */
+}
+
+.navbar-list a:hover {
+    background-color: #4347c7; /* Hintergrundfarbe beim Hover */
+    border-radius: 7px;
+    color: #ffcc00; /* Farbe des Texts beim Hover */
+    transform: scale(1.1); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Keyframe-Animationen */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
