@@ -27,7 +27,6 @@ form {
     background-color: #ffffff;
     padding: 50px;
     border-radius: 30px;
-    box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
     margin-bottom: 50px;
 }
 
@@ -173,3 +172,50 @@ button.danger:hover {
     border: 1px solid #000000;
     border-radius: 7px;
     margin-bottom: 0px;
+}
+
+/* Navigation */
+.navbar {
+    width: 100%;
+    background-color: rgba(255, 170, 0, 0.4); 
+    overflow: hidden;
+    position: fixed; /* Bleibt oben fixiert */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Sicherstellen, dass die Navigation über allem liegt */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Leichter Schatten unter der Navigation */
+    padding: 10px 0; /* Füge Polsterung hinzu, um die Links zentriert auszurichten */
+}
+
+.navbar-list {
+    display: flex;
+    justify-content: center; /* Zentriert die Navigation */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.navbar-list li {
+    margin: 0 20px; /* Abstand zwischen den Navigationselementen */
+}
+
+.navbar-list a {
+    text-decoration: none;
+    color: white; /* Schriftfarbe */
+    font-size: 18px;
+    padding: 10px 15px;
+    display: block;
+    transition: all 0.3s ease; /* Sanfter Übergang für Hover-Effekte */
+}
+
+.navbar-list a:hover {
+    background-color: #4347c7; /* Hintergrundfarbe beim Hover */
+    border-radius: 5px;
+    color: #ffcc00; /* Textfarbe beim Hover */
+    transform: scale(1.1); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Platz für den fixierten Navbar schaffen */
+body {
+    padding-top: 60px; /* Platz für die fixierte Navigation, damit sie den Inhalt nicht verdeckt */
+}
