@@ -1,11 +1,9 @@
 let cardBack = '';
 let cardID = ''; // Globale Variable für die Rückseite der Karte
-
+const urlParams = new URLSearchParams(window.location.search);
+const lernsetId = urlParams.get('id'); // Lernset-ID aus der URL
 // Funktion, um die Karten vom Backend zu holen
 async function loadRandomCard() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const lernsetId = urlParams.get('id'); // Lernset-ID aus der URL
-
     try {
         const response = await fetch(`/lernen?id=${lernsetId}`);  // GET statt POST
         const cards = await response.json();
@@ -123,6 +121,9 @@ async function checkAnswer() {
        feedbackElement.style.paddingTop = '0rem';
    }
 
+async function back() {
+    window.location.href = `/lernset.html?id=${lernsetId}`;
+};
 
 // Beim Laden der Seite eine zufällige Karte laden
 window.onload = loadRandomCard;
