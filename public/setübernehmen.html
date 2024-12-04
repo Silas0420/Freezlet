@@ -62,7 +62,7 @@
                 const data = await response.json();
                     if (response.ok) {
                         alert('Du hast erfolgreich das Lernset zu deinen hinzugefügt.');
-                        window.location.href = '/lernsets.html';;
+                        window.location.href = '/lernsets.html';
                     } else {
                     document.getElementById('error-message').innerText = data.message;
                     }
