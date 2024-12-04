@@ -49,7 +49,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
         if (data.success) {
             alert(`${title} wurde erfolgreich geändert.`);
             // Overlay schließen und Eingabe zurücksetzen
-            document.getElementById('overlayprofil').style.display = 'none';
+            window.location.reload();
         } else {
             alert('Fehler beim Speichern der Änderungen.');
         }
