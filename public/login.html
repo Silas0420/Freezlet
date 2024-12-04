@@ -1,0 +1,30 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Freezlet Logo.png"/>
+</head>
+<body>
+
+    <div>
+        <h2>Anmelden</h2>
+        <form id="login-form">
+            <label for="username">Benutzername oder E-Mail</label><br>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Passwort:</label><br>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Anmelden</button>
+            <a href="emailpr.html"><button type="button">Passwort vergessen?</button></a>
+        </form>
+        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+
+  <p>Noch kein Konto? <a href="registrierung.html"><button>Registriere dich hier</button></a>.</p>
+  <script src="login.js"></script>
+</body>
+</html>

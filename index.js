@@ -18,6 +18,8 @@ const { deleteAccount } = require('./userController');
 const { getuserdata } = require('./userController');
 const { teilen } = require('./setController');
 const { lernsetuebernahme } = require('./setController');
+const { emailpr } = require('./userController');
+const { passwordreset } = require('./userController');
 
 const app = express();
 
@@ -33,7 +35,7 @@ app.use(express.json());
 // Beispiel: Stelle sicher, dass der öffentliche Ordner für statische Dateien verwendet wird
 app.use(express.static(path.join(__dirname, 'public'))); // Setze den Pfad zu deinem 'public' Ordner
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Stelle sicher, dass der Pfad stimmt
+  res.sendFile(path.join(__dirname, 'public', 'login.html')); // Stelle sicher, dass der Pfad stimmt
 });
 
 
@@ -55,7 +57,9 @@ app.post('/updatepassword', updatepassword);
 app.post('/deleteaccount', deleteAccount);
 app.get('/getuserdata', getuserdata);
 app.get('/teilen', teilen);
-app.post('/lernsetuebernahme', lernsetuebernahme)
+app.post('/lernsetuebernahme', lernsetuebernahme);
+app.post('/emailpr', emailpr);
+app.post('/passwordreset', passwordreset);
 
 // Den Server starten
 const port = process.env.PORT || 3000;
