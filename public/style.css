@@ -419,7 +419,7 @@ img {
 
 .profile-info {
     width: 100%;
-    background-color: #ffffff;
+    background-color: #f918cc;
     padding: 50px;
     border-radius: 30px;
     box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
@@ -442,7 +442,7 @@ img {
     margin-top: 10px;
     padding: 1rem;
     border-radius: 0.5rem;
-    border-color: #ff8c00;
+    border-color: #00eeff;
     border-style: solid;
     border-width: medium;
     font-size: 14px;
@@ -454,7 +454,7 @@ img {
 .Profil-Text:first-child{
     padding: 1rem;
     border-radius: 0.5rem;
-    border-color: #ff8c00;
+    border-color: #00eeff;
     border-style: solid;
     border-width: medium;
     font-size: 14px;
