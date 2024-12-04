@@ -532,37 +532,52 @@ button.danger:hover {
 
 /* Navigation */
 .navbar {
-    width: 100%;
-    background-color: rgba(221, 168, 63, 0.4); 
-    overflow: hidden;
+    display: flex;
+    align-items: center; /* Zentriert das Logo und die Navigation vertikal */
+    justify-content: space-between; /* Logo links, Navigation rechts */
+    background-color: #8B4513; /* Brauner Hintergrund */
+    padding: 10px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Schatten */
     position: fixed; /* Bleibt oben fixiert */
     top: 0;
     left: 0;
+    width: 100%;
     z-index: 1000; /* Sicherstellen, dass die Navigation über allem liegt */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Leichter Schatten unter der Navigation */
     animation: slideDown 0.5s ease-out; /* Animation beim Laden */
+    justify-content: space-between;
+
 }
 
+
+/* Logo */
+.logo {
+    flex: 0 0 auto; /* Verhindert, dass das Logo skaliert wird */
+}
+
+.logo img {
+    height: 70px; /* Höhe festlegen */
+    width: auto; /* Breite wird automatisch anhand des Seitenverhältnisses angepasst */
+    margin-right: 15px; /* Optional: Abstand zur Navigation */
+    object-fit: contain; /* Verhindert Verzerrung */
+}
+
+
+/* Navigation Liste */
 .navbar-list {
+    flex: 1; /* Die Navigation nimmt den restlichen Platz ein */
     display: flex;
-    justify-content: center; /* Zentriert die Navigation */
+    justify-content: center; /* Zentriert die Navigation horizontal */
+    list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
+    margin: 0 auto;
+    flex-grow: 1;
+
 }
 
 .navbar-list li {
-    margin: 0 20px; /* Abstand zwischen den Navigationselementen */
-    transform: translateY(-10px);
-    opacity: 0;
-    animation: fadeInUp 0.5s ease-in-out forwards;
+    margin: 0 15px; /* Abstand zwischen den Navigationselementen */
 }
-
-.navbar-list li:nth-child(1) { animation-delay: 0.1s; }
-.navbar-list li:nth-child(2) { animation-delay: 0.2s; }
-.navbar-list li:nth-child(3) { animation-delay: 0.3s; }
-.navbar-list li:nth-child(4) { animation-delay: 0.4s; }
-.navbar-list li:nth-child(5) { animation-delay: 0.5s; }
 
 .navbar-list a {
     text-decoration: none;
@@ -579,6 +594,7 @@ button.danger:hover {
     color: #ffcc00; /* Farbe des Texts beim Hover */
     transform: scale(1.1); /* Leichte Vergrößerung beim Hover */
 }
+
 
 /* Keyframe-Animationen */
 @keyframes slideDown {
@@ -602,6 +618,7 @@ button.danger:hover {
         opacity: 1;
     }
 }
+
 /* Farbe für Vorderseite */
 label[for^="vorderseite"] {
     color: #1a73e8; /* Blau */
