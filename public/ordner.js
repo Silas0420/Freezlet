@@ -39,7 +39,7 @@ function loadFolders() {
                 // Erstelle ein Button-Element
                 const button = document.createElement('button');
                 button.textContent = folder.name;
-                button.className = 'asdf';
+                button.className = 'ordner-button';
 
                 // Füge einen EventListener hinzu, der den Benutzer bei Klick weiterleitet
                 button.addEventListener('click', () => {
