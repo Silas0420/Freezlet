@@ -266,6 +266,97 @@ const getuserdata = async (req, res) => {
 };
 
 
+const emailpr = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Prüfen, ob die E-Mail bereits existiert
+    const [users] = await db.query(
+      'SELECT * FROM Benutzer WHERE email = ?',  // Richtige SQL-Syntax
+      [email]
+    );
+
+    if (users.length === 0) {
+      return res.status(400).json({ message: "E-Mail gehört keinem Benutzer." });
+    }
+
+    const user = users[0];
+
+    // E-Mail mit Bestätigungslink senden
+    const confirmationLink = `http://localhost:3000/passwordreset.html?id=${user.ID}`;
+    await sendEmail(
+        email,
+        'Passwort zurücksetzen',
+        `Setze dein Passwort zurück über diesen Link: ${confirmationLink}`
+    );
+
+    res.status(200).json({ message: 'Bitte bestätigen Sie Ihre E-Mail.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Fehler" });
+  }
+};
 
 
-module.exports = { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata};
+const passwordreset = async (req, res) => {
+  const { id } = req.body.id;// Das Token wird aus der URL entnommen
+
+  if (!id) {
+    return res.redirect(`/passwordreset.html?success=false&message=${encodeURIComponent("Der Link ist ungültig")}`);
+  } // Fehlermeldung im JSON-Format
+  
+  const { password } = req.body.password;
+  
+  if (!password || password.length < 6) {
+      return res.status(400).json({ message: 'Passwort muss mindestens 6 Zeichen lang sein.' });
+  }
+
+  try { 
+      const hashedPassword = await bcrypt.hash(password, 10);  // Passwort verschlüsseln
+
+      // Passwort in der Datenbank aktualisieren
+      await db.query('UPDATE Benutzer SET passwort = ? WHERE id = ?', [hashedPassword, id]);
+
+      // Rückmeldung, dass die Änderung erfolgreich war
+      res.json({ success: true, message: 'Passwort wurde erfolgreich geändert.' });
+  } catch (error) {
+      console.error('Fehler beim Aktualisieren des Passworts:', error);
+      res.status(400).json({ message: 'Fehler beim Zurücksetzen des Passworts.' });
+  }
+};
+
+const updateemail = async (req, res) => {
+  const { email } = req.body;
+  
+  const user = users[0];
+
+  // E-Mail mit Bestätigungslink senden
+  const confirmationLink = `http://localhost:3000/emailupdate?id=${user.ID}}&email=${encodeURIComponent(email)}`;
+
+  await sendEmail(
+    email,
+    'E-Mail-Änderung',
+    `Bitte bestätigen Sie Ihre E-Mail, indem Sie auf diesen Link klicken: ${confirmationLink}`
+  );
+  res.json({ success: true, message: 'Bestätige deine E-Mail mit dem Link, den wir dir an die neue E-Mail gesendet haben.' });
+};
+
+const emailupdate = async (req, res) => {
+  const { id, email } = req.query;
+
+  if (!id || !email) {
+    return res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Der Link ist ungültig")}`);
+  } // Fehlermeldung im JSON-Format
+  
+
+  try {
+    // Suchen nach dem Token in der Datenbank
+    await db.query('UPDATE Benutzer SET email = ? WHERE id = ?', [email, id]);
+      res.redirect(`/emailupdate.html?success=true&message=${encodeURIComponent("E-Mail wurde erfolgreich geändert")}`);
+  } catch (error) {
+      console.error('Fehler beim Aktualisieren der E-Mail:', error);
+      res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Fehler beim Zurücksetzen der E-Mail")}`);
+  }
+};
+
+module.exports = { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset, updateemail, emailupdate};

@@ -3,6 +3,7 @@ const path = require('path');
 const session = require('express-session');
 
 const { register, login, verifyEmail } = require('./userController');
+const { emailupdate } = require('./userController');
 const { createSet } = require('./setController');
 const { importCards } = require('./setController');
 const { getCards } = require('./cardController');
@@ -14,10 +15,13 @@ const { getFolder } = require('./folderController');
 const { getSet } = require('./setController');
 const { updateusername } = require('./userController');
 const { updatepassword } = require('./userController');
+const { updateemail } = require('./userController');
 const { deleteAccount } = require('./userController');
 const { getuserdata } = require('./userController');
 const { teilen } = require('./setController');
 const { lernsetuebernahme } = require('./setController');
+const { emailpr } = require('./userController');
+const { passwordreset } = require('./userController');
 
 const app = express();
 
@@ -33,7 +37,7 @@ app.use(express.json());
 // Beispiel: Stelle sicher, dass der öffentliche Ordner für statische Dateien verwendet wird
 app.use(express.static(path.join(__dirname, 'public'))); // Setze den Pfad zu deinem 'public' Ordner
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Stelle sicher, dass der Pfad stimmt
+  res.sendFile(path.join(__dirname, 'public', 'login.html')); // Stelle sicher, dass der Pfad stimmt
 });
 
 
@@ -41,6 +45,7 @@ app.get('/', (req, res) => {
 app.post('/register', register);
 app.post('/login', login);
 app.get('/verifizierung', verifyEmail);
+app.get('/emailupdate', emailupdate);
 app.post('/lernseterstellung', createSet);
 app.post('/import', importCards);
 app.get('/lernen', getCards);
@@ -52,10 +57,13 @@ app.get('/getFolder', getFolder);
 app.get('/getSet', getSet);
 app.post('/updateusername', updateusername);
 app.post('/updatepassword', updatepassword);
+app.post('/updateemail', updateemail);
 app.post('/deleteaccount', deleteAccount);
 app.get('/getuserdata', getuserdata);
 app.get('/teilen', teilen);
-app.post('/lernsetuebernahme', lernsetuebernahme)
+app.post('/lernsetuebernahme', lernsetuebernahme);
+app.post('/emailpr', emailpr);
+app.post('/passwordreset', passwordreset);
 
 // Den Server starten
 const port = process.env.PORT || 3000;

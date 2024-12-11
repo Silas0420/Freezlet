@@ -1,11 +1,9 @@
 let cardBack = '';
 let cardID = ''; // Globale Variable für die Rückseite der Karte
-
+const urlParams = new URLSearchParams(window.location.search);
+const lernsetId = urlParams.get('id'); // Lernset-ID aus der URL
 // Funktion, um die Karten vom Backend zu holen
 async function loadRandomCard() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const lernsetId = urlParams.get('id'); // Lernset-ID aus der URL
-
     try {
         const response = await fetch(`/lernen?id=${lernsetId}`);  // GET statt POST
         const cards = await response.json();
@@ -51,32 +49,55 @@ async function resetAllLearning() {
     }
 }
 
-// Funktion zur Überprüfung der Antwort
+function highlightDifferences(userAnswer, correctAnswer) {
+    let highlighted = '';
+    const maxLength = Math.max(userAnswer.length, correctAnswer.length);
+
+    for (let i = 0; i < maxLength; i++) {
+        const userChar = userAnswer[i] || ''; // falls der Benutzer eine kürzere Antwort hat
+        const correctChar = correctAnswer[i] || ''; // falls die richtige Antwort länger ist
+
+        if (userChar === correctChar) {
+            highlighted += userChar; // Gleiche Zeichen bleiben normal
+        } else {
+            // Falsche Zeichen rot und fett markieren
+            highlighted += `<span style="color: red; font-weight: bold;">${userChar}</span>`;
+        }
+    }
+    return highlighted;
+}
+
 async function checkAnswer() {
     const userAnswer = document.getElementById('userAnswer').value.trim();
     const feedbackElement = document.getElementById('feedback');
-    const cardFrontElement = document.getElementById('cardFront'); // Vorderseite der Karte
     const image = document.createElement('img');
 
-    // Die Rückseite kommt jetzt aus der globalen Variablen
     const correctAnswer = cardBack;
 
-    // Leere das Eingabefeld nach jeder Antwort
     document.getElementById('cardContainer').style.display = 'none';
-
 
     if (!userAnswer) {
         feedbackElement.innerText = 'Bitte eine Antwort eingeben.';
-        feedbackElement.style.color = 'red'; // Fehlerfarbe
+        feedbackElement.style.color = 'red';
         feedbackElement.style.paddingTop = '1rem';
         return;
     }
 
     const isCorrect = userAnswer === correctAnswer;
-    feedbackElement.innerText = isCorrect
-        ? 'Richtig! Gut gemacht.'
-        : `Leider falsch. Die richtige Antwort war: ${correctAnswer}`;
-    feedbackElement.style.color = isCorrect ? 'green' : 'red';
+
+    if (isCorrect) {
+        feedbackElement.innerText = 'Richtig! Gut gemacht.';
+        feedbackElement.style.color = 'green';
+    } else {
+        // Wenn die Antwort falsch ist, die Unterschiede hervorheben
+        const highlightedAnswer = highlightDifferences(userAnswer, correctAnswer);
+        feedbackElement.innerHTML = `
+            Leider falsch. Deine Antwort war: <span>${highlightedAnswer}</span>, 
+            aber die richtige Antwort ist: <span style="color: green; font-weight: bold;">${correctAnswer}</span>.
+        `;
+        feedbackElement.style.color = 'red';
+    }
+
     feedbackElement.style.paddingTop = '1rem';
     image.src = isCorrect
         ? 'https://conjugaison.tatitotu.ch/static/gifs/happy/happy38.webp'
@@ -92,21 +113,16 @@ async function checkAnswer() {
         console.error('Fehler beim Aktualisieren des Lernstands:', error);
     }
 
+    const weiterButton = document.createElement('button');
+    weiterButton.innerText = 'Weiter';
+    weiterButton.id = 'weiter';
+    weiterButton.className = 'Lernen-Button-Blau';
+    weiterButton.onclick = () => window.location.reload();
 
-       // "Weiter"-Button erstellen, der nach einer falschen Antwort angezeigt wird
-       const weiterButton = document.createElement('button');
-       weiterButton.innerText = 'Weiter';
-       weiterButton.id = 'weiter'; 
-       weiterButton.className = 'Lernen-Button-Blau';
-       weiterButton.onclick = () => {
-           // Setze das Feedback und den Weiter-Button zurück, wenn "Weiter" gedrückt wird
-           // Aktuelle Seite neu laden
-            return window.location.reload();
-       };
-       // Button zum Feedback hinzufügen
-       feedbackElement.appendChild(weiterButton);
-       feedbackElement.appendChild(image);
-   }
+    feedbackElement.appendChild(weiterButton);
+    feedbackElement.appendChild(image);
+}
+
    
    // Funktion zum Zurücksetzen des Feedbacks
    function resetFeedback() {
@@ -123,6 +139,9 @@ async function checkAnswer() {
        feedbackElement.style.paddingTop = '0rem';
    }
 
+async function back() {
+    window.location.href = `/lernset.html?id=${lernsetId}`;
+};
 
 // Beim Laden der Seite eine zufällige Karte laden
 window.onload = loadRandomCard;
