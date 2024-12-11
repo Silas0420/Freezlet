@@ -1,9 +1,18 @@
-// Ein-/Ausblenden 
-function toggleMenu() {
-    const menu = document.getElementById('menu'); // Menü-Element holen
-    if (menu.style.display === 'block') {
-        menu.style.display = 'none'; // Menü ausblenden
-    } else {
-        menu.style.display = 'block'; // Menü anzeigen
-    }
-}
+    <script>
+        // Lade die Navigation aus einer separaten Datei
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("navigation.html") // Datei mit der Navigation
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Navigation konnte nicht geladen werden");
+                    }
+                    return response.text();
+                })
+                .then((data) => {
+                    document.getElementById("navigation-placeholder").innerHTML = data;
+                })
+                .catch((error) => console.error(error));
+        });
+    </script>
+</body>
+</html>
