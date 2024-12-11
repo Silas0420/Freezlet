@@ -625,3 +625,24 @@ label[for^="rueckseite"] {
     cursor: pointer;
     background-color: rgb(144, 0, 115);
 }
+
+#login-form {
+    background-color: rgb(249, 24, 204);
+}
+
+#Anmeldung:first {
+    text-align: center;
+}
+
+.anmeldung-input {
+    margin-top: 10px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-color: #00eeff;
+    border-style: solid;
+    border-width: medium;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+}

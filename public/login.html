@@ -8,23 +8,22 @@
 </head>
 <body>
 
-    <div>
-        <h2>Anmelden</h2>
+    <div id="anmeldung">
+        <h1>Anmelden</h1>
         <form id="login-form">
             <label for="username">Benutzername oder E-Mail</label><br>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" class="anmeldung-input" required>
             <br>
             <label for="password">Passwort:</label><br>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" class="anmeldung-input" required>
             <br>
-            <button type="submit">Anmelden</button>
-            <a href="emailpr.html"><button type="button">Passwort vergessen?</button></a>
+            <button type="submit" class="Profil-Button-Blau">Anmelden</button>
+            <a href="emailpr.html"><button type="button" class="Profil-Button-Blau" style="margin-bottom: 10px;">Passwort vergessen?</button></a>
+            <label>Noch kein Konto?</label>
+            <a href="registrierung.html"><button class="Profil-Button-Blau">Registriere dich hier</button></a>
+            <script src="login.js"></script>
         </form>
         <div id="error-message" style="color: red; margin-top: 10px;"></div>
     </div>
-
-
-  <p>Noch kein Konto? <a href="registrierung.html"><button>Registriere dich hier</button></a>.</p>
-  <script src="login.js"></script>
 </body>
 </html>
