@@ -615,3 +615,13 @@ label[for^="rueckseite"] {
     font-weight: bold;
     font-size: 18px;
 }
+
+.ordner-button {
+    background-color: rgb(249, 24, 204);
+    margin: 1rem;
+}
+
+.ordner-button:hover {
+    cursor: pointer;
+    background-color: rgb(144, 0, 115);
+}
