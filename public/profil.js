@@ -12,6 +12,12 @@ document.getElementById('passwordchange').addEventListener('click', function() {
     document.getElementById('overlayprofil').style.display = 'block';
 });
 
+document.getElementById('emailchange').addEventListener('click', function() {
+    document.getElementById('title').textContent = 'E-Mail ändern';
+    document.getElementById('input').placeholder = 'Neue E-Mail';
+    document.getElementById('overlayprofil').style.display = 'block';
+});
+
 // Overlay schließen
 document.getElementById('closeButton').addEventListener('click', () => {
     document.getElementById('overlayprofil').style.display = 'none';
@@ -33,6 +39,8 @@ document.getElementById('saveButton').addEventListener('click', () => {
         updateType = 'username';
     } else if (title === 'Passwort ändern') {
         updateType = 'password';
+    } else {
+        updateType = 'email';
     }
 
     // Hier sendest du die Änderungen an den Server
@@ -41,12 +49,15 @@ document.getElementById('saveButton').addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ [updateType]: newValue })  // Hier wird der neue Benutzername oder Passwort gesendet
+        body: JSON.stringify({ [updateType]: newValue })
     })
     .then(response => response.json())
     .then(data => {
         console.log('Antwort:', data);
-        if (data.success) {
+        if (data.success & updateType == 'email') {
+            alert('Bestätige deine E-Mail mit dem Link, den wir dir an die neue E-Mail gesendet haben.');
+            window.location.reload();
+        } else if (data.success) {
             alert(`${title} wurde erfolgreich geändert.`);
             // Overlay schließen und Eingabe zurücksetzen
             window.location.reload();

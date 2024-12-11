@@ -325,5 +325,38 @@ const passwordreset = async (req, res) => {
   }
 };
 
+const updateemail = async (req, res) => {
+  const { email } = req.body;
+  
+  const user = users[0];
 
-module.exports = { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset};
+  // E-Mail mit Bestätigungslink senden
+  const confirmationLink = `http://localhost:3000/emailupdate?id=${user.ID}}&email=${encodeURIComponent(email)}`;
+
+  await sendEmail(
+    email,
+    'E-Mail-Änderung',
+    `Bitte bestätigen Sie Ihre E-Mail, indem Sie auf diesen Link klicken: ${confirmationLink}`
+  );
+  res.json({ success: true, message: 'Bestätige deine E-Mail mit dem Link, den wir dir an die neue E-Mail gesendet haben.' });
+};
+
+const emailupdate = async (req, res) => {
+  const { id, email } = req.query;
+
+  if (!id || !email) {
+    return res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Der Link ist ungültig")}`);
+  } // Fehlermeldung im JSON-Format
+  
+
+  try {
+    // Suchen nach dem Token in der Datenbank
+    await db.query('UPDATE Benutzer SET email = ? WHERE id = ?', [email, id]);
+      res.redirect(`/emailupdate.html?success=true&message=${encodeURIComponent("E-Mail wurde erfolgreich geändert")}`);
+  } catch (error) {
+      console.error('Fehler beim Aktualisieren der E-Mail:', error);
+      res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Fehler beim Zurücksetzen der E-Mail")}`);
+  }
+};
+
+module.exports = { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset, updateemail, emailupdate};
