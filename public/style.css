@@ -8,7 +8,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(10, 9, 45);
-    color: #333;
+    color: #ffffff;
     margin: 1rem;
     padding: 1rem;
     display: flex;
@@ -70,7 +70,7 @@ button {
     line-height: 1.4285714285714286;
     border-color: rgb(88,99,128);
     color: #f6f7fb;
-    background: rgb(10, 9, 45);
+    background: rgb(10, 154, 227);
     padding: .375rem .875rem;
 }
 
@@ -624,4 +624,28 @@ label[for^="rueckseite"] {
 .ordner-button:hover {
     cursor: pointer;
     background-color: rgb(144, 0, 115);
+}
+.button-container {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.teilen-button{
+    position: absolute; /* Ermöglicht Positionierung auf X und Y Achsen */
+    top: 75%; /* Position auf der Y-Achse */
+    left: 50%; /* Position auf der X-Achse */
+    transform: translate(-50%, -50%); /* Zentriert den Button relativ zu seiner Position */
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

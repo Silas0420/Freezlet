@@ -15,10 +15,12 @@
         </p>
         <button id="goToLearningButton" class="create-button">Zum Lernen</button>
     </div>
-    <button id="teilen">Lernset teilen</button>
+    <div class = "teilen-button">
+      <button id="teilen">Lernset teilen</button>
+    </div>
             <!-- Overlay -->
-    <div id="overlayTeilen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+    <div id="overlayTeilen" style="display: none; position: relative; top: 0; left: 0; width: 0%; height: 0%; background: rgb(10, 9, 45);box-shadow: 0 50px 200px rgba(254, 106, 252, 0.4);">
+      <div style="position: relative; margin: 150px auto; padding: 20px; background: linear-gradient(135deg, #3a3f8d, #4347c7); width: 400px; text-align: center; border-radius: 0.5rem;">
       <h2>Lernkarten importieren</h2>
       <input type="text" id="linkInput" readonly>
       <br>
