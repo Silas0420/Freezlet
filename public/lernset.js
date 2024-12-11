@@ -4,19 +4,19 @@
 
  if (lernsetId) {
      // Hole den Namen des Lernsets von der Backend-API
-     fetch(`/lernsetName?id=${lernsetId}`)
+     fetch(`/getLernset?id=${lernsetId}`)
          .then(response => response.json())
          .then(data => {
              if (data.name) {
                  // Setze den Namen des Lernsets in den Titel
                  document.getElementById('lernsetName').innerText = data.name;
-             }
+            }
+            document.getElementById('beschreibung').innerText = data.description;
          })
          .catch(error => {
              console.error('Fehler beim Abrufen des Lernset-Namens:', error);
          });
  }
-
  // Weiterleitung zum Lernmodus
  document.getElementById('goToLearningButton').addEventListener('click', function() {
      if (lernsetId) {
@@ -55,3 +55,44 @@ function copyLink() {
     // Optional: Bestätigung für den Benutzer anzeigen
     alert("Link wurde kopiert!");
   }
+
+document.getElementById('addToFolder').addEventListener('click', () => {
+    document.getElementById('overlayaddToFolder').style.display = 'block';
+});
+
+document.getElementById('closeButtonf').addEventListener('click', () => {
+    document.getElementById('overlayaddToFolder').style.display = 'none';
+});
+fetch('/getFolders')
+.then(response => response.json())
+.then(folders => {
+    const folderList = document.getElementById('folderList');
+    folderList.innerHTML = '';  // Leere die Liste
+    folders.forEach(folder => {
+        // Erstelle ein Button-Element
+        const button = document.createElement('button');
+        button.textContent = folder.name;
+        button.className = 'ordner-button';
+
+        button.addEventListener('click', () => {
+                fetch(`/addToFolder?fid=${folder.ID}&sid=${lernsetId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Fehler: ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Lernset erfolgreich zum Ordner hinzugefügt');
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Fehler:', error);
+                });
+        });
+
+        // Füge den Button der Liste hinzu
+        folderList.appendChild(button);
+    });
+})
+.catch(err => console.error('Fehler beim Laden der Ordner:', err));

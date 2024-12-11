@@ -2,24 +2,10 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 
-const { register, login, verifyEmail } = require('./userController');
-const { createSet } = require('./setController');
-const { importCards } = require('./setController');
-const { getCards } = require('./cardController');
-const { updateLernstand } = require('./cardController');
-const { resetLernstand } = require('./cardController');
-const { getLernsetName } = require('./setController');
-const { createFolder } = require('./folderController');
-const { getFolder } = require('./folderController');
-const { getSet } = require('./setController');
-const { updateusername } = require('./userController');
-const { updatepassword } = require('./userController');
-const { deleteAccount } = require('./userController');
-const { getuserdata } = require('./userController');
-const { teilen } = require('./setController');
-const { lernsetuebernahme } = require('./setController');
-const { emailpr } = require('./userController');
-const { passwordreset } = require('./userController');
+const { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset, updateemail, emailupdate} = require('./userController');
+const { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme} = require('./setController');
+const { createFolder, getFolders, getFolder, assignSetToFolder} = require('./folderController');
+const { getCards, updateLernstand, resetLernstand } = require('./cardController');
 
 const app = express();
 
@@ -43,23 +29,27 @@ app.get('/', (req, res) => {
 app.post('/register', register);
 app.post('/login', login);
 app.get('/verifizierung', verifyEmail);
+app.get('/emailupdate', emailupdate);
 app.post('/lernseterstellung', createSet);
 app.post('/import', importCards);
 app.get('/lernen', getCards);
 app.post('/updateLernstand', updateLernstand);
 app.post('/resetLernstand', resetLernstand);
-app.get('/lernsetName', getLernsetName);
-app.post('/ordnererstellung', createFolder);
 app.get('/getFolder', getFolder);
+app.get('/getLernset', getLernset);
+app.post('/ordnererstellung', createFolder);
+app.get('/getFolders', getFolders);
 app.get('/getSet', getSet);
 app.post('/updateusername', updateusername);
 app.post('/updatepassword', updatepassword);
+app.post('/updateemail', updateemail);
 app.post('/deleteaccount', deleteAccount);
 app.get('/getuserdata', getuserdata);
 app.get('/teilen', teilen);
 app.post('/lernsetuebernahme', lernsetuebernahme);
 app.post('/emailpr', emailpr);
 app.post('/passwordreset', passwordreset);
+app.get('/addToFolder', assignSetToFolder)
 
 // Den Server starten
 const port = process.env.PORT || 3000;

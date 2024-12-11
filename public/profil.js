@@ -12,13 +12,19 @@ document.getElementById('passwordchange').addEventListener('click', function() {
     document.getElementById('overlayprofil').style.display = 'block';
 });
 
+document.getElementById('emailchange').addEventListener('click', function() {
+    document.getElementById('title').textContent = 'E-Mail ändern';
+    document.getElementById('input').placeholder = 'Neue E-Mail';
+    document.getElementById('overlayprofil').style.display = 'block';
+});
+
 // Overlay schließen
 document.getElementById('closeButton').addEventListener('click', () => {
     document.getElementById('overlayprofil').style.display = 'none';
 });
 
 // Speichern der Änderungen
-document.getElementById('saveButton').addEventListener('click', () => {
+document.getElementById('saveButton').addEventListener('click', async () => {
     const newValue = document.getElementById('input').value.trim();
     const title = document.getElementById('title').textContent;
 
@@ -33,28 +39,27 @@ document.getElementById('saveButton').addEventListener('click', () => {
         updateType = 'username';
     } else if (title === 'Passwort ändern') {
         updateType = 'password';
+    } else {
+        updateType = 'email';
     }
+    try {
+        const response = await  fetch(`/update${updateType}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ [updateType]: newValue })
+        });
 
-    // Hier sendest du die Änderungen an den Server
-    fetch(`/update${updateType}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ [updateType]: newValue })  // Hier wird der neue Benutzername oder Passwort gesendet
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Antwort:', data);
-        if (data.success) {
-            alert(`${title} wurde erfolgreich geändert.`);
-            // Overlay schließen und Eingabe zurücksetzen
-            window.location.reload();
-        } else {
-            alert('Fehler beim Speichern der Änderungen.');
-        }
-    })
-    .catch(err => console.error('Fehler:', err));
+        console.log(response); // Füge dies hinzu, um die Antwort zu sehen
+
+        const data = await response.json();
+        alert(data.message);
+        window.location.reload();
+        } catch (error) {
+          console.error('Fehler bei der Anfrage:', error);
+          alert('Ein unerwarteter Fehler ist aufgetreten. Versuche es nochmal');
+      }
 });
 
 
