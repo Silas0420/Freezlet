@@ -10,22 +10,28 @@
 <body>
     <div class="lernset-container">
         <h1 class="title" id="lernsetName"></h1> <!-- Hier wird der Name des Lernsets angezeigt -->
-        <p>
-            Bereit, um zu lernen? <br>Drücke den Knopf unten, um loszulegen!
-        </p>
+        <p>Bereit, um zu lernen? <br>Drücke den Knopf unten, um loszulegen!</p>
         <button id="goToLearningButton" class="create-button">Zum Lernen</button>
+        <button id="teilen">Lernset teilen</button>
+        <button id="addToFolder">Zu Ordner hinzufügen</button>
     </div>
-    <button id="teilen">Lernset teilen</button>
-            <!-- Overlay -->
+            <!-- Overlay teilen-->
     <div id="overlayTeilen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
-      <h2>Lernkarten importieren</h2>
-      <input type="text" id="linkInput" readonly>
-      <br>
-      <button onclick="copyLink()">Kopieren</button>
-      <button type="button" id="closeButton">Abbrechen</button>
+      <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+        <h2>Lernset teilen</h2>
+        <input type="text" id="linkInput" readonly>
+        <br>
+        <button onclick="copyLink()">Kopieren</button>
+        <button type="button" id="closeButton">Abbrechen</button>
+      </div>
     </div>
-  </div>
-    <script src="lernset.js"></script>
+    <div id="overlayaddToFolder" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+      <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+        <h2>Zu Ordner hinzufügen</h2>
+        <ul id="folderList"></ul>
+        <button type="button" id="closeButtonf">Abbrechen</button>
+      </div>
+    </div>
+  <script src="lernset.js"></script>
 </body>
 </html>
