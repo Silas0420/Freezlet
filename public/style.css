@@ -8,8 +8,8 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(10, 9, 45);
-    color: #333;
-    margin: 5rem;
+    color: #ffffff;
+    margin: 1rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -62,7 +62,7 @@ button {
     line-height: 1.4285714285714286;
     border-color: rgb(88,99,128);
     color: #f6f7fb;
-    background: rgb(10, 9, 45);
+    background: rgb(10, 154, 227);
     padding: .375rem .875rem;
 }
 
@@ -195,7 +195,7 @@ input::placeholder {
     color: #e0e0e0;
     border-radius: 60px;
     text-align: center;
-    box-shadow: 0 50px 200px rgba(221, 168, 63, 0.4); /* Schatten für mehr Tiefe */
+    box-shadow: 0 50px 200px rgba(190, 15, 135, 0.7); /* Schatten für mehr Tiefe */
     margin-top: 100px;
 }
 
@@ -327,7 +327,7 @@ img {
 form {
 
     width: 100%;
-    background-color: #ffffff;
+    background-color: #f918cc;
     padding: 50px;
     border-radius: 30px;
     margin-bottom: 50px;
@@ -460,7 +460,7 @@ button.danger:hover {
     display: flex;
     align-items: center; /* Zentriert das Logo und die Navigation vertikal */
     justify-content: space-between; /* Logo links, Navigation rechts */
-    background-color: #8B4513; /* Brauner Hintergrund */
+    background-color: #be0f87;
     padding: 25px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Schatten */
     position: fixed; /* Bleibt oben fixiert */
@@ -503,7 +503,7 @@ button.danger:hover {
 }
 
 .navbar-list li {
-    margin: 0 15px; /* Abstand zwischen den Navigationselementen */
+    margin: 0 45px; /* Abstand zwischen den Navigationselementen */
 }
 
 .navbar-list a {
@@ -520,6 +520,29 @@ button.danger:hover {
     border-radius: 7px;
     color: #ffcc00; /* Farbe des Texts beim Hover */
     transform: scale(1.1); /* Leichte Vergrößerung beim Hover */
+}
+
+.logout-button {
+    position: absolute; /* Bezieht sich auf den nächsten relativen Container */
+    right: 20px; /* Abstand vom rechten Rand */
+    top: 50%; /* Vertikal zentriert */
+    transform: translateY(-50%); /* Perfekte vertikale Zentrierung */
+    background-color: #ffffff; /* Weißer Hintergrund */
+    border-radius: 5px; /* Abgerundete Ecken */
+    padding: 10px 20px; /* Innenabstand */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Schatten für Tiefe */
+    transition: background-color 0.3s ease; /* Hover-Animation */
+}
+
+.logout-button a {
+    text-decoration: none;
+    color: #be0f87; /* Farbe passend zur Navigation */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #f3f3f3; /* Hellerer Hintergrund bei Hover */
 }
 
 
@@ -576,4 +599,16 @@ label[for^="rueckseite"] {
 
 #Anmeldung:first {
     text-align: center;
+}
+.button-container {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
