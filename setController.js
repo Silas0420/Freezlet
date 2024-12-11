@@ -206,7 +206,7 @@ const lernsetuebernahme = async (req, res) => {
             await connection.rollback();
             connection.release();
         }
-        res.status(500).json({ message: 'Fehler beim Erstellen des Lernsets.' });
+        res.status(500).json({ message: 'Fehler beim kopieren des Lernsets.' });
     }
 };
 

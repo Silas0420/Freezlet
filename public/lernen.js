@@ -43,7 +43,7 @@ async function resetAllLearning() {
         });
 
         // Lade die erste Karte nach dem Zurücksetzen
-        loadRandomCard();
+        window.location.reload();
     } catch (error) {
         console.error('Fehler beim Zurücksetzen des Lernstands:', error);
     }
@@ -145,3 +145,6 @@ async function back() {
 
 // Beim Laden der Seite eine zufällige Karte laden
 window.onload = loadRandomCard;
+async function optionen() {
+    document.getElementById('overlayoptionen').style.display = 'block';
+};

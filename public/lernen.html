@@ -8,18 +8,33 @@
     <link rel="icon" href="Freezlet Logo.png"/>
 </head>
 <body>
+    <button class="Lernen-Button-Blau" onclick="optionen()">Optionen</button>
+    <button class="Lernen-Button-Blau" onclick="back()">X</button>
     <h1>Lernset lernen</h1>
     <div id="cardContainer">
         <div class="Lernen-Karte">
             <p id="cardFront" class="Lernen-Schriftfarbe">Vorseite: Test</p>
             <input type="text" id="userAnswer" placeholder="Antwort">
             <button class="Lernen-Button-Blau" onclick="checkAnswer()">Antwort prüfen</button>
-            <button class="Lernen-Button-Blau" onclick="back()">Zurück</button>
         </div>       
     </div>
 
     <div id="feedback"></div>
-
+                <!-- Overlay -->
+                <div id="overlayoptionen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+                    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+                      <h2 id="title">Optionen</h2>
+                      <h6>Was </h6>
+                      <label>
+                        <input type="radio" name="seite" id="vorderseite" checked>
+                        Vorderseite
+                      </label>
+                      
+                      <label>
+                        <input type="radio" name="seite" id="rueckseite">
+                        Rückseite
+                      </label>                      
+                    </div>
     <script src="lernen.js"></script>
 </body>
 </html>
