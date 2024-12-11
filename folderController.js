@@ -23,16 +23,17 @@ const createFolder = async (req, res) => {
 
 // Lernset in einen Ordner verschieben
 const assignSetToFolder = async (req, res) => {
-    const { lernsetId, folderId } = req.body;
+    const folderID = req.query.fid;  // Ordner-ID
+    const lernsetID = req.query.sid; // Lernset-ID
 
-    if (!lernsetId || !folderId) {
+    if (!lernsetID || !folderID) {
         return res.status(400).json({ message: 'Lernset-ID und Ordner-ID sind erforderlich.' });
     }
 
     try {
         const [result] = await pool.query(
             'UPDATE Lernset SET ordnerID = ? WHERE id = ?',
-            [folderId, lernsetId]
+            [folderID, lernsetID]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Lernset nicht gefunden.' });
@@ -45,7 +46,7 @@ const assignSetToFolder = async (req, res) => {
 };
 
 // Alle Ordner des Benutzers abrufen
-const getFolder = async (req, res) => {
+const getFolders = async (req, res) => {
     try {
         const [folders] = await pool.query(
             'SELECT * FROM Ordner WHERE erstellerID = ?',
@@ -58,24 +59,45 @@ const getFolder = async (req, res) => {
     }
 };
 
-// Alle Lernsets in einem bestimmten Ordner abrufen
-const getSetsInFolder = async (req, res) => {
-    const folderId = req.query.folderId;
+const getFolder = async (req, res) => {
+    const folderID = req.query.id; // Ordner-ID aus der URL
 
-    if (!folderId) {
-        return res.status(400).json({ message: 'Ordner-ID fehlt.' });
+    if (!folderID) {
+        return res.status(400).json({ message: 'Folder-ID fehlt.' });
     }
 
+    let connection;
     try {
-        const [sets] = await pool.query(
-            'SELECT * FROM Lernset WHERE ordnerID = ?',
-            [folderId]
+        connection = await pool.getConnection();
+
+        // Hole den Namen des Ordners
+        const [folder] = await connection.query(
+            'SELECT name FROM Ordner WHERE ID = ?',
+            [folderID]
         );
-        res.status(200).json(sets);
+
+        // Überprüfen, ob der Ordner existiert
+        if (folder.length === 0) {
+            return res.status(404).json({ message: 'Ordner nicht gefunden.' });
+        }
+
+        // Hole alle zugehörigen Lernsets
+        const [sets] = await connection.query(
+            'SELECT * FROM Lernset WHERE ordnerID = ?',
+            [folderID]
+        );
+
+        // Antwort mit Ordnername und Sets
+        res.status(200).json({
+            folderName: folder[0].name, // Der Name des Ordners
+            sets: sets                  // Array der zugehörigen Lernsets
+        });
     } catch (error) {
-        console.error('Fehler beim Abrufen der Lernsets:', error);
-        res.status(500).json({ message: 'Fehler beim Abrufen der Lernsets.' });
+        console.error('Fehler beim Abrufen der Daten:', error);
+        res.status(500).json({ message: 'Fehler beim Abrufen der Datenbank.' });
+    } finally {
+        if (connection) connection.release();
     }
 };
 
-module.exports = { createFolder, getFolder };
+module.exports = { createFolder, getFolders, getFolder, assignSetToFolder};

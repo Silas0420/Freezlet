@@ -183,7 +183,7 @@ const updateusername = async (req, res) => {
       await db.query('UPDATE Benutzer SET benutzername = ? WHERE id = ?', [username, userId]);
 
       // Rückmeldung, dass die Änderung erfolgreich war
-      res.json({ success: true, message: 'Benutzername wurde erfolgreich geändert.' });
+      res.status(200).json({ message: 'Benutzername wurde erfolgreich geändert' });
   } catch (error) {
       console.error('Fehler beim Aktualisieren des Benutzernamens:', error);
       res.status(500).json({ message: 'Fehler beim Aktualisieren des Benutzernamens.' });
@@ -206,7 +206,7 @@ const updatepassword = async (req, res) => {
       await db.query('UPDATE Benutzer SET passwort = ? WHERE id = ?', [hashedPassword, userId]);
 
       // Rückmeldung, dass die Änderung erfolgreich war
-      res.json({ success: true, message: 'Passwort wurde erfolgreich geändert.' });
+      res.status(200).json({ message: 'Passwort wurde erfolgreich geändert' });
   } catch (error) {
       console.error('Fehler beim Aktualisieren des Passworts:', error);
       res.status(500).json({ message: 'Fehler beim Aktualisieren des Passworts.' });
@@ -327,18 +327,30 @@ const passwordreset = async (req, res) => {
 
 const updateemail = async (req, res) => {
   const { email } = req.body;
-  
-  const user = users[0];
-
+  try {
+    // Prüfen, ob der Benutzername bereits existiert
+    const [user] = await db.query(
+      'SELECT * FROM Benutzer WHERE email = ?',
+      [email]
+    );
+    
+    if (user.length > 0) {
+        return res.status(400).json({ message: "E-mail bereits vergeben." });   
+    }
+    const userId = req.session.userID;
   // E-Mail mit Bestätigungslink senden
-  const confirmationLink = `http://localhost:3000/emailupdate?id=${user.ID}}&email=${encodeURIComponent(email)}`;
+    const confirmationLink = `http://localhost:3000/emailupdate?id=${userId}&email=${encodeURIComponent(email)}`;
 
-  await sendEmail(
-    email,
-    'E-Mail-Änderung',
-    `Bitte bestätigen Sie Ihre E-Mail, indem Sie auf diesen Link klicken: ${confirmationLink}`
-  );
-  res.json({ success: true, message: 'Bestätige deine E-Mail mit dem Link, den wir dir an die neue E-Mail gesendet haben.' });
+    await sendEmail(
+      email,
+      'E-Mail-Änderung',
+      `Bitte bestätigen Sie Ihre E-Mail, indem Sie auf diesen Link klicken: ${confirmationLink}`
+    );
+    return res.status(200).json({ message: 'Bestätige deine E-Mail mit dem Link, den du per E-Mail erhalten hast.' });
+  }
+    catch {
+      return res.status(400).json({ message: "Fehler bei der Änderung" });
+    }
 };
 
 const emailupdate = async (req, res) => {

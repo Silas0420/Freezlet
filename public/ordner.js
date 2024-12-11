@@ -30,7 +30,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
 });
 
 function loadFolders() {
-    fetch('/getFolder')
+    fetch('/getFolders')
         .then(response => response.json())
         .then(folders => {
             const folderList = document.getElementById('folderList');
