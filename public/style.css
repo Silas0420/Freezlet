@@ -92,7 +92,7 @@ input:focus {
 }
 
 input::placeholder {
-    color: rgb(0,0,0);
+    color: rgb(0, 0, 0);
     font-size: 14px;
 }
 
@@ -611,4 +611,26 @@ label[for^="rueckseite"] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.Overlay-Design {
+    position: relative; 
+    margin: 100px auto; 
+    padding: 20px; 
+    background: rgb(249, 24, 204); 
+    width: 400px; 
+    text-align: center; 
+    border-radius: 0.5rem;
+}
+
+textarea {
+    background-color: transparent;
+    color: white;
+    border-color: rgb(0, 238, 255);
+    border-width: medium;
+    border-radius: .5rem;
+}
+
+textarea::placeholder {
+    color: white;
 }
