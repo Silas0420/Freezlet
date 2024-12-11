@@ -20,10 +20,10 @@
         <div>
             <h1 class="title">Neues Lernset erstellen</h1>
             <form id="createSetForm">
-                <label for="title">Titel des Lernsets</label><br>
+                <label for="title">Titel</label><br>
                 <input type="text" id="title" name="title" placeholder="Gib einen Titel ein" class="input">
                 <button id="saveSetButton" class="create-button" type="button">Lernset erstellen</button><br>
-                <label for="description">Beschreibung des Lernsets</label><br>
+                <label for="description">Beschreibung</label><br>
                 <input type="text" id="description" name="description" placeholder="Beschreibung hinzufügen..." class="input"><br>
                 <span class="Unterstrich"></span>
                 <label for="openButton">Lernkarten importieren</label><br>
@@ -118,7 +118,6 @@ document.getElementById('saveSetButton').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         if (data.message === 'Lernset erfolgreich erstellt!') {
-            console.log('Lernset erstellt:', data);
             window.location.href = `/lernset.html?id=${data.setID}`;
         }
     })
