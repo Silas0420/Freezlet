@@ -11,7 +11,7 @@ const { updateLernstand } = require('./cardController');
 const { resetLernstand } = require('./cardController');
 const { getLernsetName } = require('./setController');
 const { createFolder } = require('./folderController');
-const { getFolder } = require('./folderController');
+const { getFolders, getFolder, assignSetToFolder } = require('./folderController');
 const { getSet } = require('./setController');
 const { updateusername } = require('./userController');
 const { updatepassword } = require('./userController');
@@ -51,9 +51,10 @@ app.post('/import', importCards);
 app.get('/lernen', getCards);
 app.post('/updateLernstand', updateLernstand);
 app.post('/resetLernstand', resetLernstand);
+app.get('/getFolder', getFolder);
 app.get('/lernsetName', getLernsetName);
 app.post('/ordnererstellung', createFolder);
-app.get('/getFolder', getFolder);
+app.get('/getFolders', getFolders);
 app.get('/getSet', getSet);
 app.post('/updateusername', updateusername);
 app.post('/updatepassword', updatepassword);
@@ -64,6 +65,7 @@ app.get('/teilen', teilen);
 app.post('/lernsetuebernahme', lernsetuebernahme);
 app.post('/emailpr', emailpr);
 app.post('/passwordreset', passwordreset);
+app.get('/addToFolder', assignSetToFolder)
 
 // Den Server starten
 const port = process.env.PORT || 3000;
