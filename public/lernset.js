@@ -4,13 +4,14 @@
 
  if (lernsetId) {
      // Hole den Namen des Lernsets von der Backend-API
-     fetch(`/lernsetName?id=${lernsetId}`)
+     fetch(`/getLernset?id=${lernsetId}`)
          .then(response => response.json())
          .then(data => {
              if (data.name) {
                  // Setze den Namen des Lernsets in den Titel
                  document.getElementById('lernsetName').innerText = data.name;
-             }
+            }
+            document.getElementById('beschreibung').innerText = data.description;
          })
          .catch(error => {
              console.error('Fehler beim Abrufen des Lernset-Namens:', error);

@@ -109,27 +109,28 @@ async function importCards(req, res) {
     }
   }
 
-  const getLernsetName = async (req, res) => {
+  const getLernset = async (req, res) => {
     const lernsetId = req.query.id;  // Lernset-ID aus der URL
-
     if (!lernsetId) {
         return res.status(400).json({ message: 'Lernset-ID fehlt.' });
     }
-
     let connection;
     try {
         connection = await pool.getConnection();
 
         // Hole den Titel des Lernsets (oder name, je nach der Spaltenbezeichnung)
         const [result] = await connection.query(
-            'SELECT titel FROM Lernset WHERE ID = ?', [lernsetId]
+            'SELECT titel,beschreibung FROM Lernset WHERE ID = ?', [lernsetId]
         );
 
         if (result.length === 0) {
             return res.status(404).json({ message: 'Lernset nicht gefunden.' });
         }
 
-        res.json({ name: result[0].titel });  // Rückgabe des Titels (oder name, je nach Spalte)
+        res.json({
+          name: result[0].titel,
+          description: result[0].beschreibung
+      }); // Rückgabe des Titels (oder name, je nach Spalte)
 
     } catch (error) {
         console.error('Fehler beim Abrufen des Lernset-Namens:', error);
@@ -211,4 +212,4 @@ const lernsetuebernahme = async (req, res) => {
 };
 
 
-module.exports = { createSet, importCards,getLernsetName , getSet ,teilen ,lernsetuebernahme};
+module.exports = { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme};
