@@ -536,7 +536,7 @@ button.danger:hover {
     align-items: center; /* Zentriert das Logo und die Navigation vertikal */
     justify-content: space-between; /* Logo links, Navigation rechts */
     background-color: #8B4513; /* Brauner Hintergrund */
-    padding: 10px 10px;
+    padding: 25px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Schatten */
     position: fixed; /* Bleibt oben fixiert */
     top: 0;
@@ -552,12 +552,14 @@ button.danger:hover {
 /* Logo */
 .logo {
     flex: 0 0 auto; /* Verhindert, dass das Logo skaliert wird */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%)
 }
 
 .logo img {
     height: 70px; /* Höhe festlegen */
     width: auto; /* Breite wird automatisch anhand des Seitenverhältnisses angepasst */
-    margin-right: 15px; /* Optional: Abstand zur Navigation */
     object-fit: contain; /* Verhindert Verzerrung */
 }
 
