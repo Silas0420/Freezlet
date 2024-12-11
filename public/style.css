@@ -19,12 +19,6 @@ body {
     height: 50vh;
 }
 
-.title {
-    font-size: 36px;
-    color: rgb(255, 255, 255);
-    text-align: center;
-}
-
 h1 {
     margin-top: 50px; /* Erhöhe diesen Wert nach Bedarf */
     font-size: 24px;
@@ -34,7 +28,10 @@ h1 {
 }
 
 label {
-    color:rgb(255, 255, 255)
+    font-size: 22px;
+    font-weight: bold;
+    color: #555;
+    margin-top: 10px;
 }
 
 p {
@@ -43,11 +40,6 @@ p {
 
 a {
     color:rgb(255, 255, 255)
-}
-
-input::placeholder {
-    color: #ffffff;
-    font-size: 1rem;
 }
 
 button {
@@ -78,17 +70,20 @@ button:hover {
     background-color: rgb(67, 75, 97);
 }
 
-/* Input Einstellungen*/
-
 input {
     width: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: transparent;
     color: rgb(0,0,0);
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-top: 10px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-color: #00eeff;
+    border-style: solid;
+    border-width: medium;
     font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
 }
 
 input:focus {
@@ -99,6 +94,12 @@ input:focus {
 input::placeholder {
     color: rgb(0,0,0);
     font-size: 14px;
+}
+
+.title {
+    font-size: 36px;
+    color: rgb(255, 255, 255);
+    text-align: center;
 }
 
 .button1 {
@@ -184,16 +185,6 @@ input::placeholder {
     background-color: rgb(67, 75, 97);
 }
 
-/*CSS vom Home.HTML*/
-
-/* Grundlegende Reset-Regeln */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Container für den gesamten Inhalt */
 .home-container {
     width: 1500%;  /* Der Container nimmt die gesamte Breite ein */
     max-width: 300px; /* Erhöhe den maximalen Wert */
@@ -208,25 +199,20 @@ input::placeholder {
     margin-top: 100px;
 }
 
-/* Styling für die Hauptüberschrift */
 .home-title {
     font-size: 70px;
     color: #ffffff;
-    margin-top: 0; /* Entferne Abstand nach oben */
-    margin-bottom: 10px; /* Beibehalten des Abstands nach unten */
+    margin-top: 0; 
+    margin-bottom: 10px; 
 }
 
-/* Styling für die Unterüberschrift */
 .home-subtitle {
     font-size: 40px;
     color: #ffffff;
     margin-bottom: 10px;
 }
-
-/* Lernset CSS Darstellung */
-/* Container für die Lernset-Seite */
 .lernset-container {
-    text-align: center; /* Zentriert den gesamten Text und Button */
+    text-align: center; 
     margin-top: 10vh;
     padding: 30px;
     background: linear-gradient(135deg, #3a3f8d, #4347c7);
@@ -235,33 +221,9 @@ input::placeholder {
     max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 50px 200px rgba(254, 106, 252, 0.4); /* Schatten für mehr Tiefe */
+    box-shadow: 0 50px 200px rgba(254, 106, 252, 0.4); 
 }
 
-/* Button zentrieren */
-.create-button {
-    display: inline-block; /* Sicherstellen, dass der Button als Blockelement behandelt wird */
-    margin: 0 auto; /* Zentriert den Button */
-    font-size: 1.5rem; /* Größere Schrift */
-    padding: 20px 50px; /* Mehr Innenabstand */
-    margin-top: 10px; /* Abstand zum Text */
-    background-color: #4347c7;
-    border-radius: 10px; /* Abgerundete Ecken */
-    color: #ffffff; /* Weiße Schrift */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Button-Schatten */
-    border: none;
-    cursor: pointer;
-
-}
-
-/* Hover-Effekt für den Button */
-.create-button:hover {
-    background-color: #5a5fdf; /* Helleres Blau bei Hover */
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    transition: all 0.3s ease;
-}
-
-/* Überschrift Abstand anpassen */
 .lernset-container h1 {
     margin-bottom: 0px; /* Reduziert den Abstand nach unten */
 }
@@ -362,21 +324,6 @@ img {
     display: inline-block;
 }
 
-/* Lernseterstellung CSS/*
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(10, 9, 45);
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    min-height: 100vh;
-}
-
-/* Formular-Styling */
 form {
 
     width: 100%;
@@ -386,28 +333,6 @@ form {
     margin-bottom: 50px;
 }
 
-label {
-    font-size: 22px;
-    font-weight: bold;
-    color: #555;
-    margin-top: 10px;
-}
-
-.input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.input:focus {
-    border-color: #3fdc3a;
-    outline: none;
-}
-
-/* Buttons */
 button {
     font-size: 16px;
     padding: 10px 15px;
@@ -521,8 +446,8 @@ button.danger:hover {
 }
 
 .field input {
-    width: 100%; /* Passt sich an die Breite des Containers an */
-    max-width: 300px; /* Optional: Begrenzung der maximalen Breite */
+    width: 100%; 
+    max-width: 300px; 
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #000000;
@@ -632,17 +557,4 @@ label[for^="rueckseite"] {
 
 #Anmeldung:first {
     text-align: center;
-}
-
-.anmeldung-input {
-    margin-top: 10px;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border-color: #00eeff;
-    border-style: solid;
-    border-width: medium;
-    font-size: 14px;
-    font-weight: bold;
-    color: #555;
-    display: inline-block;
 }
