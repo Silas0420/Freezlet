@@ -1,4 +1,4 @@
-            fetch("navigation.html") // Datei mit der Navigation
+            fetch("/navigation.html")
                 .then((response) => {
                     if (!response.ok) {
                         console.log("fehler1")
