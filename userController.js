@@ -328,7 +328,6 @@ const passwordreset = async (req, res) => {
 const updateemail = async (req, res) => {
   const { email } = req.body;
   try {
-    // Prüfen, ob der Benutzername bereits existiert
     const [user] = await db.query(
       'SELECT * FROM Benutzer WHERE email = ?',
       [email]

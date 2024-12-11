@@ -4,7 +4,6 @@ const pool = require('./db'); // Stelle sicher, dass die Verbindung korrekt impo
 // Funktion zum Erstellen eines neuen Lernsets (mit Lernstand für jede Karte)
 async function createSet(req, res) {
     const { title, description, cards } = req.body;
-    console.log('createSet aufgerufen mit:', req.body); 
 
     if (!title || !cards || cards.length === 0) {
         return res.status(400).json({ message: 'Titel und Karten sind erforderlich.' });
@@ -21,9 +20,11 @@ async function createSet(req, res) {
             'INSERT INTO Lernset (titel, beschreibung, erstellerID) VALUES (?, ?, ?)',
             [title, description || null, req.session.userID]  // Annahme: Der Benutzer ist in der Session gespeichert
         );
-
         const setID = setResult.insertId;
-
+        await connection.query(
+          'INSERT INTO Lernset2Benutzer (benutzerID, lernsetID) VALUES (?, ?)',
+          [req.session.userID, setID]
+      );
         // 2. Erstelle die Karten und den Lernstand
         for (const card of cards) {
             const { vorderseite, rueckseite } = card;
@@ -144,7 +145,7 @@ async function importCards(req, res) {
 const getSet = async (req, res) => {
   try {
       const [sets] = await pool.query(
-          'SELECT * FROM Lernset WHERE erstellerID = ?',
+          'SELECT * FROM Lernset JOIN Lernset2Benutzer ON Lernset.ID = Lernset2Benutzer.lernsetID WHERE Lernset2Benutzer.benutzerID = ?',
           [req.session.userID]
       );
       res.status(200).json(sets);
@@ -183,8 +184,6 @@ const lernsetuebernahme = async (req, res) => {
             [req.session.userID, lernsetId]  // Annahme: Der Benutzer ist in der Session gespeichert
         );
         const cardsInSet = await connection.query('SELECT ID FROM Karte WHERE lernsetID = ?', [lernsetId]);
-
-          console.log("Karten im Lernset:", cardsInSet); // Debugging-Ausgabe
 
           // Überprüfen, ob Karten vorhanden sind
           if (cardsInSet.length === 0) {
