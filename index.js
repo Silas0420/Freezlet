@@ -3,6 +3,7 @@ const path = require('path');
 const session = require('express-session');
 const simpleGit = require('simple-git');
 const { exec } = require('child_process');
+const git = simpleGit();
 
 const { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset, updateemail, emailupdate} = require('./userController');
 const { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme} = require('./setController');
@@ -55,7 +56,10 @@ app.get('/addToFolder', assignSetToFolder)
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
-  // Überprüfe, ob es ein GitHub Webhook ist (optional: Sicherheitschecks)
+  if (!verifySignature(req)) {
+    return res.status(400).send('Invalid signature');
+  }
+
   if (req.headers['x-github-event'] === 'push') {
     try {
       console.log('Webhook empfangen: Pull ausführen...');
