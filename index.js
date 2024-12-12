@@ -51,6 +51,45 @@ app.post('/emailpr', emailpr);
 app.post('/passwordreset', passwordreset);
 app.get('/addToFolder', assignSetToFolder)
 
+// Webhook-Endpoint hinzufügen
+app.post('/webhook', async (req, res) => {
+  // Überprüfe, ob es ein GitHub Webhook ist (optional: Sicherheitschecks)
+  if (req.headers['x-github-event'] === 'push') {
+    try {
+      console.log('Webhook empfangen: Pull ausführen...');
+
+      // Definiere das Arbeitsverzeichnis
+      const repoPath = '/home/silas/Freezlet';  // Dein Projektverzeichnis
+
+      // Git Pull ausführen
+      await git.cwd(repoPath);
+      await git.pull('origin', 'main');  // Ersetze "main" durch den richtigen Branch, wenn nötig
+
+      // Optional: Installiere die Abhängigkeiten, wenn Änderungen an der package.json gemacht wurden
+      await git.raw(['npm', 'install']);
+
+      // Server neu starten (mit pm2)
+      exec('pm2 restart freezlet', (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Fehler beim Neustarten des Servers: ${error}`);
+        }
+        if (stderr) {
+          console.error(`stderr: ${stderr}`);
+        }
+        console.log(`stdout: ${stdout}`);
+      });
+
+      // Antwort zurück an GitHub
+      res.status(200).send('WebHook empfangen und verarbeitet.');
+    } catch (error) {
+      console.error('Fehler beim Pull der Änderungen:', error);
+      res.status(500).send('Fehler beim Verarbeiten des Webhooks');
+    }
+  } else {
+    res.status(400).send('Unzulässiges Webhook-Ereignis');
+  }
+});
+
 // Den Server starten
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
