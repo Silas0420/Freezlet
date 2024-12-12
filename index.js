@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const simpleGit = require('simple-git');
+const { exec } = require('child_process');
 
 const { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset, updateemail, emailupdate} = require('./userController');
 const { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme} = require('./setController');
