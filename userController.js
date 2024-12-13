@@ -65,7 +65,7 @@ const register = async (req, res) => {
     );
 
     // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `http://localhost:3000/verifizierung?token=${token}`;
+    const confirmationLink = `https://freezlet.ch/verifizierung?token=${token}`;
     await sendEmail(
         email,
         'E-Mail-Bestätigung',
@@ -282,7 +282,7 @@ const emailpr = async (req, res) => {
     const user = users[0];
 
     // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `http://localhost:3000/passwordreset.html?id=${user.ID}`;
+    const confirmationLink = `https://freezlet.ch/passwordreset.html?id=${user.ID}`;
     await sendEmail(
         email,
         'Passwort zurücksetzen',
@@ -337,7 +337,7 @@ const updateemail = async (req, res) => {
     }
     const userId = req.session.userID;
   // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `http://localhost:3000/emailupdate?id=${userId}&email=${encodeURIComponent(email)}`;
+    const confirmationLink = `https://freezlet.ch/emailupdate?id=${userId}&email=${encodeURIComponent(email)}`;
 
     await sendEmail(
       email,
