@@ -16,6 +16,7 @@
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "express-webhook": "^0.0.2",
+    "https": "^1.0.0",
     "mysql2": "^3.11.4",
     "nodemailer": "^6.9.16",
     "simple-git": "^3.27.0"
