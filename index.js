@@ -1,3 +1,4 @@
+const https = require('https');
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -5,10 +6,19 @@ const simpleGit = require('simple-git');
 const { exec } = require('child_process');
 const git = simpleGit();
 
-const { register, verifyEmail, login ,updateusername, updatepassword, deleteAccount, getuserdata, emailpr, passwordreset, updateemail, emailupdate} = require('./userController');
-const { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme} = require('./setController');
-const { createFolder, getFolders, getFolder, assignSetToFolder} = require('./folderController');
-const { getCards, updateLernstand, resetLernstand } = require('./cardController');
+const {
+  register, verifyEmail, login, updateusername, updatepassword, deleteAccount,
+  getuserdata, emailpr, passwordreset, updateemail, emailupdate
+} = require('./userController');
+const {
+  createSet, importCards, getLernset, getSet, teilen, lernsetuebernahme
+} = require('./setController');
+const {
+  createFolder, getFolders, getFolder, assignSetToFolder
+} = require('./folderController');
+const {
+  getCards, updateLernstand, resetLernstand
+} = require('./cardController');
 
 const app = express();
 
@@ -17,7 +27,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'Freezlettelzeerf01928373645',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: true }
 }));
 
 app.use(express.json());
@@ -96,8 +106,22 @@ app.post('/webhook', async (req, res) => {
   }
 });
 
-// Den Server starten
-const port = process.env.PORT || 80;
-app.listen(port, () => {
-  console.log(`Server läuft auf http://localhost:${port}`);
+// SSL/TLS-Zertifikate laden
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/freezlet.ch/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/freezlet.ch/cert.pem'),
+  ca: fs.readFileSync('/etc/letsencrypt/live/freezlet.ch/chain.pem')
+};
+
+// HTTPS-Server starten
+https.createServer(options, app).listen(443, () => {
+  console.log('HTTPS-Server läuft auf Port 443');
+});
+
+// Weiterleitung von HTTP auf HTTPS
+http.createServer((req, res) => {
+  res.writeHead(301, { "Location": `https://${req.headers.host}${req.url}` });
+  res.end();
+}).listen(80, () => {
+  console.log('HTTP zu HTTPS Weiterleitung aktiv');
 });
