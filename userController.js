@@ -8,11 +8,10 @@ require('dotenv').config();
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-    secure: true, // true für SSL/TLS
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    }, // Details zu den SMTP-Kommunikationen
+    secure: false, // true für SSL/TLS
+    tls: {
+      rejectUnauthorized: false
+    } 
 });
 
 // E-Mail senden Funktion
