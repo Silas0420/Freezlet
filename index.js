@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const simpleGit = require('simple-git');
-const { exec } = require('child_process');
 const git = simpleGit();
 
 const {
@@ -67,42 +66,31 @@ app.get('/addToFolder', assignSetToFolder)
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
+  console.log('Webhook empfangen:', req.headers);  // Prüfe die Headers
+  
   if (!verifySignature(req)) {
+    console.log('Invalid signature');
     return res.status(400).send('Invalid signature');
   }
 
   if (req.headers['x-github-event'] === 'push') {
     try {
-      console.log('Webhook empfangen: Pull ausführen...');
-
-      // Definiere das Arbeitsverzeichnis
+      console.log('Verarbeite GitHub Push-Event...');
       const repoPath = '/home/silas/Freezlet';  // Dein Projektverzeichnis
 
-      // Git Pull ausführen
       await git.cwd(repoPath);
-      await git.pull('origin', 'main');  // Ersetze "main" durch den richtigen Branch, wenn nötig
+      await git.pull('origin', 'main');  // Achte auf den richtigen Branch
 
-      // Optional: Installiere die Abhängigkeiten, wenn Änderungen an der package.json gemacht wurden
+      // Wenn nötig, installiere die Abhängigkeiten
       await git.raw(['npm', 'install']);
 
-      // Server neu starten (mit pm2)
-      exec('pm2 restart freezlet', (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Fehler beim Neustarten des Servers: ${error}`);
-        }
-        if (stderr) {
-          console.error(`stderr: ${stderr}`);
-        }
-        console.log(`stdout: ${stdout}`);
-      });
-
-      // Antwort zurück an GitHub
       res.status(200).send('WebHook empfangen und verarbeitet.');
     } catch (error) {
       console.error('Fehler beim Pull der Änderungen:', error);
       res.status(500).send('Fehler beim Verarbeiten des Webhooks');
     }
   } else {
+    console.log('Unzulässiges GitHub-Event:', req.headers['x-github-event']);
     res.status(400).send('Unzulässiges Webhook-Ereignis');
   }
 });
