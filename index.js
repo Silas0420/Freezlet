@@ -109,7 +109,17 @@ app.post('/webhook', async (req, res) => {
         }
         console.log(`stdout: ${stdout}`);
       });
-
+      exec('pm2 restart Freezlet', (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Fehler beim Neustarten der Anwendung: ${error.message}`);
+          return res.status(500).send('Fehler beim Neustarten der Anwendung');
+        }
+        if (stderr) {
+          console.error(`stderr: ${stderr}`);
+          return res.status(500).send('Fehler beim Neustarten der Anwendung');
+        }
+        console.log(`stdout: ${stdout}`);
+      });
       res.status(200).send('WebHook empfangen und verarbeitet.');
     } catch (error) {
       console.error('Fehler beim Pull der Änderungen:', error);
