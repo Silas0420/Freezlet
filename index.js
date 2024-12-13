@@ -5,6 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const simpleGit = require('simple-git');
 const git = simpleGit();
+const crypto = require('crypto');
 
 const {
   register, verifyEmail, login, updateusername, updatepassword, deleteAccount,
@@ -67,7 +68,20 @@ app.get('/addToFolder', assignSetToFolder)
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
   console.log('Webhook empfangen:', req.headers);  // Prüfe die Headers
-  
+
+// Beispiel einer Funktion zur Überprüfung der GitHub Webhook-Signatur
+  function verifySignature(req) {
+  const signature = req.headers['x-hub-signature-256']; // GitHub Webhook Signature Header
+  const payload = JSON.stringify(req.body);
+  const secret = process.env.GITHUB_SECRET; // Dein GitHub Secret, das du beim Webhook erstellt hast
+
+  const hmac = crypto.createHmac('sha256', secret);
+  hmac.update(payload);
+  const digest = `sha256=${hmac.digest('hex')}`;
+
+  return signature === digest;
+}
+
   if (!verifySignature(req)) {
     console.log('Invalid signature');
     return res.status(400).send('Invalid signature');
