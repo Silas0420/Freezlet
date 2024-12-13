@@ -7,6 +7,7 @@ const session = require('express-session');
 const simpleGit = require('simple-git');
 const git = simpleGit();
 const crypto = require('crypto');
+const { exec } = require('child_process');
 
 const {
   register, verifyEmail, login, updateusername, updatepassword, deleteAccount,
@@ -97,7 +98,17 @@ app.post('/webhook', async (req, res) => {
       await git.pull('origin', 'main');  // Achte auf den richtigen Branch
 
       // Wenn nötig, installiere die Abhängigkeiten
-      await git.raw(['npm', 'install']);
+      exec('npm install', { cwd: repoPath }, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Fehler beim Ausführen von npm install: ${error.message}`);
+          return res.status(500).send('Fehler beim Verarbeiten des Webhooks');
+        }
+        if (stderr) {
+          console.error(`stderr: ${stderr}`);
+          return res.status(500).send('Fehler beim Verarbeiten des Webhooks');
+        }
+        console.log(`stdout: ${stdout}`);
+      });
 
       res.status(200).send('WebHook empfangen und verarbeitet.');
     } catch (error) {
