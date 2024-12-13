@@ -68,7 +68,7 @@ app.get('/addToFolder', assignSetToFolder)
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
-  console.log('Webhook empfangen:', req.headers);  // Prüfe die Headers
+  console.log('Webhook empfangen:', req.headers);
 
 // Beispiel einer Funktion zur Überprüfung der GitHub Webhook-Signatur
   function verifySignature(req) {
