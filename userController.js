@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     port: process.env.EMAIL_PORT,
     secure: false, // true für SSL/TLS
     tls: {
-      rejectUnauthorized: false
+      rejectUnauthorized: true
     } 
 });
 
