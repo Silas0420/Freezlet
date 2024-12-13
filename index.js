@@ -1,3 +1,4 @@
+const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
@@ -115,14 +116,6 @@ const options = {
 };
 
 // HTTPS-Server starten
-https.createServer(options, app).listen(443, () => {
-  console.log('HTTPS-Server läuft auf Port 443');
-});
-
-// Weiterleitung von HTTP auf HTTPS
-http.createServer((req, res) => {
-  res.writeHead(301, { "Location": `https://${req.headers.host}${req.url}` });
-  res.end();
-}).listen(80, () => {
-  console.log('HTTP zu HTTPS Weiterleitung aktiv');
+https.createServer(options, app).listen(8080, () => {
+  console.log('HTTPS-Server läuft auf Port 8080');
 });
