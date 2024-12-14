@@ -9,8 +9,12 @@ const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     secure: false, // true für SSL/TLS
+    auth: {
+      user: process.env.EMAIL_USER, // Benutzername
+      pass: process.env.EMAIL_PASS  // Passwort
+  },
     tls: {
-      rejectUnauthorized: true
+      rejectUnauthorized: false
     } 
 });
 
@@ -27,7 +31,7 @@ const sendEmail = async (to, subject, text) => {
         await transporter.sendMail(mailOptions);
         console.log('E-Mail erfolgreich gesendet.');
     } catch (error) {
-        console.error('Fehler beim Senden der E-Mail:', error);
+        console.error('Fehler beim Senden der E-Mail:', error, error.stack);
     }
 };
 
