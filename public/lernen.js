@@ -114,10 +114,7 @@ async function checkAnswer() {
         console.error('Fehler beim Aktualisieren des Lernstands:', error);
     }
 
-    const weiterButton = document.createElement('button');
-    weiterButton.innerText = 'Weiter';
-    weiterButton.id = 'weiter';
-    weiterButton.className = 'Lernen-Button-Blau';
+    document.getElementById("weiter").display = "block";
 
     feedbackElement.appendChild(weiterButton);
     feedbackElement.appendChild(image);
