@@ -114,7 +114,10 @@ async function checkAnswer() {
         console.error('Fehler beim Aktualisieren des Lernstands:', error);
     }
 
-    document.getElementById("weiter").style.display = "block";
+    const weiterButton = document.createElement("button");
+    weiterButton.className("Lernen-Button-Blau");
+    weiterButton.innerText = "Weiter";
+    weiterButton.onclick = weiter();
 
     feedbackElement.appendChild(weiterButton);
     feedbackElement.appendChild(image);
@@ -160,9 +163,9 @@ document.getElementById('saveButton').addEventListener('click', () => {
     loadRandomCard;
 });
 
-document.getElementById('weiter').addEventListener('click', () => {
+async function weiter(){
     document.getElementById('cardContainer').style.display = 'block';
     document.getElementById('feedback').innerText = '';
     document.getElementById('feedback').innerHTML = '';
     feedbackElement.removeChild(image);
-});
+};
