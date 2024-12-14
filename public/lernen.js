@@ -1,3 +1,4 @@
+let cardFront = false;
 let cardBack = '';
 let cardID = ''; // Globale Variable für die Rückseite der Karte
 const urlParams = new URLSearchParams(window.location.search);
@@ -13,10 +14,10 @@ async function loadRandomCard() {
             const randomCard = cards[Math.floor(Math.random() * cards.length)];
 
             // Zeige die Vorderseite der zufälligen Karte an
-            document.getElementById('cardFront').innerText = randomCard.vorderseite;
+            document.getElementById('cardFront').innerText = cardFront ? randomCard.rueckseite : randomCard.vorderseite;
 
             // Speichere die Rückseite in der globalen Variable
-            cardBack = randomCard.rueckseite;
+            cardBack = cardFront ? randomCard.vorderseite : randomCard.rueckseite;
             cardID = randomCard.kartenID;
 
         } else {
@@ -74,14 +75,14 @@ async function checkAnswer() {
 
     const correctAnswer = cardBack;
 
-    document.getElementById('cardContainer').style.display = 'none';
-
     if (!userAnswer) {
         feedbackElement.innerText = 'Bitte eine Antwort eingeben.';
         feedbackElement.style.color = 'red';
         feedbackElement.style.paddingTop = '1rem';
         return;
     }
+
+    document.getElementById('cardContainer').style.display = 'none';
 
     const isCorrect = userAnswer === correctAnswer;
 
@@ -117,7 +118,6 @@ async function checkAnswer() {
     weiterButton.innerText = 'Weiter';
     weiterButton.id = 'weiter';
     weiterButton.className = 'Lernen-Button-Blau';
-    weiterButton.onclick = () => window.location.reload();
 
     feedbackElement.appendChild(weiterButton);
     feedbackElement.appendChild(image);
@@ -148,3 +148,24 @@ window.onload = loadRandomCard;
 async function optionen() {
     document.getElementById('overlayoptionen').style.display = 'block';
 };
+
+document.getElementById('closeButton').addEventListener('click', () => {
+    document.getElementById('overlayoptionen').style.display = 'none';
+});
+
+document.getElementById('saveButton').addEventListener('click', () => {
+    if (document.getElementById('vorderseite').checked) {
+        cardFront = true;
+    } else {
+        cardFrotnt = false;
+    }
+    document.getElementById('overlayprofil').style.display = 'none';
+});
+
+document.getElementById('weiter').addEventListener('click', () => {
+    document.getElementById('cardContainer').style.display = 'block';
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('feedback').innerHTML = '';
+    feedbackElement.removeChild(weiterButton);
+    feedbackElement.removeChild(image);
+});
