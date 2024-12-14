@@ -160,6 +160,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
         cardFront = false;
     }
     document.getElementById('overlayoptionen').style.display = 'none';
+    loadRandomCard;
 });
 
 document.getElementById('weiter').addEventListener('click', () => {
