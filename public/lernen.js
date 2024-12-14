@@ -157,9 +157,9 @@ document.getElementById('saveButton').addEventListener('click', () => {
     if (document.getElementById('vorderseite').checked) {
         cardFront = true;
     } else {
-        cardFrotnt = false;
+        cardFront = false;
     }
-    document.getElementById('overlayprofil').style.display = 'none';
+    document.getElementById('overlayoptionen').style.display = 'none';
 });
 
 document.getElementById('weiter').addEventListener('click', () => {
