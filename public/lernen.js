@@ -115,9 +115,9 @@ async function checkAnswer() {
     }
 
     const weiterButton = document.createElement("button");
-    weiterButton.className("Lernen-Button-Blau");
+    weiterButton.className = "Lernen-Button-Blau";
     weiterButton.innerText = "Weiter";
-    weiterButton.onclick = weiter();
+    weiterButton.onclick = weiter;
 
     feedbackElement.appendChild(weiterButton);
     feedbackElement.appendChild(image);
