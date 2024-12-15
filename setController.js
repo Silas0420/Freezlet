@@ -156,7 +156,7 @@ const getSet = async (req, res) => {
 };
 
 const teilen = async (req, res) => {
-  const { id } = req.query.id;
+  const { id } = req.query;
 
   if (!id) {
     return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Der Link ist ungültig!")}`);
