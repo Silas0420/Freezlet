@@ -1,4 +1,3 @@
-        // Formular-Submit handler
         document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault(); // Verhindert das Standard-Formular-Submit
       

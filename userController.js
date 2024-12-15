@@ -302,13 +302,11 @@ const emailpr = async (req, res) => {
 
 
 const passwordreset = async (req, res) => {
-  const { id } = req.body.id;// Das Token wird aus der URL entnommen
+  const { id, password } = req.body; // Direkt aus req.body extrahieren
 
   if (!id) {
     return res.redirect(`/passwordreset.html?success=false&message=${encodeURIComponent("Der Link ist ungültig")}`);
   } // Fehlermeldung im JSON-Format
-  
-  const { password } = req.body.password;
   
   if (!password || password.length < 6) {
       return res.status(400).json({ message: 'Passwort muss mindestens 6 Zeichen lang sein.' });
