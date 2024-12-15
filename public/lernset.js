@@ -30,7 +30,7 @@
 
  document.getElementById('teilen').addEventListener('click', () => {
 
-    document.getElementById('linkInput').value = `http://localhost:3000/teilen?id=${lernsetId}`;
+    document.getElementById('linkInput').value = `https://freezlet.ch/teilen?id=${lernsetId}`;
     document.getElementById('overlayTeilen').style.display = 'block';
 });
 
