@@ -160,11 +160,11 @@ document.getElementById('saveButton').addEventListener('click', () => {
         cardFront = false;
     }
     document.getElementById('overlayoptionen').style.display = 'none';
-    loadRandomCard;
+    loadRandomCard();
 });
 
 async function weiter(){
-    loadRandomCard;
+    await loadRandomCard();
     document.getElementById('userAnswer').value = '';
     document.getElementById('cardContainer').style.display = 'block';
     document.getElementById('feedback').innerText = '';
