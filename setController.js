@@ -156,10 +156,10 @@ const getSet = async (req, res) => {
 };
 
 const teilen = async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.query.id;
 
   if (!id) {
-    //return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Token für die Verifizierung fehlt")}`);
+    return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Der Link ist ungültig!")}`);
   } else {
     return res.redirect(`/setübernehmen.html?id=${id}`);
   }
