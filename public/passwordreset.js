@@ -17,9 +17,9 @@
               const data = await response.json();
         
               if (response.ok) {
-                messageTitle.innerText += ' Vielen Dank! Du wirst gleich zur Startseite weitergeleitet...';
+                messageTitle.innerText += ' Vielen Dank! Du wirst gleich zur Loginseite weitergeleitet...';
                 setTimeout(() => {
-                          window.location.href = '/home.html'; // Weiterleitung nach 3 Sekunden
+                          window.location.href = '/login.html'; // Weiterleitung nach 3 Sekunden
                       }, 3000);
             } else {
                 document.getElementById('error-message').innerText = data.message;
