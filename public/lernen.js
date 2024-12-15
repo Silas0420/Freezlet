@@ -164,9 +164,9 @@ document.getElementById('saveButton').addEventListener('click', () => {
 });
 
 async function weiter(){
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('feedback').innerHTML = '';
     document.getElementById('userAnswer').value = '';
     document.getElementById('cardContainer').style.display = 'block';
     await loadRandomCard();
-    document.getElementById('feedback').innerText = '';
-    document.getElementById('feedback').innerHTML = '';
 };
