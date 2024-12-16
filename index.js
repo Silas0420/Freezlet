@@ -69,7 +69,7 @@ app.post('/passwordreset', passwordreset);
 app.get('/addToFolder', assignSetToFolder)
 app.post('/renamefolder', renamefolder)
 app.post('/deletefolder', deletefolder)
-app.get('setinfolders',setinfolders)
+app.get('/setinfolders',setinfolders)
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
