@@ -1,4 +1,4 @@
-// db.js
+require('dotenv').config();  // Lädt die Umgebungsvariablen aus der .env Datei
 const mysql = require('mysql2');
 
 // Erstelle eine Verbindung zur MariaDB-Datenbank
