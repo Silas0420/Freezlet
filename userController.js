@@ -334,8 +334,15 @@ const updateemail = async (req, res) => {
         return res.status(400).json({ message: "E-mail bereits vergeben." });   
     }
     const userId = req.session.userID;
+
+    const token = crypto.randomBytes(32).toString('hex');
+
+    await db.query(
+      'INSERT INTO UnbestaetigteEmail (email, benutzerID, token) VALUES (?, ?, ?)',
+      [email, userId, token]
+    );
   // E-Mail mit Bestätigungslink senden
-    const confirmationLink = `https://freezlet.ch/emailupdate?id=${userId}&email=${encodeURIComponent(email)}`;
+    const confirmationLink = `https://freezlet.ch/emailupdate?token=${token}`;
 
     await sendEmail(
       email,
@@ -350,17 +357,29 @@ const updateemail = async (req, res) => {
 };
 
 const emailupdate = async (req, res) => {
-  const { id, email } = req.query;
+  const { token } = req.query;
 
-  if (!id || !email) {
+  if (token) {
     return res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Der Link ist ungültig")}`);
   } // Fehlermeldung im JSON-Format
   
 
   try {
+    const [rows] = await db.query('SELECT * FROM UnbestaetigteEmail WHERE token = ?', [token]);
+
+    const user = rows[0];
+
+    // Benutzer in die 'benutzer'-Tabelle übertragen
+    await db.query('UPDATE Benutzer SET email = ? WHERE ID = ?', 
+      [user.email, user.benutzerID]);
+
+    // Benutzer aus der unbestaetigtbenutzer-Tabelle löschen
+    await db.query('DELETE FROM UnbestaetigteEmail WHERE token = ?', [token]);
+
+    // Optional: Token, das älter als 1 Tag ist, entfernen
+    await db.query('DELETE FROM UnbestaetigteEmail WHERE erstellungszeit < NOW() - INTERVAL 1 DAY');
     // Suchen nach dem Token in der Datenbank
-    await db.query('UPDATE Benutzer SET email = ? WHERE id = ?', [email, id]);
-      res.redirect(`/emailupdate.html?success=true&message=${encodeURIComponent("E-Mail wurde erfolgreich geändert")}`);
+    res.redirect(`/emailupdate.html?success=true&message=${encodeURIComponent("E-Mail wurde erfolgreich geändert")}`);
   } catch (error) {
       console.error('Fehler beim Aktualisieren der E-Mail:', error);
       res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Fehler beim Zurücksetzen der E-Mail")}`);
