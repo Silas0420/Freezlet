@@ -19,7 +19,6 @@
     fetch(`/setinfolders?id=${lernsetId}`)
     .then(folders => {
         const setfolderlist = document.getElementById('setfolderlist');
-        setfolderlist.innerHTML = '';  // Leere die Liste
         folders.forEach(folder => {
             // Erstelle ein Button-Element
             const button = document.createElement('button');

@@ -71,8 +71,8 @@ app.post('/renamefolder', renamefolder);
 app.post('/deletefolder', deletefolder);
 app.get('/setinfolders',setinfolders);
 app.post('/editset', editset);
-app.set('/deleteset',deleteset);
-app.set('ersteller', ersteller);
+app.get('/deleteset',deleteset);
+app.get('ersteller', ersteller);
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
