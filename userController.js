@@ -97,10 +97,6 @@ const verifyEmail = async (req, res) => {
     // Suchen nach dem Token in der Datenbank
     const [rows] = await db.query('SELECT * FROM UnbestaetigterBenutzer WHERE token = ?', [token]);
 
-    if (rows.length === 0) {
-      return res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Token für die Verifizierung ist ungültig oder abgelaufen")}`);
-    }
-
     const user = rows[0];
 
     // Benutzer in die 'benutzer'-Tabelle übertragen

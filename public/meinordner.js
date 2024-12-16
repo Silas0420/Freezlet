@@ -1,7 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const folderID = urlParams.get('id');
 async function loadSets() {
-    
     if (folderID) {
         try {
             const response = await fetch(`/getFolder?id=${folderID}`);

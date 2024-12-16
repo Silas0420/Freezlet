@@ -80,7 +80,7 @@ const getFolder = async (req, res) => {
 
         // Hole alle zugehörigen Lernsets
         const [sets] = await connection.query(
-            'SELECT * FROM Lernset WHERE ordnerID = ?',
+            'SELECT L.* FROM Lernset L JOIN Lernset2Ordner L2O ON L.ID = L2O.lernsetIDWHERE L2O.ordnerID = ?;',
             [folderID]
         );
 
