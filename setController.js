@@ -141,7 +141,6 @@ async function importCards(req, res) {
     }
 };
 
-// Alle Ordner des Benutzers abrufen
 const getSet = async (req, res) => {
   try {
       const [sets] = await pool.query(
@@ -210,5 +209,18 @@ const lernsetuebernahme = async (req, res) => {
     }
 };
 
+const getSets = async (req, res) => {
+  const { id } = req.query; 
+  try {
+      const [sets] = await pool.query(
+          'SELECT * FROM Lernset JOIN Lernset2Benutzer ON Lernset.ID = Lernset2Benutzer.lernsetID WHERE Lernset2Benutzer.benutzerID = ? AND ordnerID != ?',
+          [req.session.userID, id]
+      );
+      res.status(200).json(sets);
+  } catch (error) {
+      console.error('Fehler beim Abrufen der Sets:', error);
+      res.status(500).json({ message: 'Fehler beim Abrufen der Sets.' });
+  }
+};
 
-module.exports = { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme};
+module.exports = { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme,getSets};

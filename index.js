@@ -14,7 +14,7 @@ const {
   getuserdata, emailpr, passwordreset, updateemail, emailupdate
 } = require('./userController');
 const {
-  createSet, importCards, getLernset, getSet, teilen, lernsetuebernahme
+  createSet, importCards, getLernset, getSet, teilen, lernsetuebernahme, getSets
 } = require('./setController');
 const {
   createFolder, getFolders, getFolder, assignSetToFolder
@@ -55,6 +55,7 @@ app.get('/getFolder', getFolder);
 app.get('/getLernset', getLernset);
 app.post('/ordnererstellung', createFolder);
 app.get('/getFolders', getFolders);
+app.get('/getSets', getSets);
 app.get('/getSet', getSet);
 app.post('/updateusername', updateusername);
 app.post('/updatepassword', updatepassword);
