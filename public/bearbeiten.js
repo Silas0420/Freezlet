@@ -162,10 +162,8 @@ if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Wert
             const cards = await response.json();
             if (cards.length > 0) {
                 const cardContainer = document.getElementById('cardContainer');
-                cards.forEach(line => {
-                    const parts = line.split('\t'); // Tabulator als Trenner verwenden
-                    if (parts.length === 2) { // Überprüfe, ob Vorderseite und Rückseite existieren
-                        const [vorderseite, rueckseite] = parts;
+                cards.forEach(card => {
+                        const [vorderseite, rueckseite] = card;
                         if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Werte nicht leer sind
                             const cardDiv = document.createElement('div');
                             cardDiv.classList.add('container');
@@ -188,7 +186,6 @@ if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Wert
                             `;
                             cardContainer.appendChild(cardDiv);
                         }
-                    }
                 })
             }
         } catch (error) {
