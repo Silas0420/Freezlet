@@ -243,18 +243,24 @@ fetch(`/getfolderswithoutset?id=${lernsetId}`)
 
 
 document.getElementById('deleteset').addEventListener('click', function() {
-    if (confirm('Bist du sicher, dass du das Lernset löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.')) {
-        fetch( `/deleteset?id=${lernsetId}`)
+    const confirmation = confirm('Bist du sicher, dass du das Lernset löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.');
+    
+    if (!confirmation) {
+        // Der Benutzer hat auf "Abbrechen" geklickt, die Funktion wird beendet.
+        window.location.href = `bearbeiten.html?id=${lernsetId}`;
+        return;
+    }
+    // Benutzer hat "OK" gewählt, der Löschvorgang wird fortgesetzt.
+    fetch(`/deleteset?id=${lernsetId}`)
         .then(response => response.json())
         .then(data => {
             console.log('Antwort:', data);
             if (data.success) {
-                alert('Das Lernset wurde gelöscht.'); 
+                alert('Das Lernset wurde gelöscht.');
                 window.location.href = 'lernsets.html';
             } else {
                 alert('Fehler beim Löschen deines Lernsets.');
             }
         })
         .catch(err => console.error('Fehler:', err));
-    }
 });
