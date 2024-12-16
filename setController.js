@@ -376,10 +376,8 @@ console.log('Lernset ID:', id);
       console.log('Kein Ergebnis gefunden oder falsches Format');
     }    
     
-      console.log('erstellerID:', erstellerID);
-    
     // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
-    if (erstellerID !== userID) {
+    if (result[0][0].erstellerID !== userID) {
       console.log('erstellerID:', erstellerID);
 console.log('userID:', userID);
       return res.status(403).json({ message: 'Du hast keine Berechtigung, dieses Set zu bearbeiten.' });
