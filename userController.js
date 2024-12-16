@@ -359,7 +359,7 @@ const updateemail = async (req, res) => {
 const emailupdate = async (req, res) => {
   const { token } = req.query;
 
-  if (token) {
+  if (!token) {
     return res.redirect(`/emailupdate.html?success=false&message=${encodeURIComponent("Der Link ist ungültig")}`);
   } // Fehlermeldung im JSON-Format
   
