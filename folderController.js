@@ -97,4 +97,35 @@ const getFolder = async (req, res) => {
     }
 };
 
-module.exports = { createFolder, getFolders, getFolder, assignSetToFolder};
+const renamefolder = async (req, res) => {
+    const { foldername, folderID } = req.body;
+
+    try {
+        const [result] = await pool.query(
+            'UPDATE Ordner SET name = ? WHERE ID = ?',
+            [foldername, folderID]
+        );
+        res.status(201).json({ message: 'Ordnername erfolgreich geändert.'});
+    } catch (error) {
+        console.error('Fehler beim Ändern des Ordners:', error);
+        res.status(500).json({ message: 'Fehler beim Ändern des Ordners.' });
+    }
+};
+
+const deletefolder = async (req, res) => {
+  const { folderID } = req.body;
+
+  try {
+      await db.query('DELETE FROM Ordner WHERE name = ?', [folderID]);
+      
+      // Ende der Session nach dem Löschen
+    
+          res.json({ success: true, message: 'Ordner wurde erfolgreich gelöscht.' });
+  } catch (error) {
+      console.error('Fehler beim Löschen des Accounts:', error);
+      res.status(500).json({ message: 'Fehler beim Löschen des Accounts.' });
+  }
+};
+
+
+module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder};

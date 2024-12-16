@@ -80,3 +80,75 @@ fetch(`/getSets?id=${folderID}`)
     });
 })
 .catch(err => console.error('Fehler beim Laden der Sets:', err));
+
+async function back() {
+    window.location.href = `/ordner.html`;
+};
+
+document.getElementById("closeButton").addEventListener('click', () => {
+    document.getElementById("overlayoptionen").style.display = "none";
+})
+
+document.getElementById("optionen").addEventListener('click', () => {
+    document.getElementById("overlayoptionen").style.display = "block";
+})
+
+document.getElementById("renamefolder").addEventListener('click', () => {
+    document.getElementById("overlayrenamefolder").style.display = "block";
+})
+
+document.getElementById("closeButtonrf").addEventListener('click', () => {
+    document.getElementById("overlayrenamefolder").style.display = "none";
+})
+
+document.getElementById("saveButtonrf").addEventListener('click', async() => {
+    const foldername = document.getElementById('input').value.trim();
+    if (!foldername) {
+        alert('Bitte geben Sie einen neuen Ordnernamen ein.');
+        return;
+    }
+    try {
+        const response = await  fetch(`/renamefolder`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                foldername: foldername,  // Sende den neuen Ordnernamen
+                folderID: folderID       // Sende die Ordner-ID
+            })
+        });
+
+        console.log(response); // Füge dies hinzu, um die Antwort zu sehen
+
+        const data = await response.json();
+        alert("Ordnernamen erfolgreich geändert");
+        window.location.reload();
+        } catch (error) {
+          console.error('Fehler bei der Anfrage:', error);
+          alert('Ein unerwarteter Fehler ist aufgetreten. Versuche es nochmal');
+      }
+});
+
+document.getElementById('deletefolder').addEventListener('click', function() {
+    if (confirm('Bist du sicher, dass du den Ordner löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+        fetch('/deletefolder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({folderID: folderID })  
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Antwort:', data);
+            if (data.success) {
+                alert('Der Ordner wurde gelöscht.'); 
+                window.location.href = 'ordner.html';  // Weiterleitung zur Registrierungsseite
+            } else {
+                alert('Fehler beim Löschen deines Ordners.');
+            }
+        })
+        .catch(err => console.error('Fehler:', err));
+    }
+});
