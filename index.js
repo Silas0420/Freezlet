@@ -72,7 +72,7 @@ app.post('/deletefolder', deletefolder);
 app.get('/setinfolders',setinfolders);
 app.post('/editset', editset);
 app.get('/deleteset',deleteset);
-app.get('ersteller', ersteller);
+app.get('/ersteller', ersteller);
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {
