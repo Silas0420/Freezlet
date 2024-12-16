@@ -51,8 +51,8 @@ document.getElementById('closeButtonf').addEventListener('click', () => {
 fetch(`/getSets?id=${folderID}`)
 .then(response => response.json())
 .then(sets => {
-    const setList = document.getElementById('setList');
-    setList.innerHTML = '';  // Leere die Liste
+    const overlaySetList = document.getElementById('setList');
+    overlaySetList.innerHTML = '';  // Leere die Liste
     sets.forEach(set => {
         // Erstelle ein Button-Element
         const button = document.createElement('button');
@@ -76,7 +76,7 @@ fetch(`/getSets?id=${folderID}`)
         });
 
         // Füge den Button der Liste hinzu
-        setList.appendChild(button);
+        overlaySetList.appendChild(button);
     });
 })
 .catch(err => console.error('Fehler beim Laden der Sets:', err));
