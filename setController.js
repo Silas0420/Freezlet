@@ -213,8 +213,8 @@ const getSets = async (req, res) => {
   const { id } = req.query; 
   try {
       const [sets] = await pool.query(
-          'SELECT * FROM Lernset JOIN Lernset2Benutzer ON Lernset.ID = Lernset2Benutzer.lernsetID WHERE Lernset2Benutzer.benutzerID = ? AND ordnerID != ?',
-          [req.session.userID, id]
+          'SELECT * FROM Lernset JOIN Lernset2Ordner ON Lernset.ID = Lernset2Ordner.lernsetID WHERE Lernset2Ordner.ordnerID != ? AND Lernset.ID IN (SELECT lernsetID FROM Lernset2Benutzer WHERE benutzerID = ?)',
+          [id, req.session.userID]
       );
       res.status(200).json(sets);
   } catch (error) {
