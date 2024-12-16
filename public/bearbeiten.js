@@ -52,7 +52,8 @@ document.getElementById('editSetButton').addEventListener('click', function () {
         alert('Bitte fügen Sie mindestens eine Karte zum Lernset hinzu.');
         return; // Aktion abbrechen
     }
-    const newSet = { title, description, cards };
+    setID = lernsetId;
+    const newSet = { setID, title, description, cards };
     // Ladescreen anzeigen
     const loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'flex';
