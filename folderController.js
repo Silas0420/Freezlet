@@ -155,7 +155,7 @@ const getfolderswithoutset = async (req, res) => {
 
         // Hole den Namen des Ordners
         const [folders] = await connection.query(
-            'SELECT O.* FROM Ordner O JOIN Lernset2Ordner L2O ON O.ID = L2O.ordnerID WHERE L2O.lernsetID != ? AND O.erstellerID = ?',
+            'SELECT O.* FROM Ordner O WHERE O.erstellerID = ? AND O.ID NOT IN (SELECT L2O.ordnerID FROM Lernset2Ordner L2O WHERE L2O.lernsetID = ?)',
             [setID, req.session.userID]
         );
 
