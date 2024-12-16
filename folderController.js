@@ -127,5 +127,21 @@ const deletefolder = async (req, res) => {
   }
 };
 
+const foldermitlernset = async (req, res) => {
+    const { id } = req.query; 
+    try {
+        const [folders] = await pool.query(
+            `SELECT o.* 
+             FROM Ordner o
+             JOIN Lernset2Ordner l2o ON o.OrdnerID = l2o.OrdnerID
+             WHERE o.erstellerID = ? AND l2o.LernsetID = ?`,
+            [req.session.userID, id]
+        );
+        res.status(200).json(folders);
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Ordner:', error);
+        res.status(500).json({ message: 'Fehler beim Abrufen der Ordner.' });
+    }
+};
 
-module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder};
+module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset};

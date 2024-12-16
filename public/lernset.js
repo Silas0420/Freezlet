@@ -17,22 +17,21 @@
              console.error('Fehler beim Abrufen des Lernset-Namens:', error);
          });
     fetch(`/setinfolders?id=${lernsetId}`)
+    fetch(`/setinfolders?id=${lernsetId}`)
+    .then(response => response.json())  // Stelle sicher, dass die Antwort als JSON verarbeitet wird
     .then(folders => {
-        const setfolderlist = document.getElementById('setfolderlist');
-        folders.forEach(folder => {
-            // Erstelle ein Button-Element
-            const button = document.createElement('button');
-            button.textContent = folder.name;
-            button.className = 'ordner-button';
-    
-            button.addEventListener('click', () => {
-                     window.location.href = `/meinordner.html?id=${folder.ID}`;
+        if (Array.isArray(folders)) {  // Prüfe, ob die Antwort ein Array ist
+            const setfolderlist = document.getElementById('setfolderlist');
+            setfolderlist.innerHTML = '';  // Leere die Liste
+            folders.forEach(folder => {
+                const li = document.createElement('li');
+                li.textContent = folder.name;
+                setfolderlist.appendChild(li);
             });
-            // Füge den Button der Liste hinzu
-            setfolderlist.appendChild(button);
-        });
+        } else {
+            console.error('Erwartetes Array, aber erhalten:', folders);
+        }
     })
-    .catch(err => console.error('Fehler beim Laden der Ordner:', err));
  }
  // Weiterleitung zum Lernmodus
  document.getElementById('goToLearningButton').addEventListener('click', function() {

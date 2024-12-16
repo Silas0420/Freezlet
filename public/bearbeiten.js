@@ -69,7 +69,7 @@ document.getElementById('editSetButton').addEventListener('click', function () {
             alert('Fehler beim bearbeiten des Lernsets');
         })
         .finally(() => {
-            window.location.href = `/lernset.html?id=${data.setID}`;
+            window.location.href = `/lernset.html?id=${lernsetId}`;
         });
 });
 
@@ -197,7 +197,7 @@ document.getElementById('closeButtonf').addEventListener('click', () => {
     document.getElementById('overlayaddToFolder').style.display = 'none';
 });
 
-fetch('/getFolders')
+fetch(`/getFolders?id=${lernsetId}`)
 .then(response => response.json())
 .then(folders => {
     const folderList = document.getElementById('folderList');
