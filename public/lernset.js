@@ -16,6 +16,24 @@
          .catch(error => {
              console.error('Fehler beim Abrufen des Lernset-Namens:', error);
          });
+    fetch(`/setinfolders?id=${lernsetId}`)
+    .then(folders => {
+        const setfolderlist = document.getElementById('setfolderlist');
+        setfolderlist.innerHTML = '';  // Leere die Liste
+        folders.forEach(folder => {
+            // Erstelle ein Button-Element
+            const button = document.createElement('button');
+            button.textContent = folder.name;
+            button.className = 'ordner-button';
+    
+            button.addEventListener('click', () => {
+                     window.location.href = `/meinordner.html?id=${folder.ID}`;
+            });
+            // Füge den Button der Liste hinzu
+            setfolderlist.appendChild(button);
+        });
+    })
+    .catch(err => console.error('Fehler beim Laden der Ordner:', err));
  }
  // Weiterleitung zum Lernmodus
  document.getElementById('goToLearningButton').addEventListener('click', function() {
