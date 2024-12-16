@@ -129,6 +129,7 @@ const deletefolder = async (req, res) => {
 
 const foldermitlernset = async (req, res) => {
     const { id } = req.query; 
+    console.log(id, req.session.userID)
     try {
         const [folders] = await pool.query(
             `SELECT o.* 
