@@ -135,7 +135,7 @@ if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Wert
     .catch(error => {
         console.error('Fehler beim Abrufen des Lernsets:', error);
     });
-    fetch(`/setinfolders?id=${lernsetId}`)
+    fetch(`/foldermitlernset?id=${lernsetId}`)
     .then(response => response.json())  // Stelle sicher, dass die Antwort als JSON verarbeitet wird
     .then(folders => {
         if (Array.isArray(folders)) {  // Prüfe, ob die Antwort ein Array ist
