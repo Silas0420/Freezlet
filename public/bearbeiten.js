@@ -163,30 +163,30 @@ if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Wert
             if (cards.length > 0) {
                 const cardContainer = document.getElementById('cardContainer');
                 cards.forEach(card => {
-                        const [vorderseite, rueckseite] = card;
-                        if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Werte nicht leer sind
-                            const cardDiv = document.createElement('div');
-                            cardDiv.classList.add('container');
-                            const cardCount = cardContainer.children.length + 1;
-                            cardDiv.innerHTML = `
-                                <div class="entry">
-                                    <div class="entry-number">${cardContainer.children.length + 1}</div>
-                                    <div class="entry-content">
-                                        <div class="field">
-                                            <label>Vorderseite</label>
-                                            <input type="text" id="vorderseite-${cardCount}" value="${vorderseite}" readonly>
-                                        </div>
-                                        <div class="field">
-                                            <label>Rückseite</label>
-                                            <input type="text" id="rueckseite-${cardCount}" value="${rueckseite}" readonly>
-                                        </div>
+                    const { vorderseite, rueckseite } = card; // Destructuring von card
+                    if (vorderseite.trim() && rueckseite.trim()) {
+                        const cardDiv = document.createElement('div');
+                        cardDiv.classList.add('container');
+                        const cardCount = cardContainer.children.length + 1;
+                        cardDiv.innerHTML = `
+                            <div class="entry">
+                                <div class="entry-number">${cardContainer.children.length + 1}</div>
+                                <div class="entry-content">
+                                    <div class="field">
+                                        <label>Vorderseite</label>
+                                        <input type="text" id="vorderseite-${cardCount}" value="${vorderseite}" readonly>
                                     </div>
-                                    <div class="delete-icon" onclick="deleteCard(this)">&times;</div>
+                                    <div class="field">
+                                        <label>Rückseite</label>
+                                        <input type="text" id="rueckseite-${cardCount}" value="${rueckseite}" readonly>
+                                    </div>
                                 </div>
-                            `;
-                            cardContainer.appendChild(cardDiv);
-                        }
-                })
+                                <div class="delete-icon" onclick="deleteCard(this)">&times;</div>
+                            </div>
+                        `;
+                        cardContainer.appendChild(cardDiv);
+                    }
+                });                
             }
         } catch (error) {
             console.error('Fehler beim Abrufen der Karten:', error);
