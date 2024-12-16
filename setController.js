@@ -367,6 +367,15 @@ console.log('Lernset ID:', id);
     if (result.length === 0) {
       return res.status(404).json({ message: 'Lernset nicht gefunden.' });
     }
+    console.log('result:', result); // Zeigt die komplette Struktur an
+    if (result && Array.isArray(result) && result.length > 0) {
+      console.log('Zugriff auf erstellerID:', result[0][0].erstellerID);
+      const { erstellerID } = result[0][0];
+      console.log('erstellerID:', erstellerID);
+    } else {
+      console.log('Kein Ergebnis gefunden oder falsches Format');
+    }    
+    
     console.log('result:', result);
     if (result && Array.isArray(result) && result.length > 0) {
       const { erstellerID } = result[0]; // Wenn es sich um ein Array handelt, hole das erste Element
