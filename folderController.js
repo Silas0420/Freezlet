@@ -116,7 +116,7 @@ const deletefolder = async (req, res) => {
   const { folderID } = req.body;
 
   try {
-      await pool.query('DELETE FROM Ordner WHERE name = ?', [folderID]);
+      await pool.query('DELETE FROM Ordner WHERE ID = ?', [folderID]);
       
       // Ende der Session nach dem Löschen
     

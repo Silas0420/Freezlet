@@ -144,7 +144,7 @@ document.getElementById('deletefolder').addEventListener('click', function() {
             console.log('Antwort:', data);
             if (data.success) {
                 alert('Der Ordner wurde gelöscht.'); 
-                window.location.href = 'ordner.html';  // Weiterleitung zur Registrierungsseite
+                window.location.href = 'ordner.html';
             } else {
                 alert('Fehler beim Löschen deines Ordners.');
             }
