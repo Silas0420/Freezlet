@@ -353,7 +353,7 @@ const { id } = req.query;
 
 const ersteller = async (req, res) => {
   const { id } = req.query; 
-  const userID = req.user.id;  // Angenommen, du hast die userID aus der Session oder dem Token
+  const userID = req.session.userID;  // Angenommen, du hast die userID aus der Session oder dem Token
 
   try {
     // Überprüfen, ob der Lernset-Ersteller der gleiche ist wie der angemeldete Benutzer
