@@ -147,4 +147,31 @@ AND l2o.LernsetID != ?
     }
 };
 
-module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset};
+const getfolderswithoutset = async (req, res) => {
+    const setID = req.query.id;
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        // Hole den Namen des Ordners
+        const [folders] = await connection.query(
+            'SELECT O.* FROM Ordner O JOIN Lernset2Ordner L2O ON O.ID = L2O.ordnerID WHERE L2O.lernsetID != ? AND O.erstellerID = ?',
+            [setID, req.session.userID]
+        );
+
+        if (folders.length === 0) {
+            return res.status(404).json({ message: 'Keine passenden Ordner gefunden.' });
+        }
+
+        // Erfolgreiche Antwort zurückgeben
+        res.json(folders);
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Ordner:', error);
+        res.status(500).json({ message: 'Fehler beim Abrufen der Ordner' });
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+
+module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset, getfolderswithoutset};

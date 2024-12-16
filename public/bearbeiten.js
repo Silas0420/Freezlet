@@ -197,11 +197,10 @@ document.getElementById('closeButtonf').addEventListener('click', () => {
     document.getElementById('overlayaddToFolder').style.display = 'none';
 });
 
-fetch(`/getFolders?id=${lernsetId}`)
+fetch(`/getfolderswithoutset?id=${lernsetId}`)
 .then(response => response.json())
 .then(folders => {
     const folderList = document.getElementById('folderList');
-    folderList.innerHTML = '';  // Leere die Liste
     folders.forEach(folder => {
         // Erstelle ein Button-Element
         const button = document.createElement('button');
