@@ -237,7 +237,7 @@ const setinfolders = async (req, res) => {
   }
 };
 
-async function editset(req, res) {
+const editset = async (req, res) => {
   const { setID, title, description, cards } = req.body;
 
   if (!setID || !title || !cards || cards.length === 0) {
