@@ -7,39 +7,37 @@
     <link rel="icon" href="Freezlet Logo.png"/>
 </head>
 <body>
-        <!-- Platzhalter für die Navigation -->
-        <div id="navigation-placeholder"></div>
-
-    <h1 id="foldername"></h1>
-    <button id="addToFolder">Zu Ordner hinzufügen</button>
-    <button id="optionen">Optionen</button>
-    <button onclick="back()">X</button>
-    <div id="overlayaddToFolder" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-        <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
-          <h2>Lernset auswählen</h2>
-          <ul id="overlaySetList"></ul>
-          <button type="button" id="closeButtonf">Abbrechen</button>
-        </div>
+  <div id="navigation-placeholder"></div>
+  <h1 id="foldername"></h1>
+  <button id="addToFolder">Zu Ordner hinzufügen</button>
+  <button id="optionen">Optionen</button>
+  <button onclick="back()">X</button>
+  <div id="overlayaddToFolder" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+      <h2>Lernset auswählen</h2>
+      <ul id="overlaySetList"></ul>
+      <button type="button" id="closeButtonf">Abbrechen</button>
     </div>
-    <div id="overlayoptionen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-      <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
-        <h2>Optionen</h2>
-        <button id="renamefolder">Ordnernamen ändern</button>
-        <button id="deletefolder">Ordner löschen</button>
-        <button type="button" id="closeButton">Abbrechen</button>
-      </div>
-      <div id="overlayrenamefolder" style="display: none; position: fixed; top: 100px; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-        <div class="Overlay-Design">
-        <h2 id="title">Ordnernamen ändern</h2>
-        <textarea id="input" style="resize: none;" placeholder="Ordnername"></textarea>
-        <br>
-        <button class="Profil-Button-Blau" type="button" id="saveButtonrf">Speichern</button>
-        <button class="Profil-Button-Blau" type="button" id="closeButtonrf" style="margin-top: 1rem;">Abbrechen</button>
-        </div>
+  </div>
+  <div id="overlayoptionen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div style="position: relative; margin: 100px auto; padding: 20px; background: white; width: 400px; text-align: center; border-radius: 0.5rem;">
+      <h2>Optionen</h2>
+      <button id="renamefolder">Ordnernamen ändern</button>
+      <button id="deletefolder">Ordner löschen</button>
+      <button type="button" id="closeButton">Abbrechen</button>
     </div>
-    <ul id="setList"></ul>
-    <script src="meinordner.js"></script>
-        <!-- JavaScript einbinden -->
-        <script src="home.js"></script>
+  </div>
+  <div id="overlayrenamefolder" style="display: none; position: fixed; top: 100px; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div class="Overlay-Design">
+      <h2 id="title">Ordnernamen ändern</h2>
+      <textarea id="input" style="resize: none;" placeholder="Ordnername"></textarea>
+      <br>
+      <button class="Profil-Button-Blau" type="button" id="saveButtonrf">Speichern</button>
+      <button class="Profil-Button-Blau" type="button" id="closeButtonrf" style="margin-top: 1rem;">Abbrechen</button>
+    </div>
+  </div>
+  <ul id="setList"></ul>
+  <script src="meinordner.js"></script>
+  <script src="home.js"></script>
 </body>
 </html>
