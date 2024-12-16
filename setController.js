@@ -378,9 +378,6 @@ console.log('Lernset ID:', id);
     
       console.log('erstellerID:', erstellerID);
     
-    const { erstellerID } = result[0]; // Destrukturierung, um direkt die erstellerID zu extrahieren
-    
-    
     // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
     if (erstellerID !== userID) {
       console.log('erstellerID:', erstellerID);
