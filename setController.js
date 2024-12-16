@@ -368,12 +368,11 @@ console.log('Lernset ID:', id);
       return res.status(404).json({ message: 'Lernset nicht gefunden.' });
     }
 
-    const set = result[0]; // Zugriff auf das erste Element des Ergebnisses
-    console.log('Abfrageergebnis:', set);
+    const { erstellerID } = result[0]; // Destrukturierung, um direkt die erstellerID zu extrahieren
     
     
     // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
-    if (set.erstellerID !== userID) {
+    if (erstellerID !== userID) {
       console.log('set.erstellerID:', set.erstellerID);
 console.log('userID:', userID);
       return res.status(403).json({ message: 'Du hast keine Berechtigung, dieses Set zu bearbeiten.' });
