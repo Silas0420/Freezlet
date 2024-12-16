@@ -198,7 +198,18 @@ document.getElementById('closeButtonf').addEventListener('click', () => {
 });
 
 fetch(`/getfolderswithoutset?id=${lernsetId}`)
-.then(response => response.json())
+.then(response => {
+    if (response.status === 404) {
+        // Nachricht für den Nutzer anzeigen
+        const folderList = document.getElementById('folderList');
+        folderList.textContent = 'Keine Ordner gefunden';
+        throw new Error('Keine Ordner verfügbar');
+    }
+    if (!response.ok) {
+        throw new Error(`Fehler: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+})
 .then(folders => {
     const folderList = document.getElementById('folderList');
     folders.forEach(folder => {
