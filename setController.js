@@ -237,4 +237,146 @@ const setinfolders = async (req, res) => {
   }
 };
 
-module.exports = { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme,getSets, setinfolders};
+async function editset(req, res) {
+  const { setID, title, description, cards } = req.body;
+
+  if (!setID || !title || !cards || cards.length === 0) {
+      return res.status(400).json({ message: 'Set-ID, Titel und Karten sind erforderlich.' });
+  }
+
+  let connection;
+  try {
+      connection = await pool.getConnection();
+      await connection.beginTransaction();
+
+      // 1. Prüfen, ob das Lernset existiert und dem Benutzer gehört
+      const [existingSet] = await connection.query(
+          'SELECT * FROM Lernset WHERE ID = ? AND ID IN (SELECT lernsetID FROM Lernset2Benutzer WHERE benutzerID = ?)',
+          [setID, req.session.userID]
+      );
+
+      if (existingSet.length === 0) {
+          return res.status(404).json({ message: 'Lernset nicht gefunden oder keine Berechtigung.' });
+      }
+
+      // 2. Titel und Beschreibung aktualisieren
+      await connection.query(
+          'UPDATE Lernset SET titel = ?, beschreibung = ? WHERE ID = ?',
+          [title, description || null, setID]
+      );
+
+      // 3. Karten aktualisieren
+      // 3.1. Hole alle bestehenden Karten
+      const [existingCards] = await connection.query(
+          'SELECT ID, vorderseite, rueckseite FROM Karte WHERE lernsetID = ?',
+          [setID]
+      );
+
+      // 3.2. Bearbeite jede eingereichte Karte
+      const existingCardIDs = existingCards.map(card => card.ID);
+      const updatedCardIDs = [];
+
+      for (const card of cards) {
+          const { cardID, vorderseite, rueckseite } = card;
+
+          if (cardID && existingCardIDs.includes(cardID)) {
+              // Aktualisiere bestehende Karte
+              await connection.query(
+                  'UPDATE Karte SET vorderseite = ?, rueckseite = ? WHERE ID = ?',
+                  [vorderseite, rueckseite, cardID]
+              );
+              updatedCardIDs.push(cardID);
+          } else {
+              // Füge neue Karte hinzu
+              const [newCardResult] = await connection.query(
+                  'INSERT INTO Karte (vorderseite, rueckseite, lernsetID) VALUES (?, ?, ?)',
+                  [vorderseite, rueckseite, setID]
+              );
+
+              const newCardID = newCardResult.insertId;
+
+              // Füge Lernstand für neue Karte hinzu
+              await connection.query(
+                  'INSERT INTO Lernstand (benutzerID, kartenID, lernstand) VALUES (?, ?, ?)',
+                  [req.session.userID, newCardID, 0]
+              );
+
+              updatedCardIDs.push(newCardID);
+          }
+      }
+
+      // 3.3. Lösche Karten, die nicht mehr in den übermittelten Daten enthalten sind
+      const cardsToDelete = existingCardIDs.filter(id => !updatedCardIDs.includes(id));
+      if (cardsToDelete.length > 0) {
+          await connection.query(
+              'DELETE FROM Karte WHERE ID IN (?)',
+              [cardsToDelete]
+          );
+
+          // Lösche auch die zugehörigen Lernstände
+          await connection.query(
+              'DELETE FROM Lernstand WHERE kartenID IN (?)',
+              [cardsToDelete]
+          );
+      }
+
+      // 4. Commit der Transaktion
+      await connection.commit();
+      res.status(200).json({ message: 'Lernset erfolgreich aktualisiert!' });
+
+  } catch (error) {
+      console.error('Fehler beim Aktualisieren des Lernsets:', error);
+      if (connection) {
+          await connection.rollback();
+      }
+      res.status(500).json({ message: 'Fehler beim Aktualisieren des Lernsets.' });
+  } finally {
+      if (connection) {
+          connection.release();
+      }
+  }
+}
+
+const deleteset = async (req, res) => {
+const { id } = req.query; 
+  try {
+      await pool.query('DELETE FROM Lernset WHERE ID = ?', [id]);
+      
+      // Ende der Session nach dem Löschen
+    
+          res.json({ success: true, message: 'Set wurde erfolgreich gelöscht.' });
+  } catch (error) {
+      console.error('Fehler beim Löschen des Sets:', error);
+      res.status(500).json({ message: 'Fehler beim Löschen des Sets.' });
+  }
+};
+
+const ersteller = async (req, res) => {
+  const { id } = req.query; 
+  const userID = req.user.id;  // Angenommen, du hast die userID aus der Session oder dem Token
+
+  try {
+    // Überprüfen, ob der Lernset-Ersteller der gleiche ist wie der angemeldete Benutzer
+    const result = await pool.query('SELECT erstellerID FROM Lernset WHERE ID = ?', [id]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'Lernset nicht gefunden.' });
+    }
+
+    const set = result[0];
+    
+    // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
+    if (set.erstellerID !== userID) {
+      return res.status(403).json({ message: 'Du hast keine Berechtigung, dieses Set zu bearbeiten.' });
+    }
+
+    // Erfolgreiche Antwort zurückgeben
+    res.json({ success: true, message: 'Benutzer darf das Lernset bearbeiten' });
+  } catch (error) {
+    console.error('Fehler bei der Bearbeitungsüberprüfung:', error);
+    res.status(500).json({ message: 'Fehler bei der Bearbeitungsüberprüfung' });
+  }
+};
+
+
+module.exports = { createSet, importCards,getLernset , getSet ,teilen ,lernsetuebernahme,getSets, setinfolders, editset, deleteset, ersteller};
