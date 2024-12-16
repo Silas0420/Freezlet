@@ -51,7 +51,7 @@ document.getElementById('closeButtonf').addEventListener('click', () => {
 fetch(`/getSets?id=${folderID}`)
 .then(response => response.json())
 .then(sets => {
-    const overlaySetList = document.getElementById('setList');
+    const overlaySetList = document.getElementById('overlaySetList');
     overlaySetList.innerHTML = '';  // Leere die Liste
     sets.forEach(set => {
         // Erstelle ein Button-Element
