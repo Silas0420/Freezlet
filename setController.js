@@ -352,7 +352,6 @@ const { id } = req.query;
 };
 
 const ersteller = async (req, res) => {
-  console.log('req.user:', req.user);
   const { id } = req.query;
 console.log('Lernset ID:', id);
   const userID = req.session.userID;  // Angenommen, du hast die userID aus der Session oder dem Token
@@ -369,7 +368,9 @@ console.log('Lernset ID:', id);
       return res.status(404).json({ message: 'Lernset nicht gefunden.' });
     }
 
-    const set = result[0];
+    const set = result[0]; // Zugriff auf das erste Element des Ergebnisses
+    console.log('Abfrageergebnis:', set);
+    
     
     // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
     if (set.erstellerID !== userID) {
