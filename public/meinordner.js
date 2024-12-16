@@ -45,7 +45,7 @@ document.getElementById('addToFolder').addEventListener('click', () => {
 });
 
 document.getElementById('closeButtonf').addEventListener('click', () => {
-    document.getElementById('overlayaddToFolder').style.display = 'none';
+    window.location.reload();
 });
 
 fetch(`/getSets?id=${folderID}`)
