@@ -32,12 +32,9 @@ const assignSetToFolder = async (req, res) => {
 
     try {
         const [result] = await pool.query(
-            'UPDATE Lernset SET ordnerID = ? WHERE id = ?',
+            'INSERT INTO Lernset2Ordner (ordnerID, lernsetID) VALUES (?, ?)',
             [folderID, lernsetID]
         );
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Lernset nicht gefunden.' });
-        }
         res.status(200).json({ message: 'Lernset erfolgreich dem Ordner zugewiesen.' });
     } catch (error) {
         console.error('Fehler beim Zuweisen des Lernsets:', error);

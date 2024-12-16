@@ -35,11 +35,9 @@ CREATE TABLE Ordner (
 CREATE TABLE Lernset (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     erstellerID INT NOT NULL,
-    ordnerID INT,
     titel VARCHAR(255) NOT NULL,
     beschreibung VARCHAR(255),
-    FOREIGN KEY (erstellerID) REFERENCES Benutzer(ID) ON DELETE CASCADE,
-    FOREIGN KEY (ordnerID) REFERENCES Ordner(ID) ON DELETE SET NULL
+    FOREIGN KEY (erstellerID) REFERENCES Benutzer(ID) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- Tabelle für die Beziehung zwischen Lernsets und Benutzern
@@ -49,6 +47,15 @@ CREATE TABLE Lernset2Benutzer (
     FOREIGN KEY (benutzerID) REFERENCES Benutzer(ID) ON DELETE CASCADE,
     FOREIGN KEY (lernsetID) REFERENCES Lernset(ID) ON DELETE CASCADE,
     PRIMARY KEY (benutzerID, lernsetID)
+) ENGINE=InnoDB;
+
+-- Tabelle für die Beziehung zwischen Lernsets und Ordnern
+CREATE TABLE Lernset2Ordner (
+    ordnerID INT NOT NULL,
+    lernsetID INT NOT NULL,
+    FOREIGN KEY (ordnerID) REFERENCES Ordner(ID) ON DELETE CASCADE,
+    FOREIGN KEY (lernsetID) REFERENCES Lernset(ID) ON DELETE CASCADE,
+    PRIMARY KEY (ordnerID, lernsetID)
 ) ENGINE=InnoDB;
 
 -- Tabelle für Karten
