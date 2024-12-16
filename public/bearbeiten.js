@@ -63,19 +63,13 @@ document.getElementById('editSetButton').addEventListener('click', function () {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSet)
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'Lernset erfolgreich bearbeitet!') {
-                window.location.href = `/lernset.html?id=${data.setID}`;
-            }
-        })
-        .catch(error => {
+    .then(response => response.json())
+    .catch(error => {
             console.error('Fehler:', error);
             alert('Fehler beim bearbeiten des Lernsets');
         })
         .finally(() => {
-            // Ladescreen ausblenden
-            loadingScreen.style.display = 'none';
+            window.location.href = `/lernset.html?id=${data.setID}`;
         });
 });
 
@@ -246,7 +240,7 @@ document.getElementById('deleteset').addEventListener('click', function() {
             console.log('Antwort:', data);
             if (data.success) {
                 alert('Das Lernset wurde gelöscht.'); 
-                window.location.href = 'lernset.html';
+                window.location.href = 'lernsets.html';
             } else {
                 alert('Fehler beim Löschen deines Lernsets.');
             }
