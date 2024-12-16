@@ -352,6 +352,7 @@ const { id } = req.query;
 };
 
 const ersteller = async (req, res) => {
+  console.log('req.user:', req.user);
   const { id } = req.query;
 console.log('Lernset ID:', id);
   const userID = req.session.userID;  // Angenommen, du hast die userID aus der Session oder dem Token
