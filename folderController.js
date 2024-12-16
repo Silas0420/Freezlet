@@ -134,7 +134,7 @@ const foldermitlernset = async (req, res) => {
             `SELECT o.* 
              FROM Ordner o
              JOIN Lernset2Ordner l2o ON o.OrdnerID = l2o.OrdnerID
-             WHERE o.erstellerID = ? AND l2o.LernsetID = ?`,
+             WHERE o.erstellerID = ? AND l2o.LernsetID != ?`,
             [req.session.userID, id]
         );
         res.status(200).json(folders);
