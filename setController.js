@@ -352,9 +352,14 @@ const { id } = req.query;
 };
 
 const ersteller = async (req, res) => {
-  const { id } = req.query; 
+  const { id } = req.query;
+console.log('Lernset ID:', id);
   const userID = req.session.userID;  // Angenommen, du hast die userID aus der Session oder dem Token
 
+  if (!userID) {
+    return res.status(401).json({ message: 'Nicht authentifiziert. Bitte melde dich an.' });
+  }
+  
   try {
     // Überprüfen, ob der Lernset-Ersteller der gleiche ist wie der angemeldete Benutzer
     const result = await pool.query('SELECT erstellerID FROM Lernset WHERE ID = ?', [id]);
@@ -367,6 +372,8 @@ const ersteller = async (req, res) => {
     
     // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
     if (set.erstellerID !== userID) {
+      console.log('set.erstellerID:', set.erstellerID);
+console.log('userID:', userID);
       return res.status(403).json({ message: 'Du hast keine Berechtigung, dieses Set zu bearbeiten.' });
     }
 
