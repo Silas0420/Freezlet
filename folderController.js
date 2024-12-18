@@ -173,5 +173,24 @@ const getfolderswithoutset = async (req, res) => {
     }
 };
 
+const deleteFromFolder = async (req, res) => {
+    const folderID = req.query.fid;  // Ordner-ID
+    const lernsetID = req.query.sid; // Lernset-ID
 
-module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset, getfolderswithoutset};
+    if (!lernsetID || !folderID) {
+        return res.status(400).json({ message: 'Lernset-ID und Ordner-ID sind erforderlich.' });
+    }
+
+    try {
+        const [result] = await pool.query(
+            'DELETE FROM Lernset2Ordner WHERE ordnerID = ? AND lernsetID = ?',
+            [folderID, lernsetID]
+        );        
+        res.status(200).json({ message: 'Lernset erfolgreich aus dem Ordner gelöscht.' });
+    } catch (error) {
+        console.error('Fehler beim löschen des Lernsets aus dem Ordner.', error);
+        res.status(500).json({ message: 'Fehler beim löschen des Lernsets aus dem Ordner.' });
+    }
+};
+
+module.exports = { createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset, getfolderswithoutset, deleteFromFolder};

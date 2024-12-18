@@ -17,7 +17,7 @@ const {
   createSet, importCards, getLernset, getSet, teilen, lernsetuebernahme, getSets, setinfolders, editset, deleteset, ersteller
 } = require('./setController');
 const {
-  createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset, getfolderswithoutset
+  createFolder, getFolders, getFolder, assignSetToFolder, renamefolder, deletefolder, foldermitlernset, getfolderswithoutset, deleteFromFolder
 } = require('./folderController');
 const {
   getCards, updateLernstand, resetLernstand
@@ -75,6 +75,7 @@ app.get('/deleteset',deleteset);
 app.get('/ersteller', ersteller);
 app.get('/foldermitlernset', foldermitlernset);
 app.get('/getfolderswithoutset', getfolderswithoutset);
+app.get('/deleteFromFolder', deleteFromFolder);
 
 // Webhook-Endpoint hinzufügen
 app.post('/webhook', async (req, res) => {

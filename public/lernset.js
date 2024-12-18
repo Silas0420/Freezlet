@@ -21,7 +21,6 @@
          .then(folders => {
              if (Array.isArray(folders)) {  // Prüfe, ob die Antwort ein Array ist
                  const setfolderlist = document.getElementById('setfolderlist');
-                 setfolderlist.innerHTML = '';  // Leere die Liste
                  folders.forEach(folder => {
                      const li = document.createElement('li');
                      li.textContent = folder.name;

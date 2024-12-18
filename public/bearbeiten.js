@@ -197,6 +197,14 @@ document.getElementById('closeButtonf').addEventListener('click', () => {
     document.getElementById('overlayaddToFolder').style.display = 'none';
 });
 
+document.getElementById('deleteFromFolder').addEventListener('click', () => {
+    document.getElementById('overlaydeleteFromFolder').style.display = 'block';
+});
+
+document.getElementById('closeButtonf2').addEventListener('click', () => {
+    document.getElementById('overlaydeleteFromFolder').style.display = 'none';
+});
+
 fetch(`/getfolderswithoutset?id=${lernsetId}`)
 .then(response => {
     if (response.status === 404) {
@@ -264,3 +272,47 @@ document.getElementById('saveButtondelete').addEventListener('click', () => {
         })
         .catch(err => console.error('Fehler:', err));
 });
+
+fetch(`/foldermitlernset?id=${lernsetId}`)
+.then(response => {
+    if (response.status === 404) {
+        // Nachricht für den Nutzer anzeigen
+        const setInfolderList = document.getElementById('setInfolderList');
+        setInfolderList.textContent = 'Keine Ordner gefunden';
+        throw new Error('Keine Ordner verfügbar');
+    }
+    if (!response.ok) {
+        throw new Error(`Fehler: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+})  // Stelle sicher, dass die Antwort als JSON verarbeitet wird
+.then(folders => {
+    const setInfolderList = document.getElementById('setInfolderList');
+    folders.forEach(folder => {
+        // Erstelle ein Button-Element
+        const button = document.createElement('button');
+        button.textContent = folder.name;
+        button.className = 'ordner-button';
+
+        button.addEventListener('click', () => {
+                fetch(`/deleteFromFolder?fid=${folder.ID}&sid=${lernsetId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Fehler: ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Lernset erfolgreich vom Ordner gelöscht');
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Fehler:', error);
+                });
+        });
+
+        // Füge den Button der Liste hinzu
+        setInfolderList.appendChild(button);
+    });
+})
+.catch(err => console.error('Fehler beim Laden der Ordner:', err));
