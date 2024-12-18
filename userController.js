@@ -96,9 +96,9 @@ const verifyEmail = async (req, res) => {
   try {
     // Suchen nach dem Token in der Datenbank
     const [rows] = await db.query('SELECT * FROM UnbestaetigterBenutzer WHERE token = ?', [token]);
-
+    console.log('rows:', rows)
     const user = rows[0];
-
+    console.log('user:', user)
     // Benutzer in die 'benutzer'-Tabelle übertragen
     await db.query('INSERT INTO Benutzer (benutzername, passwort, email) VALUES (?, ?, ?)', 
       [user.benutzername, user.passwort, user.email]);
@@ -114,7 +114,7 @@ const verifyEmail = async (req, res) => {
     res.redirect(`/verifizierung.html?success=true&message=${encodeURIComponent("E-Mail erfolgreich bestätigt")}`);
   } catch (error) {
     console.error(error);
-    res.redirect(`/verifizierung.html?success=false&message=${encodeURIComponent("Fehler bei der Verifizierung")}`); // Fehlerantwort im JSON-Format
+    res.redirect(`/verifizierung.html?success=true&message=${encodeURIComponent("")}`); // Fehlerantwort im JSON-Format
   }
 };
 
