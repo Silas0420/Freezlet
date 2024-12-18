@@ -30,16 +30,16 @@ h1 {
 label {
     font-size: 22px;
     font-weight: bold;
-    color: #555;
+    color: #000000;
     margin-top: 10px;
 }
 
 p {
-    color:rgb(255, 255, 255)
+    color:rgb(0, 0, 0)
 }
 
 a {
-    color:rgb(255, 255, 255)
+    color:rgb(0, 0, 0)
 }
 
 button {
@@ -82,7 +82,7 @@ input {
     border-width: medium;
     font-size: 14px;
     font-weight: bold;
-    color: #555;
+    color: #000000;
     display: inline-block;
 }
 
