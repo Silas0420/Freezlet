@@ -379,9 +379,9 @@ console.log('Lernset ID:', id);
     
     // Überprüfen, ob der angemeldete Benutzer der Ersteller des Sets ist
     if (result[0][0].erstellerID !== userID) {
-      console.log('erstellerID:', erstellerID);
-console.log('userID:', userID);
-      return res.status(403).json({ message: 'Du hast keine Berechtigung, dieses Set zu bearbeiten.' });
+      console.log('erstellerID:', result[0][0].erstellerID);
+      console.log('userID:', userID);
+      return res.status(403).json({ message: 'Du bist nicht der Ersteller von diesem Lernset.' });
     }
 
     // Erfolgreiche Antwort zurückgeben
