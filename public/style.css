@@ -27,6 +27,10 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: rgb(0, 0, 0);
+}
+
 label {
     font-size: 22px;
     font-weight: bold;
