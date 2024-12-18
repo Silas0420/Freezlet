@@ -598,7 +598,8 @@ textarea {
     border-color: rgb(0, 238, 255);
     border-width: medium;
     border-radius: .5rem;
-    width: auto;
+    width: 200px;
+    overflow: auto;
 }
 
 textarea::placeholder {
