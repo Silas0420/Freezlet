@@ -23,8 +23,8 @@ async function loadRandomCard() {
         } else {
             cardContainer.style.display = 'none'; // Verstecke das Karten-Container
             document.getElementById('feedback').innerHTML = `
-                <p>Super, du hast schon alles gelernt!</p>
-                <button id="restartButton">Nochmal lernen</button>
+                <p style="color: white;">Super, du hast schon alles gelernt!</p>
+                <button style="display: flex;" id="restartButton">Nochmal lernen</button>
             `;
             document.getElementById('restartButton').onclick = resetAllLearning;
         }
