@@ -148,17 +148,17 @@ AND l2o.LernsetID = ?
 };
 
 const getfolderswithoutset = async (req, res) => {
-    const setID = req.query.id;
+    const { id } = req.query;
+    console.log('getfolderswithoutset id:', id) 
     let connection;
     try {
         connection = await pool.getConnection();
-
         // Hole den Namen des Ordners
         const [folders] = await connection.query(
             'SELECT O.* FROM Ordner O WHERE O.erstellerID = ? AND O.ID NOT IN (SELECT L2O.ordnerID FROM Lernset2Ordner L2O WHERE L2O.lernsetID = ?)',
-            [setID, req.session.userID]
+            [req.session.userID, id]
         );
-
+        console.log('getfolderswithoutset folders:', folders) 
         if (folders.length === 0) {
             return res.status(404).json({ message: 'Keine passenden Ordner gefunden.' });
         }
