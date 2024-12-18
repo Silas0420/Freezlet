@@ -186,7 +186,7 @@ input::placeholder {
 }
 
 .home-container {
-    width: 1500%;  /* Der Container nimmt die gesamte Breite ein */
+    width: 100%;  /* Der Container nimmt die gesamte Breite ein */
     max-width: 300px; /* Erhöhe den maximalen Wert */
     max-width: 1200px; /* Maximale Breite für große Bildschirme */
     margin: 0 auto;  /* Zentriert den Container */
