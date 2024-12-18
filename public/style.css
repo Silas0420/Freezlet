@@ -387,6 +387,10 @@ button.danger:hover {
     margin-bottom: 20px;
 }
 
+#importText::placeholder {
+    color: #000;
+}
+
 .container {
     background-color: #f918cc;
     padding: 15px;
@@ -590,14 +594,14 @@ button.danger:hover {
 
 textarea {
     background-color: transparent;
-    color: white;
+    color: black;
     border-color: rgb(0, 238, 255);
     border-width: medium;
     border-radius: .5rem;
 }
 
 textarea::placeholder {
-    color: white;
+    color: black;
 }
 
 #loadingScreen {
