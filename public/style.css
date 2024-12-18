@@ -217,11 +217,10 @@ input::placeholder {
     padding: 30px;
     background: linear-gradient(135deg, #3a3f8d, #4347c7);
     border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 50px 200px rgba(254, 106, 252, 0.4); 
+    box-shadow: 0 50px 200px rgba(190, 15, 135, 0.7); /* Schatten für mehr Tiefe */
 }
 
 .lernset-container h1 {
@@ -276,7 +275,7 @@ img {
     background-color: #ffffff;
     padding: 50px;
     border-radius: 30px;
-    box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
+    box-shadow: 0 50px 200px rgba(190, 15, 135, 0.7); /* Schatten für mehr Tiefe */
     margin-bottom: 50px;
     height: auto;
 }
@@ -286,7 +285,7 @@ img {
     background-color: #f918cc;
     padding: 50px;
     border-radius: 30px;
-    box-shadow: 0 70px 300px rgba(254, 106, 252, 0.4);
+    box-shadow: 0 50px 200px rgba(190, 15, 135, 0.7); /* Schatten für mehr Tiefe */
     margin-bottom: 50px;
     height: auto;
 }
