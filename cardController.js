@@ -16,7 +16,7 @@ const getCards = async (req, res) => {
             `SELECT k.ID AS kartenID, k.vorderseite, k.rueckseite, ls.lernstand AS lernstand
              FROM Karte k
              LEFT JOIN Lernstand ls ON ls.kartenID = k.ID AND ls.benutzerID = ? 
-             WHERE k.lernsetID = ? AND ls.lernstand < 3`,
+             WHERE k.lernsetID = ? AND ls.lernstand < 2`,
             [req.session.userID, lernsetId]  // Benutzer-ID aus der Session
         );
 
