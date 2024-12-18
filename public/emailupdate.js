@@ -5,7 +5,7 @@ const messageTitle = document.getElementById('messageTitle');
 messageTitle.innerText = params.get('message');
 
 // Zusätzlicher Text, wenn "success" true ist
-messageTitle.innerText += ' Vielen Dank! Du wirst gleich zur Loginseite weitergeleitet...';
+messageTitle.innerText = ' Vielen Dank! Du wirst gleich zur Loginseite weitergeleitet...';
     setTimeout(() => {
               window.location.href = '/login.html'; // Weiterleitung nach 3 Sekunden
           }, 3000);
