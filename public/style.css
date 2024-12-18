@@ -27,6 +27,10 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: rgb(0, 0, 0);
+}
+
 label {
     font-size: 22px;
     font-weight: bold;
@@ -186,7 +190,7 @@ input::placeholder {
 }
 
 .home-container {
-    width: 1500%;  /* Der Container nimmt die gesamte Breite ein */
+    width: 100%;  /* Der Container nimmt die gesamte Breite ein */
     max-width: 300px; /* Erhöhe den maximalen Wert */
     max-width: 1200px; /* Maximale Breite für große Bildschirme */
     margin: 0 auto;  /* Zentriert den Container */

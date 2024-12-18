@@ -134,3 +134,21 @@ if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Wert
 }
 });
 });
+
+const textarea = document.querySelector('textarea');
+
+textarea.addEventListener('keydown', function(event) {
+    if (event.key === 'Tab') { // Prüft, ob die Tab-Taste gedrückt wurde
+        event.preventDefault(); // Verhindert das Standardverhalten (Wechsel des Fokus)
+
+        // Fügt einen Tabulator an der aktuellen Cursor-Position ein
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+
+        // Setzt den Wert des Textareas mit dem Tabulator
+        this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+
+        // Positioniert den Cursor hinter dem eingefügten Tabulator
+        this.selectionStart = this.selectionEnd = start + 1;
+    }
+});
