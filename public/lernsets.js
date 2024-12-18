@@ -3,7 +3,7 @@ function loadSets() {
         .then(response => response.json())
         .then(sets => {
             const setList = document.getElementById('setList');
-            if (sets.length = 0) {
+            if (sets.length == 0) {
                 const h3 = document.createElement('h3');
                 h3.textContent = 'Du hast noch kein Lernset erstellt.'<br>'Klicke auf den Button um ein Lernset zu erstellen.'
                                 const button = document.createElement('button');

@@ -34,7 +34,7 @@ function loadFolders() {
         .then(response => response.json())
         .then(folders => {
             const folderList = document.getElementById('folderList');
-            if (folders.length = 0) {
+            if (folders.length == 0) {
                 const h3 = document.createElement('h3');
                 h3.textContent = 'Du hast noch keinen Ordner'
                 folderList.appendChild(h3);
