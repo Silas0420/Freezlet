@@ -421,13 +421,13 @@ button.danger:hover {
 
 .delete-icon {
     font-size: 40px;
-    color: #e65160;
+    color: #760410;
     cursor: pointer;
     align-self: center;
 }
 
 .delete-icon:hover {
-    color: #e65160;
+    color: #760410;
 }
 
 /* Media Queries für kleinere Bildschirme */
