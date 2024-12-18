@@ -359,13 +359,14 @@ button.create-button:hover {
 }
 
 .button1 {
-    background-color: #ff8c00;
+    background-color: #1a73e8;
     color: white;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    border: none;
 }
 
 .button1:hover {
-    background-color: #f11e1e;
+    background-color: #135ba1;
 }
 
 button.danger {
