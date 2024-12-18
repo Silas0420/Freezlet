@@ -16,22 +16,21 @@
          .catch(error => {
              console.error('Fehler beim Abrufen des Lernset-Namens:', error);
          });
-    fetch(`/setinfolders?id=${lernsetId}`)
-    fetch(`/setinfolders?id=${lernsetId}`)
-    .then(response => response.json())  // Stelle sicher, dass die Antwort als JSON verarbeitet wird
-    .then(folders => {
-        if (Array.isArray(folders)) {  // Prüfe, ob die Antwort ein Array ist
-            const setfolderlist = document.getElementById('setfolderlist');
-            setfolderlist.innerHTML = '';  // Leere die Liste
-            folders.forEach(folder => {
-                const li = document.createElement('li');
-                li.textContent = folder.name;
-                setfolderlist.appendChild(li);
-            });
-        } else {
-            console.error('Erwartetes Array, aber erhalten:', folders);
-        }
-    })
+         fetch(`/foldermitlernset?id=${lernsetId}`)
+         .then(response => response.json())  // Stelle sicher, dass die Antwort als JSON verarbeitet wird
+         .then(folders => {
+             if (Array.isArray(folders)) {  // Prüfe, ob die Antwort ein Array ist
+                 const setfolderlist = document.getElementById('setfolderlist');
+                 setfolderlist.innerHTML = '';  // Leere die Liste
+                 folders.forEach(folder => {
+                     const li = document.createElement('li');
+                     li.textContent = folder.name;
+                     setfolderlist.appendChild(li);
+                 });
+             } else {
+                 console.error('Erwartetes Array, aber erhalten:', folders);
+             }
+         })
  }
  // Weiterleitung zum Lernmodus
  document.getElementById('goToLearningButton').addEventListener('click', function() {
