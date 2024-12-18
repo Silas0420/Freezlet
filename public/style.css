@@ -416,7 +416,7 @@ button.danger:hover {
 .field label {
     font-size: 24px;
     font-weight: bold;
-    color: #555;
+    color: #000000;
 }
 
 .delete-icon {
