@@ -169,11 +169,11 @@ if (vorderseite.trim() && rueckseite.trim()) { // Stelle sicher, dass beide Wert
                                 <div class="entry-content">
                                     <div class="field">
                                         <label>Vorderseite</label>
-                                        <input type="text" id="vorderseite-${cardCount}" value="${vorderseite}" readonly>
+                                        <input type="text" id="vorderseite-${cardCount}" value="${vorderseite}">
                                     </div>
                                     <div class="field">
                                         <label>Rückseite</label>
-                                        <input type="text" id="rueckseite-${cardCount}" value="${rueckseite}" readonly>
+                                        <input type="text" id="rueckseite-${cardCount}" value="${rueckseite}">
                                     </div>
                                 </div>
                                 <div class="delete-icon" onclick="deleteCard(this)">&times;</div>
